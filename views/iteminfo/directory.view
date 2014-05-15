@@ -1,0 +1,45 @@
+#import "skin://common.view"
+
+widget(container_y, {
+  spacing: 5;
+
+  widget(container_x, {
+    height: $ui.height / 2;
+    spacing: 10;
+
+    widget(container_y, {
+      align: top;
+      widget(frontdrop, {
+	source: "skin://graphics/boxart-overlay.png";
+	border: 8;
+	margin: -4;
+	widget(image, {
+	  width: $ui.width / 6;
+	  source: $args.metadata.usericon ?? 
+	    $args.metadata.icon ?? 
+	    "dataroot://resources/svg/Movie.svg";
+	});
+      });
+    });
+
+    widget(container_z, {
+      filterConstraintX: true;
+      widget(container_y, {
+	space(2);
+	widget(throbber, {
+	  alpha: $args.metadata.loading;
+	});
+	space(2);
+      });
+      widget(container_y, {
+	spacing: $ui.size / 2;
+
+	space(1);
+
+      });
+    });
+  });
+  
+ 
+  space(1);
+});
