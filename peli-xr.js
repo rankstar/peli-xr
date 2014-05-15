@@ -3294,7 +3294,7 @@
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Novedades','views/img/folder.png',':playlist:pordedeseries:novedades:' + escape('http://www.pordede.com/series/index')),
-				new Item_menu('Mas Vistas','views/img/folder.png',':playlist:pordedeseries:masvistas:' + escape('http://www.pordede.com/pelis/series/showlist/viewed')),
+				new Item_menu('Mas Vistas','views/img/folder.png',':playlist:pordedeseries:masvistas:' + escape('http://www.pordede.com/series/index/showlist/viewed')),
 				new Item_menu('Mas valoradas','views/img/folder.png',':playlist:pordedeseries:masvaloradas:' + escape('http://www.pordede.com/series/index/showlist/valued')),
 				new Item_menu('Buscar','views/img/search.png',':playlist:pordedeseries:tipobusqueda:' + escape('http://www.pordede.com/search/'))
 				];

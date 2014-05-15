@@ -1,4 +1,14 @@
-#### Changelog
+###### Changelog
+
+### X.X.X:
+- Cambio de todo el codigo js, ahora el codigo esta basado en objetos, Gracias a SuperBerny q se lo ha currado.
+- Añadidos mas canales en la seccion de tvonline, Gracias a SuperBerny
+- Solucionado el bug de las busquedas con espacios en peliculaspepito.
+- ¿?Bug peliculascoco crashea. Lo he probado tanto en la ps3 como en ubuntu y no crashea.
+- Eliminada opcion Mas vistas en seriespepito, ya no aparece en la pagina esa opcion.
+- Animeflv, corregido el problema de q el primer elemento q se listaba era un link de publi, ya no sale mas.
+- Corregido el problema de redtube q no dejaba reproducir videos.
+
 
 ### 0.9.7:
 
