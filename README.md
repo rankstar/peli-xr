@@ -1,4 +1,4 @@
-1## Changelog
+## Changelog
 
 ### 0.9.7:
 
