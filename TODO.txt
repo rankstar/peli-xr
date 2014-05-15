@@ -1,0 +1,47 @@
+TODO:
+//Tv online: analizar esto: http://is.gd/spotlistpro y esto: http://pastebin.com/raw.php?i=rSh9iJq4
+	-Esto funciona: http://media0.rtve.es/resources/TE_GLESP/mp4/5/1/1303316681415.mp4?aksessionid=1303766307140_392613
+					http:// ..... .m3u8
+
+Añadir SpliveTV: 80% pendiente agregar nuevos hosts
+
+Añadir SeriesNewPCT: 20%
+	el titulo lo extrae mal, compone mal la uri vervideo
+
+El tema de las actualizaciones online: 0%
+
+
+Historial:
+	Solo se guarda la primera vez en el dia que se visiona un video (url). Es decir si ayer vi un determinado video y hoy vuelvo a verlo se guardara el acceso de ayer y el de hoy, pero si hoy lo veo 3 veces, por ejemplo, solo almacenamos la primera vez.
+Favoritos:
+	Si guardamos un favorito en la pagina 'vercontenido' se guarda el enlace a la pagina de enlaces ('verenlaces'), pero si lo guardamos desde la pagina de 'verenlaces' lo que se almacena es el link al video. En la pagina de Favoritos se pueden diferenciar por que el titulo incluye o no el nombre del host.
+En el caso de los canales de TV siempre se guarda el enlace al video.	
+	
+Ultimos Cambios:
+	-renombrado 'playlist', 'playlist2' por 'vercontenidos' y 'verenlaces' respectivamente
+	-reescrito StoreHistorial: No consigo eliminar el archivo del disco duro, ni siquiera borrar todo el contenido.
+							Asi que he tenido que hacer un apaño y eliminar las propiedades que existian en las versiones anteriores para evitar problemas. 
+							A ver si a ti se te ocurre alguna solucion.
+		
+	-'vervideo': modificado el tema del historial
+	-modificada 'Pagina Historial'
+	-CanalFactory: 
+		Completar la informacion de los metodos que ofrece
+		Modificar metodo createCanal para añadir la categoria a Canal
+		
+	-Canal: Añadido atributo canal.categoria
+	-En varias metodos parseNOMBRECANALxxxxx se asignaba var page_uri= ':verenlaces:NOMBRECANALcapitulo'. Esto no es correcto debe ser: var page_uri= ':verenlaces:NOMBRECANAL'
+	-LiveStream: pequeñas modificaciones
+	-AnimeFlv: Reparado 100%
+	
+bugs:
+SeriesPepito:
+	-Lo mas visto pide Login (este bugs ya estaba))
+Vodlyseries: (version ori tb falla)
+	-Lastest Prime-Time fallo host desconocido
+	-El resto de secciones no encuentra servidores
+
+	
+
+	
+	
