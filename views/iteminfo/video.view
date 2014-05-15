@@ -1,0 +1,80 @@
+#import "skin://common.view"
+
+widget(container_y, {
+  spacing: 5;
+
+  widget(container_x, {
+    //height: $ui.height / 2;
+    spacing: 10;
+
+    widget(container_y, {
+      align: top;
+      widget(frontdrop, {
+	source: "skin://graphics/boxart-overlay.png";
+	border: 8;
+	margin: -4;
+	widget(image, {
+	  width: $ui.width / 6;
+	  source: $page.model.metadata.usericon ?? 
+	    $page.model.metadata.icon ?? 
+	    "dataroot://resources/svg/Movie.svg";
+	});
+      });
+    });
+
+    widget(container_z, {
+      filterConstraintX: true;
+      widget(container_y, {
+	space(2);
+	widget(throbber, {
+	  alpha: $args.metadata.loading;
+	});
+	space(2);
+      });
+      widget(container_y, {
+	spacing: $ui.size / 2;
+
+	space(1);
+
+      });
+    });
+  });
+  
+  
+    widget(label, {
+	.hidden = !($args.metadata.servidor);
+    TextStyleItem();
+    sizeScale: 1;
+	align: left;
+	caption: '<font color="#888">' + 'Servidor:' + ' </font>' + $args.metadata.servidor;
+  });  
+
+    widget(label, {
+	.hidden = !($args.metadata.idioma);
+    TextStyleItem();
+    sizeScale: 1;
+	align: left;
+	caption: '<font color="#888">' + 'Idioma:' + ' </font>' + $args.metadata.idioma;
+  });  
+  
+    widget(label, {
+	.hidden = !($args.metadata.calidad);
+    TextStyleItem();
+    sizeScale: 1;
+	align: left;
+	caption: '<font color="#888">' + 'Calidad:' + ' </font>' + $args.metadata.calidad;
+  });
+  
+    widget(label, {
+	.hidden = !($page.model.metadata.description);
+    TextStyleItem();
+    sizeScale: 1;
+	align: left;
+	//align: justified;
+    maxlines: 20;
+	caption: '<font color="#888">' + 'Descripcion:' + ' </font><br>' + 
+    $page.model.metadata.description;
+  });
+  
+  space(1);
+});

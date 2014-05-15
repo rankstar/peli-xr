@@ -1,0 +1,15 @@
+{
+    "type": "javascript",
+    "id": "peli-xr",
+    "file": "peli-xr.js",
+    "showtimeVersion": "4.4",
+    "version": "0.9.8",
+    "author": "Rankstar",
+    "title": "Peli-XR",
+    "icon": "logo.png",
+    "synopsis": "Navegador web que soporta distintos sitios web con contenido multimedia",
+    "description": "Han colaborado en este plugin\n\n
+    - SuperBerny. Reportando bugs, y con la implementacion de livestreams (q es un lujazo)\n
+    - klaxnek. Codigo para seriespepito y vodly\n
+    - aldostools. Codigo redtube, y con ideas para un tipo control parental"
+}
