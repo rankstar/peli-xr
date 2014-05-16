@@ -1489,7 +1489,7 @@
 		var titulo;
 		var imagen;
 		var url_video;
-		var page_uri = ':playlist2:newpct:';
+		var page_uri = ':verenlaces:newpct:';
 		var array_playlist=[];
 		for (var i=0;i<array_aux.length;i++)
 			{
@@ -1538,7 +1538,7 @@
 				var titulo;
 				var imagen = "views/img/folder.png";
 				var url_video;
-				var page_uri = ':playlist2:newpct:';
+				var page_uri = ':verenlaces:newpct:';
 
 				for (var i=0;i<array_aux.length;i++)
 					{
@@ -1760,7 +1760,7 @@
 		var titulo;
 		var imagen;
 		var url_video;	
-		var page_uri = ':playlist2:peliculaspepito:';
+		var page_uri = ':verenlaces:peliculaspepito:';
 		var array_playlist=[];
 
 		for (var i=0;i<array_aux.length;i++)
@@ -1785,7 +1785,7 @@
 		var titulo;
 		var imagen = "views/img/folder.png";
 		var url_video;   
-		var page_uri = ':playlist2:peliculaspepito:';
+		var page_uri = ':verenlaces:peliculaspepito:';
 		
 		var array_playlist=[];
 		
@@ -1821,7 +1821,7 @@
 					var titulo;
 					var imagen;
 					var url_video;	
-					var page_uri = ':playlist2:peliculaspepito:';
+					var page_uri = ':verenlaces:peliculaspepito:';
 					var array_playlist=[];
 
 					for (var i=0;i<array_aux.length;i++)
@@ -2003,7 +2003,7 @@
 			var titulo;
 			var imagen;
 			var url_video;	
-			var page_uri = ':playlist2:vodly:';
+			var page_uri = ':verenlaces:vodly:';
 			var array_playlist=[];
 			var key;
 			
@@ -2193,7 +2193,7 @@
 			var titulo;
 			var imagen;
 			var url_video;	
-			var page_uri = ':playlist2:peliculascoco:';
+			var page_uri = ':verenlaces:peliculascoco:';
 			var array_playlist=[];
 		
 			for (var i=0;i<array_aux.length;i++)
@@ -2389,7 +2389,7 @@
 					{
 					case "peliculas":
 						key= 'http://www.pordede.com/peli/';
-						page_uri = ':playlist2:pordede:';
+						page_uri = ':verenlaces:pordede:';
 						break;
 					case "series":
 						key= 'http://www.pordede.com/serie/'; //tvshow¿?
@@ -2950,7 +2950,7 @@
 			var titulo;
 			var imagen;
 			var url_video;	
-			var page_uri = ':playlist2:seriespepito:';
+			var page_uri = ':verenlaces:seriespepito:';
 			var array_playlist=[];
 
 			for (var i=0;i<array_aux.length;i++)
@@ -2979,7 +2979,7 @@
 			var titulo;
 			var imagen = "views/img/folder.png";
 			var url_video;   
-			var page_uri = ':playlist2:seriespepito:';
+			var page_uri = ':verenlaces:seriespepito:';
 			var array_playlist=[];
 
 			for (var i=0;i<array_aux.length;i++)
@@ -3106,7 +3106,7 @@
 			var imagen;
 			//var descripcion;
 			var url_video;	
-			var page_uri = ':playlist2:seriespepito:';
+			var page_uri = ':verenlaces:seriespepito:';
 			imagen = extraer_texto(file_contents ,'<img class="img-polaroid imgcolserie"','</center>');
 			imagen = extraer_texto(imagen ,'src="','"');		
 			//descripcion = extraer_texto(file_contents ,'<div id="description"> <p> ',' ... <a');
@@ -3225,7 +3225,7 @@
 			var titulo;
 			var imagen;
 			var url_video;   
-			var page_uri = ':playlist2:vodlyseries:';
+			var page_uri = ':verenlaces:vodlyseries:';
 			var array_playlist=[];
       
 			for (var i=0;i<array_aux.length;i++)
@@ -3255,7 +3255,7 @@
 			var imagen = extraer_texto(file_contents ,'<div class="movie_thumb"><img itemprop="image" src="','"');
 			//var descripcion;
 			var url_video;	
-			var page_uri = ':playlist2:vodly:';
+			var page_uri = ':verenlaces:vodly:';
 			var array_playlist=[];
 			file_contents = "";
 			
@@ -3567,7 +3567,7 @@
 			var titulo;
 			var imagen;
 			var url_video;	
-			var page_uri = ':playlist2:animeflv:';
+			var page_uri = ':verenlaces:animeflv:';
 			var array_playlist=[];
 			//Empiezo en en i=1 x el q 0 siempre es publicidad
 			for (var i=1;i<array_aux.length;i++)
@@ -3596,7 +3596,7 @@
 			var titulo;
 			var imagen = 'views/img/folder.png';
 			var url_video;	
-			var page_uri = ':playlist2:animeflv:';
+			var page_uri = ':verenlaces:animeflv:';
 			var array_playlist=[];
 		
 			for (var i=0;i<array_aux.length;i++)
@@ -3742,7 +3742,7 @@
 			var imagen;
 			//var descripcion;
 			var url_video;	
-			var page_uri = ':playlist2:animeflv:';
+			var page_uri = ':verenlaces:animeflv:';
 			imagen = extraer_texto(file_contents ,'<div class="anime_info">','</div>');
 			imagen = extraer_texto(imagen ,'src="','"');		
 			//descripcion = extraer_texto(file_contents ,'<div class="sinopsis">','</div>');
@@ -3888,7 +3888,7 @@
 			var titulo;
 			var imagen;
 			var array_playlist = [];
-			var page_uri = ':playlist2:redtube:';
+			var page_uri = ':verenlaces:redtube:';
 			for (var i = 0;i<array_aux.length;i++)
 			{
 				titulo = extraer_texto(array_aux[i],'title="','"');
@@ -4040,7 +4040,7 @@
 			var imagen;
 			var url_video;	
 			var array_playlist=[];
-			var page_uri = ':playlist2:xvideos:';
+			var page_uri = ':verenlaces:xvideos:';
 			for (var i=0;i<array_aux.length;i++)
 			{
 				titulo=extraer_texto(array_aux[i],'<p><a ','a></p>');
@@ -4203,7 +4203,7 @@
 			var imagen;
 			var url_video;	
 			var array_playlist=[];
-			var page_uri = ':playlist2:xhamster:';
+			var page_uri = ':verenlaces:xhamster:';
 			for (var i=0;i<array_aux.length;i++)
 			{
 				titulo=extraer_texto(array_aux[i],'<u title="','"');
@@ -4231,7 +4231,7 @@
 			var imagen;
 			var url_video;	
 			var array_playlist=[];
-			var page_uri = ':playlist2:xhamster:';
+			var page_uri = ':verenlaces:xhamster:';
 			for (var i=0;i<array_aux.length;i++)
 			{
 				titulo=extraer_texto(array_aux[i],"title='","'");
@@ -4283,7 +4283,7 @@
 				var titulo;
 				var imagen;
 				var url_video;	
-				var page_uri = ':playlist2:xhamster:';
+				var page_uri = ':verenlaces:xhamster:';
 				var array_playlist=[];
 
 				for (var i=0;i<array_aux.length;i++)
@@ -5154,7 +5154,7 @@ showtime.print(i + ' objetos iniciados')
 
 
 	//Listado del mismo item x todo los servers disponibles
-	plugin.addURI(PREFIX + ":playlist2:(.*):(.*)", function(page, canal, url) {
+	plugin.addURI(PREFIX + ":verenlaces:(.*):(.*)", function(page, canal, url) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var array_servidores=[];
