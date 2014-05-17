@@ -1,126 +1,71 @@
-###### Changelog
+Peli-Xr - Plugin para Showtime
+====================
 
-### X.X.X:
-- Cambio de todo el codigo js, ahora el codigo esta basado en objetos, Gracias a SuperBerny q se lo ha currado.
-- Añadidos mas canales en la seccion de tvonline, Gracias a SuperBerny
-- Solucionado el bug de las busquedas con espacios en peliculaspepito.
-- ¿?Bug peliculascoco crashea. Lo he probado tanto en la ps3 como en ubuntu y no crashea.
-- Eliminada opcion Mas vistas en seriespepito, ya no aparece en la pagina esa opcion.
-- Animeflv, corregido el problema de q el primer elemento q se listaba era un link de publi, ya no sale mas.
-- Corregido el problema de redtube q no dejaba reproducir videos.
-- Implementada la parte de series de pordesde
+[Showtime][https://showtimemediacenter.com]
 
++ Info/Soporte del plugin, en el foro de EOL[http://www.elotrolado.net/hilo_plugin-showtime-peli-xr-v0-9-7_1981017]
 
-### 0.9.7:
+### ¿Qué es Peli-XR?
 
-- Terminada la parte de peliculas de pordesde.com
-- Solucionado el problema con played.to (he cambido el metodo).
-- Corregido codigo en newpct. No se veia nada online
-- Agregada la parte de livestreams q se la ha currado enterita el usuario SuperBerny.
-	--> Añadido icono tvonline.png en: plugin.path + "img/tvonline.png"
-	--> Añadido icono livestreams.png en: plugin.path + "img/livestreams.png"
-	--> Añadida opcion: "Añadir lista de canales LiveStream (xml)" en ajustes
-	--> Añadido item TV online en menu principal
-	--> Añadida seccion //Pagina TVonline
-	--> Añadido case "livestream": en //Listado de items generico
-	--> Añadido case "rtmp": en //Pagina de ver video 
-	--> Añadimos la funcion startsWith al prototipo de String
-	--> Añadimos la funcion endsWith al prototipo de String
-	--> Añadimos la funcion trim al prototipo de String
-	--> Añadimos la funcion toProperCase al prototipo de String
-	--> Añadimos la funcion al prototipo de Array para ordenar arrays de objetos por multiples campos
-	--> Añadimos la funcion al prototipo de Array para eliminar elementos repetidos en un array de objetos segun un campo determinado
+Es un plugin para showtime que permite el visionado de contenido multimedia de varios sitios webs.
+Basicamente es un navegador web que soporta una serie de sitios web q tienen contenido multimedia enlazado. Seria algo parecido al addon pelisalacarta para xbmc (que es una autentica pasada).
+Ademas ahora gracias al usuario SuperBerny, que se ha portado el plugin livestream xbmc, es posible tambien visualizar contenidos de canales de tv. Si os gusta esto os animo a q os pasais x aqui para ayudar a la gente q se encarga de mantener la lista de canales https://groups.google.com/forum/?hl=es#!forum/lista-livestreams.
 
-### 0.9.6:
-- Añadidas opciones en historial. Guardar todo, nada, o todo menos adultos (casi todo).
-- Corregido un bug q hacia q todo lo reproducido de animeflv.net no se guardaba el titulo en el historial.
-- Historial solo aparece si hay algo, si no hay siempre oculto.
-- Agregado modo parental (para evitar sustos), gracias a aldostools x las ideas.
-	Como funciona:
-		- Hay q poner la variable var parental_mode a true.
-		- Hay q poner el texto en md5 q queramos usar para desbloquear el modo en la variable licencia_md5. En el codigo se ve la clave q yo he puesto pero q cada uno ponga la q quiera.
-		- Con todo esto puesto, en las opciones del plugin ahora no aparece nada q haga referencia a ningun modo adulto, si no q en su lugar aparece un casilla de texto q pone licencia, q es donde debemos poner el codigo para desbloqueo.
-		- Ahora la primera vez q carga el menu principal aparece la ventana de adultos, y una vez q navegamos x cualquier lado desaperece, x lo q habria q poner el codigo otra vez (es un coñazo, pero esta pensando x seguridad)
-		- En este modo no se guarda nunca historial del contenido adultos.
-	Si no esta claro preguntarme y lo explico mejor, pero x defecto este modo no esta activo, asi q el q quiera usar el plugin como hasta ahora no tiene q hacer nada.
-- Añadido redtube. Gracias a aldostools x el codigo.
-- Retocada la funcion extraer_html_array()
-- Arreglado un problema al listar contenido de vodly
-- Desablitado played.to, no se q mierdas pasa pero no va. He estado pegando con el server y lo veo todo bien, pero no va asi q de momento lo dejo aparcado.
-- Implementado peliculascoco parcialmente. Necesitaria meterle mas resolvers para los videohost y la busqueda (ahora mismo desde la web no me funciona).
-- Implementado pordesde parcialmente. Solo peliculas y falta la busqueda
-- Corregido el problemas con peliculaspepito
+### ¿Que contenido soporta?
+
+Peliculas, series, anime, adultos, canales tv
+
+### ¿Que servidores de video soporta?
+
+allmyvideos, bestreams, filenuke, magnovideo, mightyupload,movs hare, novamov, nowvideo, playedto, streamcloud, videobam, videoweed, vidspot, vk, xvideos, xhamster
+
+### ¿Cual es la version minima requerida de showtime?
+
+No aconsejo una menor de 4.6.4 q es actualmente la ultima version stable q hay. No obstante las ultimas versiones q hay suelen ir bien aunque sean betas.
+
+### ¿Como se instala el plugin?
+
+Tan simple como bajar el zip, copiar a un pendrive o al hdd de la ps3, y desde el showtime, nos vamos al navegador de dispositivos, buscamos el zip, le damos y ya estara instalado.
+
+### ¿Por que hay dos versiones?
+
+Una seria la version inicial tal y como fue concebida, y la otra una version con una proteccion de acceso a la seccion de adultos para evitar algun susto con los mas peques de la casa, toda esta idea fue gracias al usuario aldostools.
+La version normal, es basicamente la version inicial como fue concebida inicialmente. Se puede habilitar de adultos desde opciones del plugin de una manera facil.
+Mientras q en la version parental no se hace referencia en ningun caso a ninguna seccion de adultos. Para activar esta seccion hay q irse a opciones del plugin, y veremos q hay una casilla de texto q pone licencia (fula como una casa no hay licencia de ningun tipo), hay tendremos q introducir la contraseña para desbloquear el acceso a los canales de adultos. Una vez q entramos a algun canal la seccion queda desabilitada de nuevo y es necesaria volver activarla (se q puede ser un coñazo, pero aqui prima seguridad). Sobre la contraseña, la contraseña se guarda codificada en md5 en la variable licencia_md5, asi q si alguien quiere cambiarla (recomendable), tiene q sustituirla el valor de esa variable (linea 30), por la clave q queramos codificada en md5. Por defecto tiene esta password: not4kids
+
+### Añadir paginas / servidores
+
+Si te ves capaz puedes añadir los q quieras, fijate q yo he sido capaz de hacerlo y no tengo ni puta idea de js. He tratado de intentar de dejar el codigo claro, aunque es posible q veias cosas raras, aunque si me preguntais os puedo orientar. Algun dia con tiempo hare un tutorial con un ejemplo de como agregar una pagina / servidor
+
+### Reportar bugs / Problemas
+
+Pues la verdad es q si ves algun problema, y lo comunicas tratare de arreglarlo siempre dentro de mis posibilidades. Si vas a reportar un problema trata de ser lo mas claro y preciso ya q asi me ayudas mucho y puedo ir a tiro a fijo al problema.
 
 
-### 0.9.5:
-- Cambios en el codigo para newpct
-- Eliminadas peliculasyonkis, y seriesyonkis
-- Agregado Last- Prime Episodes a vodly. Gracias a klaxnek
-- Añadida deteccion para filenuke.net (solo lo detecto no lo proceso)
-- Añadida deteccion para movshare.me (solo lo detecto no lo proceso)
-- Añadida deteccion para nowvideo.ws (solo lo detecto no lo proceso)
-- Añadida deteccion para novamov.me (solo lo detecto no lo proceso)
-
-### 0.9.4:
-- Agregado en series pepito opcion ultimos capitulos de estrenos. Gracias a klaxnek 
-- Agregado soporte para novamov
-- Agregado a peliculas newpct seccion peliculas (aunque no me mola nada esta web para streaming)
-- Agregado soporte para videobam
-- Agregado soporte para videoweed
-- Corregido bug en peliculasyonkis. Gracias a SuperBerny x avisarme
-- Corregido el bug del historial (ahora creo q ya esta).
-- Agregado soporte para vk
-- Agregado seccion de anime.
-- Agregado a anime animeflv.net
-- Agregado a adultos, xhamster
-- Agregado soporte para mightyupload.
-- Agregado soporte para movshare
-- Mejorado soporte para nowvideo
-- Agregado soporte para filenuke
-- Agregado soporte para bestreams
-- Agregado a peliculas vodly seccion peliculas
-- Agregado a series vodly seccion series
-- Mejorado soporte para novamov
-- Favoritos se oculta si no hay contenido
-- Historial se oculta si esta marcada la opcion de no guardar historial
-
-### 0.9.3:
-- Agregado soporte para nowvideo (lo q he probado me parece bastante lento)
-- Reemplazadas funciones httpget y httppost, por httpreq
-- Limpieza de morralla en el codigo
-- Añadida deteccion para contenido borrado de vidspot (a ver q tal funciona)
-- Agregado a peliculas, peliculaspepito
-- Agregado a series, seriespepito
-- Corregido un bug, q hacia q el historial se duplicara y triplicara y yo q se q mas.
-
-### 0.9.2:
-- Version publica
-
-### 0.9.1:
-- Agregado a series, seriesyonkis
-- Agregado a peliculas, peliculasyonkis
-- Agregado a adultos, xvideos
-- Agregado soporte para allmyvideos
-- Agregado soporte para streamcloud
-- Agregado soporte para played.to
-- Agregado soporte para vidspot
-- Agregado soporte para magnovideo.
-- Agregado sistema de historial para videos reproducidos
-- Agregado sistema de favoritos para agregar videos
-
-### 0.9.0:
-- Version test
-
-## TODO
+### TODO
 - Crear una biblioteca personal de pelis y series, parseada con TMDB
 - Soporte completo para youtube
 - Soporte para newct series ?¿?¿?¿?
 - soporte para series.ly, tengo q chaparme la api q tienen http://api.series.ly/docs/guide.html. Uff
-- Revisar todo el codigo y volver a limpiar morralla
 
-## FAQ
-### 1. No me funciona la seccion adultos
+### FAQ
+ 1. No me funciona la seccion adultos
 -  Por defecto esta desactivada esta opcion. Se activa en configuracion del plugin, poner la opcion adultos activada.
 
-### 2. ¿Como se instala el plugin?
+ 2. ¿Como se instala el plugin?
 - Copiais al HDD de la ps3 o a un usb. Desde el showtime, desde el navegador de dispositivos buscais el zip y le dais y ya se instala.
+
+ 3. Esto es una mierda y se me cuelga constamente
+- Prueba con otra version del showtime
+
+
+### TODO
+
+- A chuyo31, q fue x el q descubri el rollo esti del showtime, navi-x, streamhome, ....
+- A la gente de http://www.crystalxp.net/ q es donde he sacado los iconos en png.
+- A SuperBerny, aldostools, klaxnek, que han colaborado en esto.
+- A Andreas Öman x el showtime.
+- A Fábio Ferreira x los plugins q se ha currado para el showtime.
+- A toda la gente q hizo y hace posible la scene en ps3.
+- A hermes x cuidarme la ps3 con el controlfan.
+- Y si me olvido de alguien a ese tb.
