@@ -8,6 +8,7 @@
 - Eliminada opcion Mas vistas en seriespepito, ya no aparece en la pagina esa opcion.
 - Animeflv, corregido el problema de q el primer elemento q se listaba era un link de publi, ya no sale mas.
 - Corregido el problema de redtube q no dejaba reproducir videos.
+- Implementada la parte de series de pordesde
 
 
 ### 0.9.7:

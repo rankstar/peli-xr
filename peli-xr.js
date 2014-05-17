@@ -2290,7 +2290,7 @@
 			var calidad;
 			var descripcion;
 		
-			file_contents = checkloginpordede(url, file_contents);
+			file_contents = this.checkloginpordede(url, file_contents);
 			if(file_contents!=false)
 			{
 				//item_Actual
@@ -2372,7 +2372,7 @@
 			url_servidor=unescape(url_servidor);
 			var file_contents = get_urlsource(url_servidor);
 			
-			file_contents = checkloginpordede(url_servidor, file_contents);
+			file_contents = this.checkloginpordede(url_servidor, file_contents);
 			if(file_contents!=false)
 			{		
 				var array_aux = extraer_html_array(file_contents,'<a class="defaultLink extended"','</a>');
@@ -2402,7 +2402,6 @@
 					titulo=extraer_texto(array_aux[i],'title="','"');
 					imagen='http://www.pordede.com' + extraer_texto(array_aux[i],'src="','"');
 					url_video='http://www.pordede.com' + extraer_texto(array_aux[i],'href="','"');
-					showtime.trace('d  ' + key + ' ' + url_video);
 					if(url_video.indexOf(key) == 0)
 						{
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
@@ -2427,10 +2426,8 @@
 			
 		return array_playlist;
 		}		
-		
-		//Metodos Privados
-		
-		function checkloginpordede(url_servidor, file_contents)
+
+		this.checkloginpordede = function (url_servidor, file_contents)
 		{
 			var logueado = file_contents.indexOf('LOGGEDIN = false;');
 			var valor_retorno=false;
@@ -2487,6 +2484,10 @@
 
 		return valor_retorno;
 		}
+
+		//Metodos Privados
+		
+		
 		
 	}
 	//Propiedades y metodos Estaticos
@@ -3282,7 +3283,7 @@
 	/* var Pordede: Objeto que representa el canal  Pordede en Series				*
 	/************************************************************************************/
 	var Pordedeseries= function() {	
-		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 		
 		/************************************************************************
@@ -3328,7 +3329,10 @@
 				case "tipobusqueda":
 					page.metadata.title = 'Pordede -Buscar';			
 					array_playlist=this.parsepordedepeliculastipobusqueda(page, url, 'series');
-					break;				
+					break;
+				case "tiposerie":
+					array_playlist=parsepordedeserie(page,url);
+					break;
 				}	
 		return array_playlist;
 		}
@@ -3340,8 +3344,71 @@
 		/*		url: direccion de la que se debe extraer la lista.								*
 		/*	Retorna: Array de servidores												    	*
 		/****************************************************************************************/
-		this.getservidores= function (url){
-			return 	false;
+		this.getservidores= function (url)
+		{
+			url=unescape(url);
+			var file_contents = get_urlsource(url);
+
+			var titulo;
+			var imagen;
+			var url_video;
+			var servidor;
+			var idioma;
+			var calidad;
+			var descripcion;
+		
+			file_contents = this.checkloginpordede(url, file_contents);
+			if(file_contents!=false)
+			{
+				//item_Actual
+				titulo = extraer_texto(file_contents, '<meta property="og:title" content="','"');
+				imagen = extraer_texto(file_contents, '<meta property="og:image" content="','"');
+				imagen = "views/img/folder.png";
+				descripcion = '';
+				
+				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
+
+				//var url_enlaces = 'http://www.pordede.com' + extraer_texto(file_contents, '<span class="title defaultPopup" href="','"');
+				//showtime.trace('Debug   :'  + url_enlaces);
+				//file_contents = get_urlsource(url_enlaces);
+				
+				var session = extraer_texto(file_contents, 'SESS = "','"');
+				file_contents = extraer_texto(file_contents,'<ul class="linksList">','</ul>');
+				var array_aux = extraer_html_array(file_contents,'<form method="POST" target="_blank" ','</form>');
+				file_contents = "";
+		
+				var url_video;	
+				var servidor;
+				var idioma;
+				var calidad;
+				var array_servidores=[];
+		 
+				for (var i=0;i<array_aux.length;i++)
+				{
+					url_video = extraer_texto(array_aux[i],'action="','"') + '&session=' + session;		
+					servidor = extraer_texto(array_aux[i],'<img src="/images/hosts/popup_','.png');
+					idioma = extraer_texto(array_aux[i],'<div class="flag ','"');
+					calidad = extraer_texto(array_aux[i],'<div class="linkInfo quality"><i class="icon-facetime-video"></i>','</div>');
+					calidad = calidad.replace(/^\s+|\s+$/g,'');
+								
+					var params={
+						"url_host" : url_video,
+						"servidor" : servidor,
+						"idioma" : idioma,
+						"calidad" : calidad
+						};
+	
+					var objHost=HostFactory.createHost(servidor,params)
+					if (objHost)
+						{
+							array_servidores.push(objHost);
+						}				
+				//Ordenar de mayor a menor calidad
+				array_servidores.sort(function(x,y) { return x['calidad'] > y['calidad']});
+				}
+			}
+		
+		return array_servidores;
 		}
 		
 		/************************************************************************
@@ -3352,30 +3419,66 @@
 		/*	Retorna: String que representa la url								*
 		/************************************************************************/
 		this.geturl_host= function (url){
-			return 	false;
+			var url_servidor = url.substr(0,url.indexOf('&session='));
+			var session = url.substr(url.indexOf('&session=')+9);
+			var url_header = 'error';
+		
+			var datos_post = {'_s': session};
+			var file_contents = post_urlsource(url_servidor,datos_post);
+		
+			url = 'http://links.pordescargadirecta.com' + extraer_texto(file_contents,'<a class="episodeText" href="','"'); 
+			file_contents = get_urlheaders(url);
+			url_header = file_contents.multiheaders['Location'][0];
+		
+		return url_header;	
 		}
 		
 		
 		//Metodos Privados
 		
-		
-
-		function parsepordedepeliculastipobusqueda(page, url_servidor)
-		{
-		//http://www.pordede.com/search/
-		var array_playlist=[];
-		var texto_busqueda=that.cuadroBuscar();
-		if(texto_busqueda!= undefined)
-			{
-			url_servidor=unescape(url_servidor);
-			page.metadata.title = "Pordede -Buscar - " + texto_busqueda;	
-			url_servidor=escape(unescape(url_servidor) + texto_busqueda); 
-			array_playlist=parsepordedepeliculastipo1(url_servidor);
-			}
-			
-		return array_playlist;
+		function parsepordedeseriestipobusqueda(page, url_servidor)	{
+			//http://www.pordede.com/search/
+			var array_playlist=[];
+			var texto_busqueda=that.cuadroBuscar();
+			if(texto_busqueda!= undefined)
+				{
+				url_servidor=unescape(url_servidor);
+				page.metadata.title = "Pordede -Buscar - " + texto_busqueda;	
+				url_servidor=escape(unescape(url_servidor) + texto_busqueda); 
+				array_playlist=parsepordedepeliculastipo1(url_servidor);
+				}
+			return array_playlist;
 		}
 		
+		function parsepordedeserie(page, url_serie)	{
+			//http://www.pordede.com/serie/***************
+			url_serie=unescape(url_serie);
+			var file_contents = get_urlsource(url_serie);
+		
+			file_contents = that.checkloginpordede(url_serie, file_contents);
+			if(file_contents!=false)
+				{		
+				var array_aux = extraer_html_array(file_contents,'<div class="info">','</div></div>');
+				var titulo = extraer_texto(file_contents,'<meta property="og:title" content="','"');
+				var imagen = extraer_texto(file_contents,'<meta property="og:image" content="','"');
+				var url_video;
+				file_contents = "";
+				var page_uri = ':verenlaces:pordedeseries:';
+				var array_playlist=[];
+				page.metadata.title = 'Pordede - ' + titulo;
+				for (var i=0;i<array_aux.length;i++)
+					{
+					titulo = extraer_texto(array_aux[i],'<span class="number">','</div>');
+					titulo = titulo.replace(/<\/span>/g,'');
+					//imagen='http://www.pordede.com' + extraer_texto(array_aux[i],'src="','"');
+					url_video='http://www.pordede.com' + extraer_texto(array_aux[i],'href="','"');
+					array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+					}
+				}
+			return array_playlist;
+		}
+
+
 	}
 	//Propiedades y metodos Estaticos
 	Pordedeseries.padre='Pordede';
