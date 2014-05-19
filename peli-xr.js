@@ -18,7 +18,9 @@
  **/
  
 (function(plugin) {
-// var version = '0.9.8';
+
+// var version = '0.9.8 beta';
+
 
 //////////////////////////////////////////////////////////////////////////
 //																		//
@@ -1146,6 +1148,7 @@
 					var nuevaClase= new clase;
 					nuevaClase.categoria= clase.categoria();
 					nuevaClase.name=tipo;
+					
 					return nuevaClase;
 				}else{
 					return null;
@@ -1189,6 +1192,7 @@
 		this.item_Actual;
 		this.name;
 		this.categoria; //peliculas, series, anime, etc...
+
 		
 		//Metodos Publicos
 		/****************************************************************************
@@ -1285,7 +1289,8 @@
 		/*	Retorna: Array de objetos Item_menu											    *
 		/************************************************************************************/
 		this.getplaylist= function (page, tipo, url) {
-		//Retorna el vercontenido del tipo solicitado
+		//Retorna el playlist del tipo solicitado
+
 		
 		var array_playlist=[];
 		switch (tipo)
@@ -1356,6 +1361,7 @@
 		var descripcion;
 				
 		//check login
+
 		file_contents = that.checkloginnewpct(url, file_contents);
 		if(file_contents!=false)
 			{
@@ -1473,11 +1479,13 @@
 		return valor_retorno;
 		}
 
+
 		this.parsenewpct= function (params) 
 		{	
 		/*var params={'url_servidor': ,'page_uri': ,'uri_siguiente': ,'subtitulo': }*/
 		var numero_pagina = parseInt(extraer_texto(params.url_servidor,'pag=','&'));			
 		var file_contents = get_urlsource(params.url_servidor);
+
 		var ultima_pagina = extraer_texto(file_contents,"<div id='centPag'>","</div>");
 		ultima_pagina = ultima_pagina.substr(ultima_pagina.lastIndexOf("<a href='javascript:;'  class='todo'  onclick=\"orderCategory('todo','','"));
 		ultima_pagina = extraer_texto(ultima_pagina,"<a href='javascript:;'  class='todo'  onclick=\"orderCategory('todo','','","'");
@@ -1509,12 +1517,13 @@
 
 		return array_playlist;
 		}
-			
+
 		this.parsenewpcttipobusqueda = function(page, url_servidor, op_categoria)
 		{
 		//aqui no voy a usar el checklogin para evitar q se de el caso de dos inputs uno detras de otro
 		url_servidor=unescape(url_servidor);
 		var array_playlist=[];
+
 		op_categoria= op_categoria || 757;// Por defecto 757 Peliculas, sino: 1469 series HD,  767 Series
 		var texto_busqueda= this.cuadroBuscar();
 
@@ -1528,8 +1537,9 @@
 				};
 			var file_contents = post_urlsource(url_servidor,datos_post);
 			var resultados = file_contents.indexOf('No hemos encontrado resultados');
+
 			page.metadata.title = page.metadata.title + texto_busqueda;
-			//page.metadata.title = "NewPct - Buscar - " + texto_busqueda;
+			
 			if(resultados==-1)
 				{
 				var aux_string = extraer_texto(file_contents ,'<tbody>','</tbody>');
@@ -1558,6 +1568,7 @@
 		return array_playlist;
 		}
 	
+
 		this.parsenewpcttipodefault = function(url_servidor,params){
 			url_servidor=unescape(url_servidor);
 			var array_playlist=[];
@@ -1569,34 +1580,8 @@
 						
 		return array_playlist;
 		}
-	
-	
-		/*function parsenewpctpeliculastipo1(page, url_servidor)
-		{
-		url_servidor = unescape(url_servidor);
-		var categoria = url_servidor.substr(url_servidor.indexOf('cate=')+5);
-		switch (categoria)
-			{
-			case '778':
-				page.metadata.title = "NewPct - V.O. Subtituladas";
-				break;
-			case '1224':
-				page.metadata.title = "NewPct - Estrenos de Cine";
-				break;
-			case '1225':
-				page.metadata.title = "NewPct - Br-Dvd Castellano";
-				break;
-			}
 		
-		var params={'url_servidor': unescape(url_servidor),
-					'page_uri': ':verenlaces:newpct:',
-					'uri_siguiente': ':vercontenido:newpct:tipo1:',
-					'subtitulo':false}		
-		return that.parsenewpct (params);
-		}	*/
-		
-				 
-		
+
 	}
 	//Propiedades y metodos Estaticos
 	Newpct.categoria= function() {return 'peliculas';}
@@ -1623,7 +1608,6 @@
 				new Item_menu('Nuevo Contenido','views/img/folder.png',':vercontenido:peliculaspepito:tiponuevocontenido:' + escape('http://www.peliculaspepito.com')),
 				new Item_menu('Lo mas visto','views/img/folder.png',':vercontenido:peliculaspepito:tipolomasvisto:' + escape('http://www.peliculaspepito.com')),
 				new Item_menu('Lo mas popular','views/img/folder.png',':vercontenido:peliculaspepito:tipolomasvotado:' + escape('http://www.peliculaspepito.com')),
-				//new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:peliculaspepito'),
 				new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:peliculaspepito:num'),
 				new Item_menu('Buscar','views/img/search.png',':vercontenido:peliculaspepito:tipobusqueda:' + escape('http://www.peliculaspepito.com/buscador'))
 				];
@@ -1696,8 +1680,7 @@
 			descripcion = descripcion.replace(/<\/span>/g,'');
 			
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);	
-			//item_actual=item; //####################################################################### no me gusta
-
+			
 			aux_string = extraer_texto(file_contents, '</thead>','</table>');
 			file_contents = "";
 	
@@ -1824,7 +1807,8 @@
 		var array_aux = extraer_html_array(aux_string,'<li>','</li>');
 		
 		var titulo;
-		var imagen= "views/img/folder.png";
+		var imagen = "views/img/folder.png";
+
 		var url_video;   
 		var page_uri = ':verenlaces:peliculaspepito:';
 		
@@ -1845,7 +1829,7 @@
 		url_servidor=unescape(url_servidor);
 		var array_playlist=[];
 		var texto_busqueda=that.cuadroBuscar();
-		
+
 		if ( texto_busqueda != undefined) 
 			{	
 				texto_busqueda = texto_busqueda.replace(/ /g,'-');
@@ -2249,7 +2233,6 @@
 			
 		return array_playlist;
 		}
-		
 	}
 	//Propiedades y metodos Estaticos
 	PeliculasCoco.categoria= function() {return 'peliculas';}
@@ -2332,7 +2315,7 @@
 			var calidad;
 			var descripcion;
 		
-			file_contents = checkloginpordede(url, file_contents);
+			file_contents = this.checkloginpordede(url, file_contents);
 			if(file_contents!=false)
 			{
 				//item_Actual
@@ -2342,7 +2325,6 @@
 				descripcion = descripcion.replace(/^\s+|\s+$/g,'');
 				
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-				
 
 
 				var url_enlaces = 'http://www.pordede.com' + extraer_texto(file_contents, '<button class="defaultPopup big" href="','"');
@@ -2408,7 +2390,7 @@
 		return url_header;	
 		}
 		
-		
+
 		this.parsepordedepeliculastipo1 = function (url_servidor, tipo)
 		{
 			//http://www.pordede.com/pelis/index
@@ -2417,7 +2399,8 @@
 			url_servidor=unescape(url_servidor);
 			var file_contents = get_urlsource(url_servidor);
 
-			file_contents = checkloginpordede(url_servidor, file_contents);
+			file_contents = this.checkloginpordede(url_servidor, file_contents);
+
 			if(file_contents!=false)
 			{		
 				var array_aux = extraer_html_array(file_contents,'<a class="defaultLink extended"','</a>');
@@ -2447,7 +2430,7 @@
 					titulo=extraer_texto(array_aux[i],'title="','"');
 					imagen='http://www.pordede.com' + extraer_texto(array_aux[i],'src="','"');
 					url_video='http://www.pordede.com' + extraer_texto(array_aux[i],'href="','"');
-					showtime.trace('d  ' + key + ' ' + url_video);
+
 					if(url_video.indexOf(key) == 0)
 						{
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
@@ -2471,11 +2454,9 @@
 			}
 
 		return array_playlist;
-		}		
+		}				
 
-		
-		//Metodos Privados
-		function checkloginpordede(url_servidor, file_contents)
+		this.checkloginpordede = function (url_servidor, file_contents)
 		{
 			var logueado = file_contents.indexOf('LOGGEDIN = false;');
 			var valor_retorno=false;
@@ -2585,9 +2566,7 @@
 				array_menu.push(objItem)
 			}
 			
-						
 			array_menu.push(new Item_menu('Todo','views/img/folder.png',':vercontenido:livestream:todos:default')); 
-					
 		
 		return array_menu;
 		}
@@ -2684,9 +2663,10 @@
 						// ... y el titulo no comienza por OFF
 						titulo=titulo.toProperCase();
 						imagen = extraer_texto(array_aux[i], '<thumbnail>', '</thumbnail>');
+
 						if (imagen == "") {imagen = imagen_default};
-						page_uri = ':vervideo:livestream:StreamsRtmp:' + escape(titulo) + ':' + escape(imagen) + ':' ;
-												
+						
+						page_uri = ':vervideo:livestream:StreamsRtmp:' + escape(titulo) + ':' + escape(imagen) + ':' ;						
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 					}
 				}
@@ -2871,9 +2851,6 @@
 				case "tipoultimoscapitulosestreno":
 					array_playlist=parseseriespepitotipoultimoscapitulosestreno(url, page);
 					break;
-				/*case "tipolomasvisto":
-					array_playlist=parseseriespepitotipolomasvisto(url, page);
-					break;*/
 				case "tipolistado":
 					array_playlist=parseseriespepitotipolistado(url, page);
 					break;
@@ -2897,7 +2874,7 @@
 		this.getservidores= function (url)
 		{
 			url=unescape(url);
-		
+
 			var file_contents = get_urlsource(url);
 			
 			var titulo;
@@ -2916,8 +2893,6 @@
 			descripcion = '';
 			
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
-
 
 			var aux_string = extraer_texto(file_contents, '</thead>','</table>');
 			file_contents = "";
@@ -3040,40 +3015,13 @@
 		return array_playlist;
 		}
 
-		/*function parseseriespepitotipolomasvisto(url_servidor, page)
-			{
-			//http://www.seriespepito.com/ (lomasvisto
-			url_servidor=unescape(url_servidor);
-			page.metadata.title = 'Peliculas Pepito - Lo mas visto';
-		
-			var file_contents = get_urlsource(url_servidor);
-		
-			var aux_string = extraer_texto(file_contents, 'visto de esta semana en Pepito', '</ul>');
-			var array_aux = extraer_html_array(aux_string,'<li>','</li>');
-
-			var titulo;
-			var imagen;
-			var url_video;	
-			var page_uri = ':vercontenido:seriespepito:tiposerie:';
-			var array_playlist=[];
-
-			for (var i=0;i<array_aux.length;i++)
-				{
-				titulo=extraer_texto(array_aux[i],'title="','"');
-				imagen=extraer_texto(array_aux[i],'src="','"');
-				url_video=extraer_texto(array_aux[i],'href="','"');
-				
-				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
-				}
-		
-		return array_playlist;
-		}*/
 
 		function parseseriespepitotipolistado(url_servidor, page)
 			{
 			//http://www.seriespepito.com/ (listado
 			url_servidor=unescape(url_servidor);
-			page.metadata.title = 'Peliculas Pepito - Listado Series';
+
+			page.metadata.title = 'Series Pepito - Listado Series';
 		
 			var file_contents = get_urlsource(url_servidor);
 		
@@ -3084,6 +3032,7 @@
 			var imagen //= plugin.path + "views/img/folder.png";
 			var url_video;	
 			var page_uri = ':vercontenido:seriespepito:tiposerie:';
+
 			var array_playlist=[];
 
 			for (var i=0;i<array_aux.length;i++)
@@ -3123,6 +3072,7 @@
 						var imagen;
 						var url_video;	
 						var page_uri = ':vercontenido:seriespepito:tiposerie:';
+
 						var array_playlist=[];
 
 						for (var i=0;i<array_aux.length;i++)
@@ -3142,6 +3092,7 @@
 		function parseseriespepitoserie(url_serie, page)
 			{
 			url_serie=unescape(url_serie);
+
 			var file_contents = get_urlsource(url_serie);
 
 			var titulo;
@@ -3240,7 +3191,7 @@
 					break;
 				case "tiposerie":
 					array_playlist=parsevodlyseriestiposerie(url, page);
-					break;
+					break;					
 			}
 		return array_playlist;
 		}
@@ -3284,7 +3235,8 @@
 					{
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 					}
-				}
+
+			}
 		return array_playlist;
 		}
       
@@ -3313,7 +3265,6 @@
 			}
       return array_playlist;
       }
-		
 	}
 	//Propiedades y metodos Estaticos
 	Vodlyseries.padre='Vodly';
@@ -3326,9 +3277,9 @@
 	/* var Pordede: Objeto que representa el canal  Pordede en Series				*
 	/************************************************************************************/
 	var Pordedeseries= function() {	
-		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-
+		
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -3344,6 +3295,7 @@
 				];
 		return array_menu;
 		}
+
 
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
@@ -3372,10 +3324,14 @@
 				case "tipobusqueda":
 					page.metadata.title = 'Pordede -Buscar';			
 					array_playlist=this.parsepordedepeliculastipobusqueda(page, url, 'series');
-					break;				
+					break;
+				case "tiposerie":
+					array_playlist=parsepordedeserie(page,url);
+					break;
 				}	
 		return array_playlist;
-		}
+		}		
+		
 
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
@@ -3384,10 +3340,72 @@
 		/*		url: direccion de la que se debe extraer la lista.								*
 		/*	Retorna: Array de servidores												    	*
 		/****************************************************************************************/
-		/*this.getservidores= function (url){
-			return 	false;
-		}*/
+		this.getservidores= function (url){
+			url=unescape(url);
+			var file_contents = get_urlsource(url);
 
+			var titulo;
+			var imagen;
+			var url_video;
+			var servidor;
+			var idioma;
+			var calidad;
+			var descripcion;
+			
+			file_contents = this.checkloginpordede(url, file_contents);
+			if(file_contents!=false)
+			{
+				//item_Actual
+				titulo = extraer_texto(file_contents, '<meta property="og:title" content="','"');
+				imagen = extraer_texto(file_contents, '<meta property="og:image" content="','"');
+				imagen = "views/img/folder.png";
+				descripcion = '';
+				
+				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
+
+				//var url_enlaces = 'http://www.pordede.com' + extraer_texto(file_contents, '<span class="title defaultPopup" href="','"');
+				//showtime.trace('Debug   :'  + url_enlaces);
+				//file_contents = get_urlsource(url_enlaces);
+				
+				var session = extraer_texto(file_contents, 'SESS = "','"');
+				file_contents = extraer_texto(file_contents,'<ul class="linksList">','</ul>');
+				var array_aux = extraer_html_array(file_contents,'<form method="POST" target="_blank" ','</form>');
+				file_contents = "";
+		
+				var url_video;	
+				var servidor;
+				var idioma;
+				var calidad;
+				var array_servidores=[];
+		 
+				for (var i=0;i<array_aux.length;i++)
+				{
+					url_video = extraer_texto(array_aux[i],'action="','"') + '&session=' + session;		
+					servidor = extraer_texto(array_aux[i],'<img src="/images/hosts/popup_','.png');
+					idioma = extraer_texto(array_aux[i],'<div class="flag ','"');
+					calidad = extraer_texto(array_aux[i],'<div class="linkInfo quality"><i class="icon-facetime-video"></i>','</div>');
+					calidad = calidad.replace(/^\s+|\s+$/g,'');
+								
+					var params={
+						"url_host" : url_video,
+						"servidor" : servidor,
+						"idioma" : idioma,
+						"calidad" : calidad
+						};
+	
+					var objHost=HostFactory.createHost(servidor,params)
+					if (objHost)
+						{
+							array_servidores.push(objHost);
+						}				
+				//Ordenar de mayor a menor calidad
+				array_servidores.sort(function(x,y) { return x['calidad'] > y['calidad']});
+				}
+			}
+		
+		return array_servidores;
+		}
+		
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -3395,28 +3413,66 @@
 		/*		url: direccion de la que se debe extraer la lista.				*
 		/*	Retorna: String que representa la url								*
 		/************************************************************************/
-		/*this.geturl_host= function (url){
-			return 	false;
-		}*/
-
-
+		this.geturl_host= function (url){
+			var url_servidor = url.substr(0,url.indexOf('&session='));
+			var session = url.substr(url.indexOf('&session=')+9);
+			var url_header = 'error';
+		
+			var datos_post = {'_s': session};
+			var file_contents = post_urlsource(url_servidor,datos_post);
+		
+			url = 'http://links.pordescargadirecta.com' + extraer_texto(file_contents,'<a class="episodeText" href="','"'); 
+			file_contents = get_urlheaders(url);
+			url_header = file_contents.multiheaders['Location'][0];
+		
+		return url_header;	
+		}
+		
+		
 		//Metodos Privados
+		
+		function parsepordedeseriestipobusqueda(page, url_servidor)	{
+			//http://www.pordede.com/search/
+			var array_playlist=[];
+			var texto_busqueda=that.cuadroBuscar();
+			if(texto_busqueda!= undefined)
+				{
+				url_servidor=unescape(url_servidor);
+				page.metadata.title = "Pordede -Buscar - " + texto_busqueda;	
+				url_servidor=escape(unescape(url_servidor) + texto_busqueda); 
+				array_playlist=parsepordedepeliculastipo1(url_servidor);
+				}
+			return array_playlist;
+		}
+		
+		function parsepordedeserie(page, url_serie)	{
+			//http://www.pordede.com/serie/***************
+			url_serie=unescape(url_serie);
+			var file_contents = get_urlsource(url_serie);
+		
+			file_contents = that.checkloginpordede(url_serie, file_contents);
+			if(file_contents!=false)
+				{		
+				var array_aux = extraer_html_array(file_contents,'<div class="info">','</div></div>');
+				var titulo = extraer_texto(file_contents,'<meta property="og:title" content="','"');
+				var imagen = extraer_texto(file_contents,'<meta property="og:image" content="','"');
+				var url_video;
+				file_contents = "";
+				var page_uri = ':verenlaces:pordedeseries:';
+				var array_playlist=[];
+				page.metadata.title = 'Pordede - ' + titulo;
+				for (var i=0;i<array_aux.length;i++)
+					{
+					titulo = extraer_texto(array_aux[i],'<span class="number">','</div>');
+					titulo = titulo.replace(/<\/span>/g,'');
+					//imagen='http://www.pordede.com' + extraer_texto(array_aux[i],'src="','"');
+					url_video='http://www.pordede.com' + extraer_texto(array_aux[i],'href="','"');
+					array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+					}
+				}
+			return array_playlist;
+		}
 
-		/*function parsepordedepeliculastipobusqueda(page, url_servidor)
-		{
-		//http://www.pordede.com/search/
-		var array_playlist=[];
-		var texto_busqueda=that.cuadroBuscar();
-		if(texto_busqueda!= undefined)
-			{
-			url_servidor=unescape(url_servidor);
-			page.metadata.title = "Pordede -Buscar - " + texto_busqueda;	
-			url_servidor=escape(unescape(url_servidor) + texto_busqueda); 
-			array_playlist=parsepordedepeliculastipo1(url_servidor);
-			}
-
-		return array_playlist;
-		}*/
 
 	}
 	//Propiedades y metodos Estaticos
@@ -3498,9 +3554,10 @@
 					array_playlist=parsenewpctseriesCapitulos(url);
 					break;
 				}
-
 		return array_playlist;
 		}
+
+		
 		
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
@@ -3583,50 +3640,8 @@
 			return (new Item_menu("NewPct Series HD - Orden Alfabetico","views/img/folder.png",':vercontenido:newpctseries:alfabeto:'));
 		}
 		
-		//Metodos Privados
-		/*function parsenewpctseriestipodefault(url_servidor,params)
-		{
-			url_servidor=unescape(url_servidor);
-			var array_playlist=[];
-			var file_contents = get_urlsource(url_servidor);
-	
-			//check_login
-			file_contents = that.checkloginnewpct(url_servidor, file_contents);
-			if(file_contents!=false) array_playlist= that.parsenewpct (params);
-			
-		return array_playlist;
-		}*/
-		
-		/*function parsenewpctseriesalfabeto (page, letra)
-		{	//La busqueda retorna un listado de series que comienzan por la letra indicada
-			// posteriormente sera necesario obtener todos los capitulos disponibles de esta serie
-			var url =escape('http://www.newpct.com/include.inc/ajax.php/orderCategory.php?type=letter&leter=' + url + '&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1772%2C+1582%2C+1473%2C+1708%2C+1474%2C+1603%2C+1596%2C+1611%2C+1693%2C+1699%2C+1759%2C+1769%2C+1598%2C+1514%2C+1605%2C+1585%2C+1472%2C+1754%2C+1689%2C+1475%2C+1687%2C+1649%2C+1643%2C+1476%2C+1486%2C+1618%2C+1490%2C+1657%2C+1606%2C+1498%2C+1493%2C+1639%2C+1488%2C+1684%2C+1505%2C+1691%2C+1495%2C+1624%2C+1470%2C+1746%2C+1676%2C+1629%2C+1511%2C+1748%2C+1677%2C+1484%2C+1485%2C+1580%2C+1763%2C+1744%2C+1481%2C+1520%2C+1696%2C+1492%2C+1508%2C+1727%2C+1711%2C+1579%2C+1489%2C+1706%2C+1757%2C+1487%2C+1583%2C+1477%2C+1701%2C+1518%2C+1526%2C+1654%2C+1694%2C+1491%2C+1478%2C+1681%2C+1714%2C+1668%2C+1619%2C+1581%2C+1479%2C+1483%2C+1500%2C+1729%2C+1584%2C+1740%2C+1602%2C+1646%2C+1656%2C+1471%2C+1469))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1469');
-			var array_playlist=[];
 
-			var file_contents = get_urlsource(url);
-			//check_login
-			file_contents = that.checkloginnewpct(url_servidor, file_contents);	
-			if(file_contents!=false) 
-			{
-				var array_aux = extraer_html_array(file_contents,'<li>','</li>');
-				file_contents = "";
-				
-				
-			
-			}
-		}*/
-		
-		/*function parsenewpctseriestipo1 (url_servidor)
-		{
-			var params={
-				'url_servidor'= unescape(url_servidor),
-				'page_uri'= ':verenlaces:newpctseries:',
-				'uri_siguiente'= ':vercontenido:newpctseries:tipo1:',
-				'subtitulo'= true
-			}					
-		return that.parsenewpct (params);
-		}*/
-		
+		//Metodos privados
 		function parsenewpctseriesCapitulos (url_servidor)
 			{
 			url_servidor=unescape(url_servidor);
@@ -3635,7 +3650,6 @@
 			
 			var titulo;
 			var imagen=extraer_texto(file_contents,'<img  itemprop="image" src=',"' alt=").substring(1);
-showtime.print(imagen)
 			file_contents = "";
 			
 			var url_video;	
@@ -3650,8 +3664,6 @@ showtime.print(imagen)
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 			}
 		
-		
-		
 		return array_playlist;	
 		}
 	}
@@ -3661,6 +3673,7 @@ showtime.print(imagen)
 	Newpctseries.getitem= function() {return new Item_menu('Newpct HD',"img/newpct.png",':vercanales:newpctseries');}
 
 	CanalFactory.registrarCanal("newpctseries",Newpctseries); //Registrar la clase Newpctseries
+
 
 	/************************************************************************************
 	/* var AnimeFlv: Objeto que representa el canal AnimeFlv Pepito en Anime			*
@@ -3717,7 +3730,7 @@ showtime.print(imagen)
 					break;
 				case "tiposerie":
 					array_playlist=parseanimeflvtiposerie(url, page);
-				break;	
+					break;					
 			}
 		return array_playlist;
 		}
@@ -3749,15 +3762,13 @@ showtime.print(imagen)
 				
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
 			
-	
-
 			var aux_string = extraer_texto(file_contents, 'var videos','};');
 			file_contents = "";
 			var array_aux = extraer_html_array(aux_string,'[',']');
 
-			var servidor;
-			var idioma;
-			var calidad;		
+			//var servidor;
+			//var idioma;
+			//var calidad;		
 			var array_servidores=[];
 			var array_aux2=[];
 			//imagen=extraer_texto(file_contents,'<div class="profile-info">','/>');
@@ -3773,6 +3784,7 @@ showtime.print(imagen)
 				idioma = array_aux2[0] + ' Sub ' + array_aux2[1];
 				idioma = idioma.replace(/"/g,'');
 				idioma = idioma.replace(/(\[)/g,'');
+
 				url = array_aux2[10];	
 				switch (url.substr(1,6))
 				{
@@ -3847,9 +3859,10 @@ showtime.print(imagen)
 			var url_video;	
 			var page_uri = ':verenlaces:animeflv:';
 			var array_playlist=[];
+
 		
 			//Empiezo en en i=1 x el q 0 siempre es publicidad
-			for (var i=1;i<array_aux.length;i++)
+			/*for (var i=1;i<array_aux.length;i++)
 				{
 				
 					url_video='http://animeflv.net' + url_video;
@@ -3859,7 +3872,17 @@ showtime.print(imagen)
 					
 					array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 				
-				}
+				}*/
+
+			//Empiezo en en i=1 x el q 0 siempre es publicidad
+			for (var i=1;i<array_aux.length;i++)
+				{
+				titulo=extraer_texto(array_aux[i],'<span class="tit">','</span>');
+				imagen=extraer_texto(array_aux[i],'src="','"');
+				url_video='http://animeflv.net' + extraer_texto(array_aux[i],'href="','"');
+				
+				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+			}
 		
 		return array_playlist;
 		}
@@ -3913,13 +3936,14 @@ showtime.print(imagen)
 			{
 				titulo=extraer_texto(array_aux[i],'">','</a></li>');
 				url_video='http://animeflv.net' + extraer_texto(array_aux[i],'href="','">');
-										
+							
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));						
 			}
 		
 		return array_playlist;
 		}
 		
+
 		function parseanimeflvtipolistado(url_servidor, page)
 		{
 			//http://animeflv.net/animes/letra/(letra)
@@ -3938,12 +3962,13 @@ showtime.print(imagen)
 			titulo=extraer_texto(file_contents,'/" class="actual">','</a>');
 			page.metadata.title = 'AnimeFLV - ' + titulo;
 
+
 			for (var i=0;i<array_aux.length;i++)
 			{
 				titulo=extraer_texto(array_aux[i],'title="','"');
 				imagen=extraer_texto(array_aux[i],'data-original="','"');
 				url_video='http://animeflv.net' + extraer_texto(array_aux[i],'<a href="','"');
-								
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 			}
 
@@ -3951,7 +3976,9 @@ showtime.print(imagen)
 			aux_string = extraer_texto(file_contents,'<div class="pagin">','</div>');
 			file_contents = "";
 			var check_pagina = aux_string.indexOf('&raquo');
+
 			page_uri=':vercontenido:animeflv:tipolistado:';
+
 			if(check_pagina!=-1)
 			{
 				var pos_ini = aux_string.lastIndexOf('<a href="')
@@ -3964,6 +3991,7 @@ showtime.print(imagen)
 		return array_playlist;
 		}
 		
+
 		function parseanimeflvtipobusqueda(url_servidor,page)
 		{
 			url_servidor=unescape(url_servidor);
@@ -3997,12 +4025,14 @@ showtime.print(imagen)
 							
 							array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 						}
+
 				
 						//Paginador	
 						aux_string = extraer_texto(file_contents,'<div class="pagin">','</div>');
 						file_contents = "";
 						var check_pagina = aux_string.indexOf('&raquo');
 						page_uri=':vercontenido:animeflv:tipolistado:';
+
 						if(check_pagina!=-1)
 						{
 							var pos_ini = aux_string.lastIndexOf('<a href="')
@@ -4022,7 +4052,6 @@ showtime.print(imagen)
 		function parseanimeflvtiposerie(url_serie, page)
 		{
 			url_serie=unescape(url_serie);
-			
 			var file_contents = get_urlsource(url_serie);
 
 			var titulo;
@@ -4053,8 +4082,6 @@ showtime.print(imagen)
 		
 		return array_playlist;
 		}
-
-		
 	}
 	AnimeFlv.categoria= function() {return 'anime';}
 	AnimeFlv.getitem= function() {return new Item_menu('AnimeFLV',"img/animeflv.png",':vercanales:animeflv');}
@@ -4592,6 +4619,7 @@ showtime.print(imagen)
 				file_contents = "";
 				var check_pagina = aux_string.indexOf('Next');
 				page_uri=':vercontenido:xhamster:tipobusqueda:';
+				
 				if(check_pagina!=-1)
 				{
 					var pos_ini = aux_string.indexOf('iconPagerNextHover');
@@ -4703,9 +4731,6 @@ showtime.print(imagen)
 	/*******************************************************************************/
 	var StoreFavoritos= function() {
 		this.store=plugin.createStore('store/favoritos',true);
-		
-		
-		
 	}
 	StoreFavoritos.prototype=new Store(); // <<-- Herencia por prototype
 	
@@ -4716,7 +4741,7 @@ showtime.print(imagen)
 	var StoreHistorial= function() {
 		this.store=plugin.createStore('store/historial',true);
 
-		
+
 		/********************************************************************************
 		/*	funcion getItems: Recupera todos los items almacenados en el StoreHistorial	*
 		/*	Parametros: 																*
@@ -4763,8 +4788,7 @@ showtime.print(imagen)
 				if (list[i].fecha > fechaMin && list[i].fecha < fechaMax)
 					array.push(list[i]);		
 			}
-		
-			return	array;
+		return	array;
 		}
 		
 		
@@ -5050,7 +5074,7 @@ showtime.print(imagen)
 //////////////////////////////////////////////////////////////////////////	
 
 	var PREFIX = "peli-xr";
-			
+
 	var parental_mode = true;
 	var licencia = '';
 	var licencia_md5 = '1e7c1eac9e131fe3a01d7594c071bf8c'; //not4kids
@@ -5369,7 +5393,7 @@ showtime.print(imagen)
 					
 							}
 					});
-								
+
 				}
 			}
 			
@@ -5434,21 +5458,17 @@ showtime.print(imagen)
 	
 	
 	//Pagina Alfabeto
-	//plugin.addURI(PREFIX + ":alfabeto:(.*)", function(page,servidor) {
 	plugin.addURI(PREFIX + ":alfabeto:(.*):(.*)", function(page,servidor,caracter_numerico) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 		
 		var item=objCanal.getitem_alfabeto();
 		
-		//var caracter_numerico;
-		//if(servidor=='animeflv') {caracter_numerico='0-9';}
-		//	else {caracter_numerico='num';}
 		var array_alfabeto=['0-9',"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 		
 		page.appendItem(item.page_uri + escape(item.url + caracter_numerico), "directory", {
 				title: array_alfabeto[0],
 				icon: plugin.path + "views/img/folder.png"});
-	
+
 		for (var i=1;i<array_alfabeto.length;i++)
 			{
 			page.appendItem(item.page_uri + escape(item.url + array_alfabeto[i].toLowerCase()), "directory", {
@@ -5527,6 +5547,7 @@ showtime.print(imagen)
 								showtime.notify(this.titulo + ' agregado a favoritos',3);	
 				});
 			
+
 			}
 
 		page.metadata.glwview = plugin.path + "views/list3.view";
@@ -5545,8 +5566,8 @@ showtime.print(imagen)
 		var tipo_video;
 		
 		array_servidores=objCanal.getservidores(url);
-		
-		//pintar el vercontenido se recorre el array y se pinta
+
+		//pintar el playlist se recorre el array y se pinta
 		if (array_servidores.length == 0)
 		{
 		showtime.notify('No se han encontrado servidores soportados',3)
@@ -5638,13 +5659,10 @@ showtime.print(imagen)
 					}
 				}
 	
-				
 			var videoparams = {title: unescape(titulo),sources: [{url: url_video2}],no_fs_scan: true};
 			page.source = "videoparams:" + showtime.JSONEncode(videoparams);
 			page.type = "video";
 			}	
-			
-			
 		page.loading = false;
 	});	
 	//Pagina de ver video
