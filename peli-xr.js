@@ -4660,6 +4660,7 @@
 	/************************************************************************************/
 	var Oranline= function() {	
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+
 		
 		//metodos publicos
 		
@@ -4672,6 +4673,7 @@
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Estrenos de cine','views/img/folder.png',':vercontenido:oranline:tipoestrenoscine:'+ escape('http://www.oranline.net/ver/Pel%C3%ADculas/estrenos-de-cine/')),
+
 				new Item_menu('Estrenos Rip','views/img/folder.png',':vercontenido:oranline:tiporip:'+ escape('http://www.oranline.net/ver/Pel%C3%ADculas/estrenos-rip/')),
 				new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:oranline:num'), //http://www.oranline.net/?s=letra-a
 				new Item_menu('Buscar peliculas','views/img/search.png',':vercontenido:oranline:tipobusqueda:'+ escape('http://www.oranline.net/?s='))
@@ -4692,6 +4694,7 @@
 		
 			switch (tipo)
 			{
+
 			case "tipoestrenoscine":
 				page.metadata.title = "Oranline - Estrenos de Cine";
 				var params={'url_servidor': unescape(url),
@@ -4778,7 +4781,7 @@
 				file_contents = extraer_texto(file_contents,'<div id="veronline">','<div id="review-panels">');
 				var array_aux = extraer_html_array(file_contents,'<span><img id','VER AQUÍ');
 				file_contents = "";
-			
+
 				var array_aux2=[];
 				for (var i=0;i<array_aux.length;i++)
 				{
@@ -4883,6 +4886,7 @@
 		return array_playlist;
 		}
 		
+
 		function parseoranlinetipodefault (url_servidor,params){
 			url_servidor=unescape(url_servidor);
 			var array_playlist=[];
