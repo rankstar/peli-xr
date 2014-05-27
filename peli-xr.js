@@ -4996,7 +4996,7 @@
 		return codigo_html;
 		}
 
-	function get_urlsource(url_servidor) {
+	function get_urlsource(url_servidor, referer) {
 		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
 		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
 		var codigo_html = showtime.httpReq(url_servidor, 
@@ -5006,6 +5006,23 @@
 			headers: 
 				{
 				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
+  				}
+			}).toString();
+		
+		return codigo_html;
+		}
+
+	function get_urlsourcereferer(url_servidor, referer) {
+		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
+		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
+		var codigo_html = showtime.httpReq(url_servidor, 
+			{
+			debug: false,
+			compression: true,
+			headers: 
+				{
+				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0',
+				'Referer': referer
   				}
 			}).toString();
 		
