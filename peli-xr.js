@@ -19,7 +19,7 @@
  
 (function(plugin) {
 
-// var version = '0.9.8 beta';
+// var version = '0.9.8';
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -1866,7 +1866,7 @@
 		
 	}
 	//Propiedades y metodos Estaticos
-	Peliculaspepito.categoria= function() {return 'peliculas';}
+	Peliculaspepito.categoria= function() {return 'peliculasdisabled';}
 	Peliculaspepito.getitem= function() {return new Item_menu('Peliculas Pepito',"img/peliculaspepito.png",':vercanales:peliculaspepito');}
 
 	CanalFactory.registrarCanal("Peliculaspepito",Peliculaspepito); //Registrar la clase Peliculaspepito
@@ -3128,7 +3128,7 @@
 		
 	}
     //Propiedades y metodos Estaticos
-	SeriesPepito.categoria= function() {return 'series';}
+	SeriesPepito.categoria= function() {return 'seriesdisabled';}
 	SeriesPepito.getitem= function() {return new Item_menu('Series Pepito',"img/seriespepito.png",':vercanales:seriespepito');}
 
 	CanalFactory.registrarCanal("SeriesPepito",SeriesPepito); //Registrar la clase SeriesPepito
