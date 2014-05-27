@@ -1,5 +1,12 @@
 ###### Changelog
 
+### 0.9.8 beta 2:
+- Corregido bug en function extraer_texto.
+- LiveStreams:
+	- Ahora las listas pueden ser recopilaciones de otras listas.
+	- Descartar canales cuyo nombre contenga entre sus ultimas 5 letras la palabra 'off'
+- Añadido canal de peliculas Oranline.
+
 ### 0.9.8 beta:
 - Cambio de todo el codigo js, ahora el codigo esta basado en objetos, Gracias a SuperBerny q se lo ha currado.
 - Añadidos mas canales en la seccion de tvonline, Gracias a SuperBerny
