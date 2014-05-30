@@ -5452,7 +5452,7 @@
 				if (objFavoritos.delItem({
 							'fecha': this.fecha,
 							'titulo':this.titulo,
-							'uri': this.url_video})){	
+							'uri': this.uri})){	
 								showtime.notify(this.titulo + ' borrado de favoritos',3);
 								if (objFavoritos.count()>0){
 									page.redirect(PREFIX + ':favoritos');
