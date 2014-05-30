@@ -4996,7 +4996,7 @@
 		return codigo_html;
 		}
 
-	function get_urlsource(url_servidor, referer) {
+	function get_urlsource(url_servidor) {
 		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
 		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
 		var codigo_html = showtime.httpReq(url_servidor, 
@@ -5433,13 +5433,9 @@
 			{
 			var uri;
 			var f_titulo;
-			if (lista[i].host == '_verenlaces_') {		
-				uri = PREFIX + ':verenlaces:' + lista[i].canal + ':' + escape(lista[i].url);
-				f_titulo= new showtime.RichText(lista[i].titulo);
-			}else{
-				uri = PREFIX + ':vervideo:' + lista[i].canal + ':' + lista[i].host + ':' + escape(lista[i].titulo) + ':' + escape(lista[i].imagen) + ':' + escape(lista[i].url);
-				f_titulo= new showtime.RichText(lista[i].titulo + ' <font color=\"5AD1B5\">[' + (lista[i].host).toProperCase() + ']</font>');
-			}
+
+			uri = lista[i].host;
+			f_titulo= new showtime.RichText(lista[i].titulo + ' <font color=\"5AD1B5\">[' + (lista[i].host).toProperCase() + ']</font>');
 			item = page.appendItem(uri, "directory", {
 				title: f_titulo,
 				titlecover : new showtime.RichText('<font color="#ffffff" size="3">' + lista[i].titulo.substring(0,9) + '</font>'),
@@ -5456,7 +5452,7 @@
 				if (objFavoritos.delItem({
 							'fecha': this.fecha,
 							'titulo':this.titulo,
-							'url': this.url_video})){	
+							'uri': this.url_video})){	
 								showtime.notify(this.titulo + ' borrado de favoritos',3);
 								if (objFavoritos.count()>0){
 									page.redirect(PREFIX + ':favoritos');
@@ -5535,6 +5531,10 @@
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var array_playlist=[];
+		
+		if (objCanal == undefined) {objCanal=CanalFactory.createCanal(canal);}
+			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
+		
 		array_playlist=objCanal.getplaylist(page, tipo, url);
 		
 		//pintar el vercontenido se recorre el array y se pinta
@@ -5545,10 +5545,10 @@
 				title: new showtime.RichText(array_playlist[i].titulo),
 				icon: array_playlist[i].imagen});
 			
-			item.url = array_playlist[i].url;
+			item.uri = array_playlist[i].page_uri + escape(array_playlist[i].url);
 			item.titulo = array_playlist[i].titulo;
 			item.imagen = array_playlist[i].imagen;
-			item.host = (objCanal.categoria == 'tvonline')?'StreamsRtmp':'_verenlaces_';
+			item.host = objCanal.name;
 			item.addOptSeparator("Peli-XR");
 			item.addOptAction("Agregar a Favoritos", "agregarafavoritos");
 				
@@ -5556,10 +5556,9 @@
 				{ //Añadir pagina de enlaces
 	
 					if (objFavoritos.addItem({
-							'canal':canal,
 							'titulo':this.titulo,
 							'imagen':this.imagen,
-							'url': this.url,
+							'uri': this.uri,
 							'host':this.host}))	
 								showtime.notify(this.titulo + ' agregado a favoritos',3);	
 				});
@@ -5582,6 +5581,9 @@
 		var array_servidores=[];
 		var tipo_video;
 		
+		if (objCanal == undefined) {objCanal=CanalFactory.createCanal(canal);}
+			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
+		
 		array_servidores=objCanal.getservidores(url);
 
 		//pintar el playlist se recorre el array y se pinta
@@ -5599,18 +5601,17 @@
 					calidad: array_servidores[i].calidad
 					});
 
-				item.url=array_servidores[i].url_video;
-				item.host=array_servidores[i].servidor;
+				item.uri = PREFIX + ':vervideo:'+ canal + ':' + array_servidores[i].servidor + ':' + escape(objCanal.item_Actual.titulo) + ':' + escape(objCanal.item_Actual.imagen) + ':' + escape(array_servidores[i].url_video);
+				item.host = array_servidores[i].servidor;
 				item.addOptSeparator("Peli-XR");
 				item.addOptAction("Agregar a Favoritos", "agregarafavoritos");
 		
 				item.onEvent('agregarafavoritos', function (item)
 					{ //Añadir enlace del video						
 						if (objFavoritos.addItem({
-							'canal':canal,
 							'titulo':objCanal.item_Actual.titulo,
 							'imagen':objCanal.item_Actual.imagen,
-							'url': this.url,
+							'uri': this.uri,
 							'host':this.host}))	
 								showtime.notify(objCanal.item_Actual.titulo + ' agregado a favoritos',3);	
 					});
