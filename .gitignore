@@ -1,3 +1,5 @@
 #Ignorar archivo TODO del directorio root
 /TODO.*
+#Ignorar archivos de extension *.orig
+/*.orig
 README.md.rej

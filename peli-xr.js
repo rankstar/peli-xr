@@ -1271,10 +1271,10 @@
 		this.getmenu= function(){
 		//retorna el Menu
 			var array_menu=[
-				new Item_menu('Br-Dvd Castellano','views/img/folder.png',':vercontenido:newpct:tipobrdvd:'+ escape('http://www.newpct.com/peliculas-castellano/peliculas-rip/')),
-				new Item_menu('Estrenos de Cine','views/img/folder.png',':vercontenido:newpct:tipoestrenoscine:' + escape('http://www.newpct.com/peliculas-castellano/estrenos-de-cine/;1')),
-				new Item_menu('V.O. Subtituladas','views/img/folder.png',':vercontenido:newpct:tipovo:' + escape('http://www.newpct.com/peliculas-vo/;1')),
-				new Item_menu('Buscar','views/img/search.png',':vercontenido:newpct:tipobusqueda:' + escape('http://www.newpct.com/buscar-descargas/'))
+				new Item_menu('Br-Dvd Castellano','views/img/folder.png',':vercontenido:newpct:tipobrdvd:'+ escape('http://www.newpct1.com/peliculas-castellano/peliculas-rip/')),
+				new Item_menu('Estrenos de Cine','views/img/folder.png',':vercontenido:newpct:tipoestrenoscine:' + escape('http://www.newpct1.com/peliculas-castellano/estrenos-de-cine/;1')),
+				new Item_menu('V.O. Subtituladas','views/img/folder.png',':vercontenido:newpct:tipovo:' + escape('http://www.newpct1.com/peliculas-vo/;1')),
+				new Item_menu('Buscar','views/img/search.png',':vercontenido:newpct:tipobusqueda:' + escape('http://www.newpct1.com/buscar-descargas/'))
 			];
 
 			return array_menu;
@@ -1297,7 +1297,7 @@
 			{
 			case "tipobrdvd":
 				page.metadata.title = "NewPct - Br-Dvd Castellano";
-				var url_2=escape('http://www.newpct.com/include.inc/ajax.php/orderCategory.php?type=todo&leter=&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1537%2C+758%2C+1105%2C+760%2C+1225))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1225');
+				var url_2=escape('http://www.newpct1.com/include.inc/ajax.php/orderCategory.php?type=todo&leter=&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1537%2C+758%2C+1105%2C+760%2C+1225))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1225');
 				var params={'url_servidor': unescape(url_2),
 					'page_uri': ':verenlaces:newpct:',
 					'uri_siguiente': ':vercontenido:newpct:tipo1:',
@@ -1306,7 +1306,7 @@
 				break;
 			case "tipoestrenoscine":
 				page.metadata.title = "NewPct - Estrenos de Cine";
-				var url_2=escape('http://www.newpct.com/include.inc/ajax.php/orderCategory.php?type=todo&leter=&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1231%2C+1165%2C+1230%2C+1232%2C+766%2C+765%2C+761%2C+848%2C+1224))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1224');
+				var url_2=escape('http://www.newpct1.com/include.inc/ajax.php/orderCategory.php?type=todo&leter=&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1231%2C+1165%2C+1230%2C+1232%2C+766%2C+765%2C+761%2C+848%2C+1224))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1224');
 				var params={'url_servidor': unescape(url_2),
 					'page_uri': ':verenlaces:newpct:',
 					'uri_siguiente': ':vercontenido:newpct:tipo1:',
@@ -1315,7 +1315,7 @@
 				break;
 			case "tipovo":
 				page.metadata.title = "NewPct - V.O. Subtituladas";
-				var url_2=escape('http://www.newpct.com/include.inc/ajax.php/orderCategory.php?type=todo&leter=&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(779%2C+784%2C+787%2C+788%2C+786%2C+778))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=778');
+				var url_2=escape('http://www.newpct1.com/include.inc/ajax.php/orderCategory.php?type=todo&leter=&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(779%2C+784%2C+787%2C+788%2C+786%2C+778))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=778');
 				var params={'url_servidor': unescape(url_2),
 					'page_uri': ':verenlaces:newpct:',
 					'uri_siguiente': ':vercontenido:newpct:tipo1:',
@@ -1457,7 +1457,7 @@
 				try
 					{
 					var datos_post = {'userName': credentials.username,'userPass': credentials.password};
-					file_contents = post_urlsource('http://www.newpct.com/entrar',datos_post);
+					file_contents = post_urlsource('http://www.newpct1.com/entrar',datos_post);
 					var usuario = extraer_texto(file_contents,"loadtopBar('","'");
 					if(usuario!='')
 						{
@@ -3517,9 +3517,9 @@
 		this.getmenu= function(){
 		//retorna el Menu
 			var array_menu=[
-				new Item_menu('Ultimos Capitulos','views/img/folder.png',':vercontenido:newpctseries:ultimoscapitulos:'+ escape('http://www.newpct.com/series-alta-definicion-hd/')),
+				new Item_menu('Ultimos Capitulos','views/img/folder.png',':vercontenido:newpctseries:ultimoscapitulos:'+ escape('http://www.newpct1.com/series-alta-definicion-hd/')),
 				new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:newpctseries:09'),
-				new Item_menu('Buscar Serie HD','views/img/search.png',':vercontenido:newpctseries:tipobusqueda:'+ escape('http://www.newpct.com/buscar-descargas/'))
+				new Item_menu('Buscar Serie HD','views/img/search.png',':vercontenido:newpctseries:tipobusqueda:'+ escape('http://www.newpct1.com/buscar-descargas/'))
 				];
 		return array_menu;
 		}
@@ -3538,7 +3538,7 @@
 				{
 				case "ultimoscapitulos": 
 					page.metadata.title = "NewPct Series HD";
-					var url_2=escape('http://www.newpct.com/include.inc/ajax.php/orderCategory.php?type=todo&leter=&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1772%2C+1582%2C+1473%2C+1708%2C+1474%2C+1603%2C+1596%2C+1611%2C+1693%2C+1699%2C+1759%2C+1769%2C+1598%2C+1514%2C+1605%2C+1585%2C+1472%2C+1754%2C+1689%2C+1475%2C+1687%2C+1649%2C+1643%2C+1476%2C+1486%2C+1618%2C+1490%2C+1657%2C+1606%2C+1498%2C+1493%2C+1639%2C+1488%2C+1684%2C+1505%2C+1691%2C+1495%2C+1624%2C+1470%2C+1746%2C+1676%2C+1629%2C+1511%2C+1748%2C+1677%2C+1484%2C+1485%2C+1580%2C+1763%2C+1744%2C+1481%2C+1520%2C+1696%2C+1492%2C+1508%2C+1727%2C+1711%2C+1579%2C+1489%2C+1706%2C+1757%2C+1487%2C+1583%2C+1477%2C+1701%2C+1518%2C+1526%2C+1654%2C+1694%2C+1491%2C+1478%2C+1681%2C+1714%2C+1668%2C+1619%2C+1581%2C+1479%2C+1483%2C+1500%2C+1729%2C+1584%2C+1740%2C+1602%2C+1646%2C+1656%2C+1471%2C+1469))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1469');
+					var url_2=escape('http://www.newpct1.com/include.inc/ajax.php/orderCategory.php?type=todo&leter=&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1772%2C+1582%2C+1473%2C+1708%2C+1474%2C+1603%2C+1596%2C+1611%2C+1693%2C+1699%2C+1759%2C+1769%2C+1598%2C+1514%2C+1605%2C+1585%2C+1472%2C+1754%2C+1689%2C+1475%2C+1687%2C+1649%2C+1643%2C+1476%2C+1486%2C+1618%2C+1490%2C+1657%2C+1606%2C+1498%2C+1493%2C+1639%2C+1488%2C+1684%2C+1505%2C+1691%2C+1495%2C+1624%2C+1470%2C+1746%2C+1676%2C+1629%2C+1511%2C+1748%2C+1677%2C+1484%2C+1485%2C+1580%2C+1763%2C+1744%2C+1481%2C+1520%2C+1696%2C+1492%2C+1508%2C+1727%2C+1711%2C+1579%2C+1489%2C+1706%2C+1757%2C+1487%2C+1583%2C+1477%2C+1701%2C+1518%2C+1526%2C+1654%2C+1694%2C+1491%2C+1478%2C+1681%2C+1714%2C+1668%2C+1619%2C+1581%2C+1479%2C+1483%2C+1500%2C+1729%2C+1584%2C+1740%2C+1602%2C+1646%2C+1656%2C+1471%2C+1469))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1469');
 					var params={'url_servidor': unescape(url_2),
 								'page_uri': ':verenlaces:newpctseries:',
 								'uri_siguiente': ':vercontenido:newpctseries:tipo1:',
@@ -3558,7 +3558,7 @@
 					break;
 				case "alfabeto":
 					page.metadata.title = "NewPct Series HD - Orden Alfabetico: " + ((url=='09')?'0-9': url.toUpperCase()); //en este caso url almacena la letra a buscar
-					var url_2=escape('http://www.newpct.com/include.inc/ajax.php/orderCategory.php?type=letter&leter=' + url + '&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1772%2C+1582%2C+1473%2C+1708%2C+1474%2C+1603%2C+1596%2C+1611%2C+1693%2C+1699%2C+1759%2C+1769%2C+1598%2C+1514%2C+1605%2C+1585%2C+1472%2C+1754%2C+1689%2C+1475%2C+1687%2C+1649%2C+1643%2C+1476%2C+1486%2C+1618%2C+1490%2C+1657%2C+1606%2C+1498%2C+1493%2C+1639%2C+1488%2C+1684%2C+1505%2C+1691%2C+1495%2C+1624%2C+1470%2C+1746%2C+1676%2C+1629%2C+1511%2C+1748%2C+1677%2C+1484%2C+1485%2C+1580%2C+1763%2C+1744%2C+1481%2C+1520%2C+1696%2C+1492%2C+1508%2C+1727%2C+1711%2C+1579%2C+1489%2C+1706%2C+1757%2C+1487%2C+1583%2C+1477%2C+1701%2C+1518%2C+1526%2C+1654%2C+1694%2C+1491%2C+1478%2C+1681%2C+1714%2C+1668%2C+1619%2C+1581%2C+1479%2C+1483%2C+1500%2C+1729%2C+1584%2C+1740%2C+1602%2C+1646%2C+1656%2C+1471%2C+1469))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1469');
+					var url_2=escape('http://www.newpct1.com/include.inc/ajax.php/orderCategory.php?type=letter&leter=' + url + '&sql=SELECT+DISTINCT+++%09%09%09%09%09%09torrentID%2C+++%09%09%09%09%09%09torrentCategoryID%2C+++%09%09%09%09%09%09torrentCategoryIDR%2C+++%09%09%09%09%09%09torrentImageID%2C+++%09%09%09%09%09%09torrentName%2C+++%09%09%09%09%09%09guid%2C+++%09%09%09%09%09%09torrentShortName%2C++%09%09%09%09%09%09torrentLanguage%2C++%09%09%09%09%09%09torrentSize%2C++%09%09%09%09%09%09calidad+as+calidad_%2C++%09%09%09%09%09%09torrentDescription%2C++%09%09%09%09%09%09torrentViews%2C++%09%09%09%09%09%09rating%2C++%09%09%09%09%09%09n_votos%2C++%09%09%09%09%09%09vistas_hoy%2C++%09%09%09%09%09%09vistas_ayer%2C++%09%09%09%09%09%09vistas_semana%2C++%09%09%09%09%09%09vistas_mes++%09%09%09%09++FROM+torrentsFiles+as+t+WHERE++(torrentStatus+%3D+1+OR+torrentStatus+%3D+2)++AND+(torrentCategoryID+IN+(1772%2C+1582%2C+1473%2C+1708%2C+1474%2C+1603%2C+1596%2C+1611%2C+1693%2C+1699%2C+1759%2C+1769%2C+1598%2C+1514%2C+1605%2C+1585%2C+1472%2C+1754%2C+1689%2C+1475%2C+1687%2C+1649%2C+1643%2C+1476%2C+1486%2C+1618%2C+1490%2C+1657%2C+1606%2C+1498%2C+1493%2C+1639%2C+1488%2C+1684%2C+1505%2C+1691%2C+1495%2C+1624%2C+1470%2C+1746%2C+1676%2C+1629%2C+1511%2C+1748%2C+1677%2C+1484%2C+1485%2C+1580%2C+1763%2C+1744%2C+1481%2C+1520%2C+1696%2C+1492%2C+1508%2C+1727%2C+1711%2C+1579%2C+1489%2C+1706%2C+1757%2C+1487%2C+1583%2C+1477%2C+1701%2C+1518%2C+1526%2C+1654%2C+1694%2C+1491%2C+1478%2C+1681%2C+1714%2C+1668%2C+1619%2C+1581%2C+1479%2C+1483%2C+1500%2C+1729%2C+1584%2C+1740%2C+1602%2C+1646%2C+1656%2C+1471%2C+1469))++AND+home_active+%3D+0++++ORDER+BY+torrentDateAdded++DESC++LIMIT+0%2C+50&pag=1&tot=&ban=3&cate=1469');
 					var params={'url_servidor': unescape(url_2),
 								'page_uri': ':vercontenido:newpctseries:getCapitulos:',
 								'uri_siguiente': ':vercontenido:newpctseries:tipo2:', //el tipo2 no esta implementado por q no contemplamos paginacion aqui
@@ -4659,8 +4659,7 @@
 	/* var Oranline: Objeto que representa el canal Oranline.net en Peliculas	*
 	/************************************************************************************/
 	var Oranline= function() {	
-		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
-
+		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		
 		//metodos publicos
 		
@@ -4692,55 +4691,41 @@
 		this.getplaylist= function (page, tipo, url) {
 			var array_playlist=[];
 		
+			var params={'url_servidor': unescape(url),
+				'page_uri': ':verenlaces:oranline:',
+				'uri_siguiente': ':vercontenido:oranline:tipo1:',
+				'subtitulo':false}	
+		
 			switch (tipo)
 			{
-
 			case "tipoestrenoscine":
 				page.metadata.title = "Oranline - Estrenos de Cine";
-				var params={'url_servidor': unescape(url),
-					'page_uri': ':verenlaces:oranline:',
-					'uri_siguiente': ':vercontenido:oranline:tipo1:',
-					'subtitulo':false}	
-				array_playlist=parseoranlinetipodefault(url,params);
+				array_playlist=parseoranline(params);
 				break;
 			case "tiporip":
 				page.metadata.title = "Oranline - Estrenos Rip";
-				var params={'url_servidor': unescape(url),
-					'page_uri': ':verenlaces:oranline:',
-					'uri_siguiente': ':vercontenido:oranline:tipo1:',
-					'subtitulo':false}	
-				array_playlist=parseoranlinetipodefault(url,params);
+				array_playlist=parseoranline(params);
 				break;
 			case "tipo1":
-				var params={'url_servidor': unescape(url),
-					'page_uri': ':verenlaces:oranline:',
-					'uri_siguiente': ':vercontenido:oranline:tipo1:',
-					'subtitulo':false}	
 				array_playlist= parseoranline (params);
 				break;
 			case "alfabeto":
 				page.metadata.title = "Oranline - Orden Alfabetico: ";
+
 				if (url.endsWith('num'))
 				{ //Alfabeto numerico [0-9]
 					url= url.slice(0,url.length - 3);
 					for (var i=0;i<10;i++)
-						{
-							var params={'url_servidor': unescape(url + i),
-							'page_uri': ':verenlaces:oranline:',
-							'uri_siguiente': ':vercontenido:oranline:tipo1:',
-							'subtitulo':false}	
-							array_playlist.push(parseoranlinetipodefault(url + i,params));
-						}				
+						{	
+							params.url_servidor= unescape(url + i);	
+							array_playlist= array_playlist.concat(parseoranline(params));
+						}		
 				}else{ //Alfabeto letra
-					var params={'url_servidor': unescape(url),
-						'page_uri': ':verenlaces:oranline:',
-						'uri_siguiente': ':vercontenido:oranline:tipo1:',
-						'subtitulo':false}	
-					array_playlist=parseoranlinetipodefault(url,params);
+					array_playlist=parseoranline(params);
 				}
 				break;
 			case "tipobusqueda":
-				array_playlist=parseoranlinetipobusqueda(url,page);
+				array_playlist=parseoranlinetipobusqueda(params,page);
 				break;
 			}
 		
@@ -4843,25 +4828,22 @@
 			numero_pagina=(numero_pagina > 0 )?numero_pagina:1;
 		
 			var file_contents = get_urlsource(params.url_servidor);
-
 			var ultima_pagina = extraer_texto(file_contents,'<span class="pages">','</span>');
 			ultima_pagina = parseInt(ultima_pagina.substr(ultima_pagina.lastIndexOf("of ") + 3));
 			ultima_pagina = (ultima_pagina > 0)?ultima_pagina:numero_pagina;
 			
-			file_contents = extraer_texto(file_contents,'<div class="review-box-container">','<span class="pages">');
+			file_contents = extraer_texto(file_contents,'<div class="review-box-container">','<h3>Buscador de peliculas</h3>');	
 			var array_aux = extraer_html_array(file_contents,'<div class="post-thumbnail">','<div id="campos_idiomas">');
 			file_contents = "";
-//showtime.print(numero_pagina)
-//showtime.print(ultima_pagina)
+
 			var titulo;
 			var imagen;
 			var url_video;	
 			var array_playlist=[];
-			
+
 			for (var i=0;i<array_aux.length;i++)
 				{
 					titulo=extraer_texto(array_aux[i],'title="','">');
-					//if (params.subtitulo) titulo=titulo + ' ' + extraer_texto(array_aux[i],'<p>','<br/>');
 					if (titulo !='') {			
 						imagen=extraer_texto(array_aux[i],'<img src="','"');
 						url_video=extraer_texto(array_aux[i],'<a href="','"');
@@ -4872,54 +4854,48 @@
 			//paginador
 			var pagina_siguiente = (parseInt(numero_pagina) + 1);
 			if(numero_pagina<ultima_pagina)
-				{ //Aqui hay que contemplar caso especiales en buscar
-					if (numero_pagina >1) 
-						{
+				{ //Aqui hay que contemplar caso especiales:
+					if (numero_pagina >1) {
 							params.url_servidor=params.url_servidor.replace('page/' + numero_pagina,'page/' + pagina_siguiente);
 						}else{
-							params.url_servidor=params.url_servidor + "page/2/"
+							//Primera pagina ...
+							var i= params.url_servidor.indexOf('/?s=');
+							if (i > -1){
+								//... de tipo alfabeto o busqueda
+								var stbuscado= params.url_servidor.substring(i);
+								params.url_servidor="http://www.oranline.net/page/2" + stbuscado;
+							}else{
+								//... de cualquier otro tipo
+								params.url_servidor=params.url_servidor + "page/2/";
+							}
+						
 						}
-					
+
 					array_playlist.push(new Item_menu('Siguiente',"views/img/siguiente.png",params.uri_siguiente,params.url_servidor));		
 				}
 		
 		return array_playlist;
 		}
 		
-
-		function parseoranlinetipodefault (url_servidor,params){
-			url_servidor=unescape(url_servidor);
-			var array_playlist=[];
-
-			var file_contents = get_urlsource(url_servidor);
-			if(file_contents!=false) array_playlist= parseoranline (params);
-						
-		return array_playlist;
-		}
 		
-		function parseoranlinetipobusqueda (url_servidor,page)
+		function parseoranlinetipobusqueda (params,page)
 		{
-			url_servidor=unescape(url_servidor);
 			var array_playlist=[];
 
-			var texto_busqueda=this.cuadroBuscar();
+			var texto_busqueda=that.cuadroBuscar();
 			if ( texto_busqueda != undefined) 
 				{	
 					page.metadata.title = "Oranline - Buscar - "  + texto_busqueda;
 					texto_busqueda = texto_busqueda.replace(/ /g,'+');
-				
-					var file_contents = get_urlsource(url_servidor + texto_busqueda);
+
+					params.url_servidor= params.url_servidor + texto_busqueda;						
+					var file_contents = get_urlsource(params.url_servidor);
 
 					var resultados = file_contents.indexOf('0 Resultados');
-					if(resultados==-1)
-					{
-						var params={'url_servidor': unescape(url),
-						'page_uri': ':verenlaces:oranline:',
-						'uri_siguiente': ':vercontenido:oranline:tipo1:',
-						'subtitulo':false}
+					if(resultados==-1){
 						array_playlist= parseoranline (params);
-					}
-				return array_playlist;	
+						return array_playlist;	
+					}	
 				}
 			showtime.notify('No se encontraron resultados', 3);
 		return array_playlist;	
@@ -5862,6 +5838,9 @@
 		var array_servidores=[];
 		var tipo_video;
 		
+		if (objCanal == undefined) {objCanal=CanalFactory.createCanal(canal);}
+			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
+
 		array_servidores=objCanal.getservidores(url);
 
 		//pintar el playlist se recorre el array y se pinta
