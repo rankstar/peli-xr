@@ -1,9 +1,11 @@
 Peli-Xr - Plugin para Showtime
 ====================
 
-[Showtime][https://showtimemediacenter.com]
 
-+ Info/Soporte del plugin, en el foro de EOL[http://www.elotrolado.net/hilo_plugin-showtime-peli-xr-v0-9-7_1981017]
+Showtime => https://showtimemediacenter.com
+
+Info/Soporte del plugin, en el foro de EOL => http://www.elotrolado.net/hilo_plugin-showtime-peli-xr-v0-9-7_1981017
+
 
 ### ¿Qué es Peli-XR?
 
@@ -60,7 +62,9 @@ Pues la verdad es q si ves algun problema, y lo comunicas tratare de arreglarlo 
 - Prueba con otra version del showtime
 
 
-### TODO
+
+### AGRADECIMIENTOS
+
 
 - A chuyo31, q fue x el q descubri el rollo esti del showtime, navi-x, streamhome, ....
 - A la gente de http://www.crystalxp.net/ q es donde he sacado los iconos en png.
