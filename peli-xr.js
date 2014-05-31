@@ -1866,7 +1866,7 @@
 		
 	}
 	//Propiedades y metodos Estaticos
-	Peliculaspepito.categoria= function() {return 'peliculas';}
+	Peliculaspepito.categoria= function() {return 'peliculasdisabled';}
 	Peliculaspepito.getitem= function() {return new Item_menu('Peliculas Pepito',"img/peliculaspepito.png",':vercanales:peliculaspepito');}
 
 	CanalFactory.registrarCanal("Peliculaspepito",Peliculaspepito); //Registrar la clase Peliculaspepito
@@ -3145,7 +3145,7 @@
 		
 	}
     //Propiedades y metodos Estaticos
-	SeriesPepito.categoria= function() {return 'series';}
+	SeriesPepito.categoria= function() {return 'seriesdisabled';}
 	SeriesPepito.getitem= function() {return new Item_menu('Series Pepito',"img/seriespepito.png",':vercanales:seriespepito');}
 
 	CanalFactory.registrarCanal("SeriesPepito",SeriesPepito); //Registrar la clase SeriesPepito
@@ -5282,6 +5282,23 @@
 		return codigo_html;
 		}
 
+	function get_urlsourcereferer(url_servidor, referer) {
+		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
+		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
+		var codigo_html = showtime.httpReq(url_servidor, 
+			{
+			debug: false,
+			compression: true,
+			headers: 
+				{
+				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0',
+				'Referer': referer
+  				}
+			}).toString();
+		
+		return codigo_html;
+		}
+
 	function post_urlsource(url_servidor, datos_post){
 		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
 		//				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
@@ -5689,13 +5706,9 @@
 			{
 			var uri;
 			var f_titulo;
-			if (lista[i].host == '_verenlaces_') {		
-				uri = PREFIX + ':verenlaces:' + lista[i].canal + ':' + escape(lista[i].url);
-				f_titulo= new showtime.RichText(lista[i].titulo);
-			}else{
-				uri = PREFIX + ':vervideo:' + lista[i].canal + ':' + lista[i].host + ':' + escape(lista[i].titulo) + ':' + escape(lista[i].imagen) + ':' + escape(lista[i].url);
-				f_titulo= new showtime.RichText(lista[i].titulo + ' <font color=\"5AD1B5\">[' + (lista[i].host).toProperCase() + ']</font>');
-			}
+
+			uri = lista[i].host;
+			f_titulo= new showtime.RichText(lista[i].titulo + ' <font color=\"5AD1B5\">[' + (lista[i].host).toProperCase() + ']</font>');
 			item = page.appendItem(uri, "directory", {
 				title: f_titulo,
 				titlecover : new showtime.RichText('<font color="#ffffff" size="3">' + lista[i].titulo.substring(0,9) + '</font>'),
@@ -5712,7 +5725,7 @@
 				if (objFavoritos.delItem({
 							'fecha': this.fecha,
 							'titulo':this.titulo,
-							'url': this.url_video})){	
+							'uri': this.uri})){	
 								showtime.notify(this.titulo + ' borrado de favoritos',3);
 								if (objFavoritos.count()>0){
 									page.redirect(PREFIX + ':favoritos');
@@ -5791,6 +5804,10 @@
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var array_playlist=[];
+		
+		if (objCanal == undefined) {objCanal=CanalFactory.createCanal(canal);}
+			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
+		
 		array_playlist=objCanal.getplaylist(page, tipo, url);
 		
 		//pintar el vercontenido se recorre el array y se pinta
@@ -5801,10 +5818,10 @@
 				title: new showtime.RichText(array_playlist[i].titulo),
 				icon: array_playlist[i].imagen});
 			
-			item.url = array_playlist[i].url;
+			item.uri = array_playlist[i].page_uri + escape(array_playlist[i].url);
 			item.titulo = array_playlist[i].titulo;
 			item.imagen = array_playlist[i].imagen;
-			item.host = (objCanal.categoria == 'tvonline')?'StreamsRtmp':'_verenlaces_';
+			item.host = objCanal.name;
 			item.addOptSeparator("Peli-XR");
 			item.addOptAction("Agregar a Favoritos", "agregarafavoritos");
 				
@@ -5812,10 +5829,9 @@
 				{ //Añadir pagina de enlaces
 	
 					if (objFavoritos.addItem({
-							'canal':canal,
 							'titulo':this.titulo,
 							'imagen':this.imagen,
-							'url': this.url,
+							'uri': this.uri,
 							'host':this.host}))	
 								showtime.notify(this.titulo + ' agregado a favoritos',3);	
 				});
@@ -5858,18 +5874,17 @@
 					calidad: array_servidores[i].calidad
 					});
 
-				item.url=array_servidores[i].url_video;
-				item.host=array_servidores[i].servidor;
+				item.uri = PREFIX + ':vervideo:'+ canal + ':' + array_servidores[i].servidor + ':' + escape(objCanal.item_Actual.titulo) + ':' + escape(objCanal.item_Actual.imagen) + ':' + escape(array_servidores[i].url_video);
+				item.host = array_servidores[i].servidor;
 				item.addOptSeparator("Peli-XR");
 				item.addOptAction("Agregar a Favoritos", "agregarafavoritos");
 		
 				item.onEvent('agregarafavoritos', function (item)
 					{ //Añadir enlace del video						
 						if (objFavoritos.addItem({
-							'canal':canal,
 							'titulo':objCanal.item_Actual.titulo,
 							'imagen':objCanal.item_Actual.imagen,
-							'url': this.url,
+							'uri': this.uri,
 							'host':this.host}))	
 								showtime.notify(objCanal.item_Actual.titulo + ' agregado a favoritos',3);	
 					});
