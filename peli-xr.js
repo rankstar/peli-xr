@@ -27,7 +27,7 @@
 // 		Declaracion de clases											//
 //																		//
 //////////////////////////////////////////////////////////////////////////	
-		
+
 	/********************************************************************************
 	/* var Item_menu: Objeto que representa los elementos de un Menu				*
 	/*	Parametros: 															    *
@@ -45,8 +45,8 @@
 		this.url =url || "";
 		this.descripcion= descripcion || "";
 	}
-	
-	
+
+
 //
 //Servidores de video
 	/********************************************************************************************************	
@@ -90,7 +90,7 @@
 			}
 		};
 	})();
-	
+
 	/************************************************************************************************************
 	/*	var Host: Objeto que representa un servidor de video generico y del que heredan el resto de servidores	*
 	/*	Propiedades:																							*
@@ -110,7 +110,7 @@
 		this.url_video=params.url_host;
 		this.idioma=params.idioma;
 		this.calidad=params.calidad;
-		
+
 		//metodos publicos que seran redefinidos por las clases herederas
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
@@ -118,7 +118,7 @@
 		/*	Retorna: true si es un servidor de adultos, false si no lo es.		*
 		/***********************************************************************/
 		this.esservidoradulto= function () {}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -126,17 +126,17 @@
 		/*	Retorna: String que representa la url del video o 'error'				*							
 		/***************************************************************************/
 		this.geturl_video= function (url_servidor) {}	
-		
+
 	}
-	
+
 	/********************************************************************************	
 	/* var StreamsRtmp: Objeto utilizado para pasar enlaces RTMP					*
 	/*		Hereda de Host															*
 	/*******************************************************************************/
 	var StreamsRtmp=function() {
-	
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -145,7 +145,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -160,15 +160,15 @@
 		}
 	}
 	HostFactory.registrarHost("streamsrtmp",StreamsRtmp); //Registrar la clase StreamsRtmp
-	
+
 	/********************************************************************************	
 	/* var Allmyvideos: Objeto que representa el servidor Allmyvideo				*
 	/*		Hereda de Host															*
 	/*******************************************************************************/
 	var Allmyvideos= function() {
-				
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -177,7 +177,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -198,9 +198,9 @@
 				var referer = extraer_texto(file_contents,'<input type="hidden" name="referer" value="','"');
 				var method_free = extraer_texto(file_contents,'<input type="hidden" name="method_free" value="','"');		
 				file_contents = ""
-			
+
 				showtime.sleep(1000);
-		
+
 				var datos_post = {'op':op,'usr_login':usr_login,'id':id,'fname':fname,'referer':referer,'method_free':method_free,'x':'109','y':'17'};
 				file_contents = post_urlsource(url_servidor,datos_post);
 
@@ -214,19 +214,19 @@
 			}
 		return url_video;
 		}
-		
-		
+
+
 	}
 	HostFactory.registrarHost("allmyvideos",Allmyvideos); //Registrar la clase Allmyvideo
-	
+
 	/********************************************************************************	
 	/* var Api_video_mail: Objeto que representa el servidor Api_video_mail			*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Api_video_mail= function() {
-			
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -235,7 +235,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -257,19 +257,19 @@
 			}
 		return url_video;
 		}
-		
-		
+
+
 	}
 	HostFactory.registrarHost("apivideomail",Api_video_mail); //Registrar la clase Api_video_mail
-	
+
 	/********************************************************************************	
 	/* var Bestreams: Objeto que representa el servidor Bestreams					*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Bestreams= function() {
-				
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -278,7 +278,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -305,7 +305,7 @@
 				showtime.sleep(1000);
 				//page.metadata.title = 'Cargando video ...  ' + 'Espera 1 segundos';
 				showtime.sleep(1000);		
-			
+
 				var datos_post = {'op':op,'usr_login':usr_login,'id':id,'fname':fname,'referer':referer,'hash':hash,'imhuman':imhuman};
 				file_contents = showtime.httpReq(url_servidor, 
 					{
@@ -319,7 +319,7 @@
 							'Referer' : url_servidor
 						}
 					}).toString();
-			
+
 				var url_video = extraer_texto(file_contents,'file: "','"');
 				file_contents = "";
 			}else{
@@ -327,19 +327,19 @@
 			}
 		return url_video;
 		}
-		
-		
+
+
 	}
 	HostFactory.registrarHost("bestreams",Bestreams); //Registrar la clase Bestreams
-	
+
 	/********************************************************************************	
 	/* var Filenuke: Objeto que representa el servidor Filenuke						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Filenuke= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -348,7 +348,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -359,7 +359,7 @@
 		{
 			//detectar el tipo hay .com y .net
 			var dominio= url_servidor.split('/')[2].match(/\.\w{2,3}$/i);
-			
+
 			if(dominio=='.net')
 			{
 				url_video='error';				
@@ -375,7 +375,7 @@
 					var referer = extraer_texto(file_contents,'<input type="hidden" name="referer" value="','"');
 					var method_free = extraer_texto(file_contents,'<input type="hidden" name="method_free" value="','"');		
 					file_contents = ""
-		
+
 					showtime.sleep(1000);
 					var datos_post = {'op':op,'usr_login':usr_login,'id':id,'fname':fname,'referer':referer,'method_free':method_free,'x':'109','y':'17'};
 					file_contents = post_urlsource(url_servidor,datos_post);
@@ -387,18 +387,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("filenuke",Filenuke); //Registrar la clase Filenuke
-	
+
 	/********************************************************************************	
 	/* var Magnovideo: Objeto que representa el servidor Magnovideo					*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Magnovideo= function() {
-				
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -407,7 +407,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -419,7 +419,7 @@
 			var id_magnovideo;
 			id_magnovideo = url_servidor.replace('http://www.magnovideo.com/?v=','');
 			url_servidor = 'http://www.magnovideo.com/player_config.php?mdid=' + id_magnovideo + '&sml=1&autoplay=true';
-		
+
 			var file_contents = get_urlsource(url_servidor);	
 			var storage_path = extraer_texto(file_contents,'<storage_path>','</storage_path>');
 			var video_name = extraer_texto(file_contents,'<video_name>','</video_name>');
@@ -427,41 +427,41 @@
 			var movie_burst  = extraer_texto(file_contents,'<movie_burst>','</movie_burst>') + 'k';
 			var burst_speed  = extraer_texto(file_contents,'<burst_speed>','</burst_speed>') + 'k';
 			var ste  = extraer_texto(file_contents,'<ste>','</ste>');
-		
+
 			//construir la url
 			var pos_aux;
 			var aux_string = title_thumbs;
-		
+
 			pos_aux = aux_string .indexOf('storage/files/');
 			aux_string = aux_string .substr(pos_aux+14);
 			pos_aux = aux_string .indexOf('/');
 			aux_string = aux_string .substr(pos_aux+1);
 			aux_string = aux_string.replace('tmpsmall/tiles.jpg','');
-		
+
 			var url_video = storage_path + 'storage/files/' + aux_string + video_name + '?burst=' + movie_burst + '&u=' + burst_speed + '&' + ste;
-		
+
 			showtime.sleep(1000);
-		
+
 			//showtime.trace('Debug: ' + url_video);
 			//"http://e1.magnovideo.com:8080/storage/files/0/15/107/52/1.mp4?burst=5905k&u=600k&md=3LOQPhshwrZSW1knDdUGiA&e=1391099841"
 			//http://www.magnovideo.com/player_config.php?mdid="+id_video+"&sml=1&autoplay=true
 			//http://www.magnovideo.com/?v=JCRFATY
 			//http://www.magnovideo.com/player_config.php?mdid=JCRFATY&sml=1&autoplay=true
-		
+
 		return url_video;
 		}
-			
+
 	}
 	HostFactory.registrarHost("magnovideo",Magnovideo); //Registrar la clase Magnovideo
-	
+
 	/********************************************************************************	
 	/* var Mightyupload: Objeto que representa el servidor Mightyupload				*
 	/*		Hereda de Host															*
 	/*******************************************************************************/
 	var Mightyupload= function() {
-	
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -470,7 +470,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -503,19 +503,19 @@
 			}
 		return url_video;
 		}
-		
-		
+
+
 	}
 	HostFactory.registrarHost("mightyupload",Mightyupload); //Registrar la clase Mightyupload
-	
+
 	/********************************************************************************	
 	/* var Movshare: Objeto que representa el servidor Movshare						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Movshare= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -524,7 +524,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -557,18 +557,18 @@
 			}
 		return url_video;
 		}
-			
+
 	}
 	HostFactory.registrarHost("movshare",Movshare); //Registrar la clase Movshare
-	
+
 	/********************************************************************************	
 	/* var Novamov: Objeto que representa el servidor Novamov						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Novamov= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -577,7 +577,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -599,12 +599,12 @@
 					var file = extraer_texto(file_contents,'flashvars.file="','";');
 					var key = extraer_texto(file_contents,'flashvars.filekey="','";');
 					var cid1 = extraer_texto(file_contents,'flashvars.cid="','";');
-		
+
 					file_contents = "";
 					var pos = url_servidor.indexOf('/video/');
 					var url_video = url_servidor.substr(0,pos);
 					url_video = url_video + '/api/player.api.php?file=' + file + '&cid3=undefined&cid1=' + cid1 + 'numOfErrors=0&user=undefined&pass=undefined&key=' + key + '&cid2=undefined';
-		
+
 					showtime.sleep(1000);
 					file_contents = get_urlsource(url_video);
 					url_video = file_contents.substr(4);
@@ -616,19 +616,19 @@
 			}
 		return url_video;
 		}
-		
-		
+
+
 	}
 	HostFactory.registrarHost("novamov",Novamov); //Registrar la clase Novamov
-	
+
 	/********************************************************************************	
 	/* var Nowvideo: Objeto que representa el servidor Nowvideo						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Nowvideo= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -637,7 +637,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -663,12 +663,12 @@
 				var cid1 = extraer_texto(file_contents,'flashvars.cid="','";');
 				var file = extraer_texto(file_contents,'flashvars.file="','";');
 				file_contents = "";
-			
+
 				var pos = url_servidor.indexOf('/video/');
 				var url_video = url_servidor.substr(0,pos);
 				url_video = url_video + '/api/player.api.php?key=' + key + '&cid=' + cid1 + '&cid3=undefined&pass=undefined&user=undefined&file=' + file + '&numOfErrors=0&cid2=undefined';
 				showtime.sleep(1000);
-			
+
 				file_contents = get_urlsource(url_video);
 				url_video = file_contents.substr(4);
 				pos = url_video.indexOf('&');
@@ -676,18 +676,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("nowvideo",Nowvideo); //Registrar la clase nowvideo
-	
+
 	/********************************************************************************	
 	/* var Played: Objeto que representa el servidor Played							*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Played= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -696,7 +696,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -707,11 +707,11 @@
 		{
 			var file_contents = get_urlsource(url_servidor);
 			var error = file_contents.indexOf('<b class="err"')
-	
+
 			if(error==-1)
 			{	
 				url_servidor = 'http://played.to/embed-' + url_servidor.substr(url_servidor.lastIndexOf('/')+1) + '-640x360.html';
-			
+
 				file_contents = get_urlsource(url_servidor);
 				var url_video = extraer_texto(file_contents,'file: "','"');
 				file_contents = "";
@@ -720,18 +720,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("played",Played); //Registrar la clase Playedto
-	
+
 	/********************************************************************************	
 	/* var Streamcloud: Objeto que representa el servidor Streamcloud				*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Streamcloud= function() {
-			
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -740,7 +740,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -762,7 +762,7 @@
 				var hash = extraer_texto(file_contents,'<input type="hidden" name="hash" value="','"');
 				var imhuman = extraer_texto(file_contents,'<input type="submit" name="imhuman" id="btn_download" class="button gray" value="','"');
 				file_contents = ""
-		
+
 				contador = parseInt(contador) + 5;
 				var j;
 				for (j=0;j<parseInt(contador);j++)
@@ -780,18 +780,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("streamcloud",Streamcloud); //Registrar la clase Streamcloud
-	
+
 	/********************************************************************************	
 	/* var Videobam: Objeto que representa el servidor Videobam						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Videobam= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -800,7 +800,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -821,18 +821,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("videobam",Videobam); //Registrar la clase Videobam
-	
+
 	/********************************************************************************	
 	/* var Videoweed: Objeto que representa el servidor Videoweed					*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Videoweed= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -841,7 +841,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -857,12 +857,12 @@
 				var file = extraer_texto(file_contents,'flashvars.file="','";');
 				var key = extraer_texto(file_contents,'flashvars.filekey="','";');
 				var cid1 = extraer_texto(file_contents,'flashvars.cid="','";');
-		
+
 				file_contents = "";
 				var pos = url_servidor.indexOf('/file/');
 				var url_video = url_servidor.substr(0,pos);
 				url_video = url_video + '/api/player.api.php?file=' + file + '&cid3=undefined&cid1=' + cid1 + 'numOfErrors=0&user=undefined&pass=undefined&key=' + key + '&cid2=undefined';
-		
+
 				//showtime.trace('Debug ' + url_video);
 				showtime.sleep(1000);
 				file_contents = get_urlsource(url_video);
@@ -874,18 +874,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("videoweed",Videoweed); //Registrar la clase Videoweed
-	
+
 	/********************************************************************************	
 	/* var Vidspot: Objeto que representa el servidor Vidspot						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Vidspot= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -894,7 +894,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -914,13 +914,13 @@
 				var referer = extraer_texto(file_contents,'<input type="hidden" name="referer" value="','"');
 				var method_free = extraer_texto(file_contents,'<input type="hidden" name="method_free" value="','"');		
 				file_contents = ""
-		
+
 				showtime.sleep(1000);
 
 				var datos_post = {'op':op,'usr_login':usr_login,'id':id,'fname':fname,'referer':referer,'method_free':method_free,'x':'109','y':'17'};
 				file_contents = post_urlsource(url_servidor,datos_post);
 				var url_video = extraer_texto(file_contents,'file: "','"');
-		
+
 				var aux_string = extraer_texto(file_contents,'"sources" : [',']');
 				var pos_ini = aux_string.lastIndexOf('"file"');
 				aux_string = aux_string.substr(pos_ini);
@@ -931,18 +931,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("vidspot",Vidspot); //Registrar la clase Vidspot
-	
+
 	/********************************************************************************	
 	/* var Vk: Objeto que representa el servidor Vk									*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Vk= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -951,7 +951,7 @@
 		this.esservidoradulto= function () {
 			return false;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -974,18 +974,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("vk",Vk); //Registrar la clase Vk
-	
+
 	/********************************************************************************	
 	/* var Redtube: Objeto que representa el servidor Redtube						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Redtube= function() {
-			
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -994,7 +994,7 @@
 		this.esservidoradulto= function () {
 			return true;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -1014,18 +1014,18 @@
 			}
 		return url_video;	
 		}
-		
+
 	}
 	HostFactory.registrarHost("redtube",Redtube); //Registrar la clase Redtube
-	
+
 	/********************************************************************************	
 	/* var Xhamster: Objeto que representa el servidor Xhamster						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Xhamster= function() {
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -1034,7 +1034,7 @@
 		this.esservidoradulto= function () {
 			return true;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -1054,18 +1054,18 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("xhamster",Xhamster); //Registrar la clase Xhamster
-	
+
 	/********************************************************************************	
 	/* var Xvideos: Objeto que representa el servidor Xvideos						*
 	/*		Hereda de Host															*
 	/********************************************************************************/
 	var Xvideos= function() {
-	
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
 		/*	Parametros: ninguno													*
@@ -1074,7 +1074,7 @@
 		this.esservidoradulto= function () {
 			return true;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
@@ -1093,13 +1093,13 @@
 			}
 		return url_video;
 		}
-		
+
 	}
 	HostFactory.registrarHost("xvideos",Xvideos); //Registrar la clase Xvideos
 //servidores de video
 //
-	
-		
+
+
 //
 //servidores de contenidos
 	/********************************************************************************************************	
@@ -1148,12 +1148,12 @@
 					var nuevaClase= new clase;
 					nuevaClase.categoria= clase.categoria();
 					nuevaClase.name=tipo;
-					
+
 					return nuevaClase;
 				}else{
 					return null;
 				}
-				
+
 			},
 			registrarCanal: function ( tipo, clase ) 
 			{
@@ -1174,7 +1174,7 @@
 			}
 		};
 	})();
-	
+
 	/********************************************************************************	
 	/* var Canal: Objeto que representa un servidor de contenidos generico del que	*
 	/* heredan el resto de servidores. Es el origen de los listados de peliculas,	*
@@ -1193,7 +1193,7 @@
 		this.name;
 		this.categoria; //peliculas, series, anime, etc...
 
-		
+
 		//Metodos Publicos
 		/****************************************************************************
 		/*	funcion cuadroBuscar: Muestra el cuadro de dialogo 'Buscar'. 			*
@@ -1206,10 +1206,10 @@
 			var texto_busqueda;
 			var search = showtime.textDialog(text?text:'Buscar: ', true, true);
 			if ((!search.rejected) && (search.input.length > 0)) texto_busqueda=search.input;
-			
+
 			return texto_busqueda;
 		}
-		
+
 		//Metodos Publicos que seran redefinidos por las clases herederas
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
@@ -1217,7 +1217,7 @@
 		/*	Retorna: Array de objetos Item_menu									*
 		/************************************************************************/
 		this.getmenu= function(){return [];}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -1227,7 +1227,7 @@
 		/*	Retorna: Array de objetos Item_menu											    *
 		/************************************************************************************/
 		this.getplaylist= function (page, tipo, url) {return [];}
-		
+
 		/************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
 		/*							servidores soportados. 								    *
@@ -1236,7 +1236,7 @@
 		/*	Retorna: Array de servidores												    *
 		/************************************************************************************/
 		this.getservidores= function (url) {return [];}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	*
 		/*	Parametros:																*
@@ -1244,25 +1244,25 @@
 		/*	Retorna: String que representa la url									*
 		/***************************************************************************/
 		this.geturl_host= function (url){return url;}
-		
+
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
 		/*	Parametros: ninguno																*
 		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
 		this.getitem_alfabeto= function() {return {};}
-		
+
 	}	
-	
-		
+
+
 	/****************************************************************************
 	/* var Newpct: Objeto que representa el canal NewPCT en Peliculas	*
 	/****************************************************************************/
 	var Newpct= function () {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -1279,7 +1279,7 @@
 
 			return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -1291,7 +1291,7 @@
 		this.getplaylist= function (page, tipo, url) {
 		//Retorna el playlist del tipo solicitado
 
-		
+
 		var array_playlist=[];
 		switch (tipo)
 			{
@@ -1337,7 +1337,7 @@
 			}
 		return array_playlist;
 		}
-	
+
 		/************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 		*
 		/*							servidores soportados. 								    *
@@ -1359,7 +1359,7 @@
 		var idioma;
 		var calidad;
 		var descripcion;
-				
+
 		//check login
 
 		file_contents = that.checkloginnewpct(url, file_contents);
@@ -1370,17 +1370,17 @@
 			titulo = extraer_texto(titulo ,'">','</a>');
 			imagen = extraer_texto(file_contents ,'<meta property="og:image" content="','" />');
 			descripcion = extraer_texto(file_contents ,"<div class='sinopsis'>","</div>");
-			
+
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
-			
+
+
 			file_contents = extraer_texto(file_contents,"<thead id='ver-online'>","</table>");
 			file_contents = extraer_texto(file_contents,'<tbody>','</tbody>');
 			//<tr to </tr>
 			var array_aux = extraer_html_array(file_contents,'<tr','</tr>');
 			file_contents = "";
 
-			
+
 			var array_aux2=[];
 			for (var i=0;i<array_aux.length;i++)
 				{
@@ -1391,14 +1391,14 @@
 					servidor = extraer_texto(array_aux2[0],'<td>','</td>');	
 					idioma = extraer_texto(array_aux2[1],'<td>','</td>');
 					calidad = extraer_texto(array_aux2[2],'<td>','</td>');
-					
+
 					var params={
 							"url_host" : url_host,
 							"servidor" : servidor,
 							"idioma" : idioma,
 							"calidad" : calidad
 							};
-	
+
 					var objHost=HostFactory.createHost(servidor,params)
 					if (objHost)
 						{ 
@@ -1406,11 +1406,11 @@
 						} 
 					}
 				}
-	
+
 			}
 		return array_servidores;
 		}
-	
+
 		/****************************************************************************
 		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	*
 		/*	Parametros:																*
@@ -1420,7 +1420,7 @@
 		this.geturl_host= function (url){
 			return url;	
 		}
-		
+
 
 		//Estos metodos son publicos para poder acceder desde los herederos
 		this.checkloginnewpct= function (url_servidor, file_contents)
@@ -1496,7 +1496,7 @@
 		var imagen;
 		var url_video;
 		var array_playlist=[];
-		
+
 		for (var i=0;i<array_aux.length;i++)
 			{
 			titulo=extraer_texto(array_aux[i],'<h3>','</h3>');
@@ -1539,7 +1539,7 @@
 			var resultados = file_contents.indexOf('No hemos encontrado resultados');
 
 			page.metadata.title = page.metadata.title + texto_busqueda;
-			
+
 			if(resultados==-1)
 				{
 				var aux_string = extraer_texto(file_contents ,'<tbody>','</tbody>');
@@ -1557,7 +1557,7 @@
 						{
 						titulo=extraer_texto(array_aux[i],'title="Descargar ','"');
 						url_video=extraer_texto(array_aux[i],'<a href="','"');
-						
+
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 						}
 					}
@@ -1567,7 +1567,7 @@
 
 		return array_playlist;
 		}
-	
+
 
 		this.parsenewpcttipodefault = function(url_servidor,params){
 			url_servidor=unescape(url_servidor);
@@ -1577,10 +1577,10 @@
 			//check_login
 			file_contents = that.checkloginnewpct(url_servidor, file_contents);
 			if(file_contents!=false) array_playlist= this.parsenewpct (params);
-						
+
 		return array_playlist;
 		}
-		
+
 
 	}
 	//Propiedades y metodos Estaticos
@@ -1595,7 +1595,7 @@
 	var Peliculaspepito= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -1611,10 +1611,10 @@
 				new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:peliculaspepito:num'),
 				new Item_menu('Buscar','views/img/search.png',':vercontenido:peliculaspepito:tipobusqueda:' + escape('http://www.peliculaspepito.com/buscador'))
 				];
-		
+
 			return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -1648,7 +1648,7 @@
 				}	
 		return array_playlist;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 		*
 		/*							servidores soportados. 								    *
@@ -1669,7 +1669,7 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
+
 			//item_Actual
 			titulo = extraer_texto(aux_string, '<h1>','</h1>');
 			imagen = extraer_texto(aux_string, 'src="','"');
@@ -1678,16 +1678,16 @@
 			descripcion = descripcion.replace(/<\/p>/g,'');
 			descripcion = descripcion.replace(/<div class="ficha_peli"><span>/g,'');
 			descripcion = descripcion.replace(/<\/span>/g,'');
-			
+
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);	
-			
+
 			aux_string = extraer_texto(file_contents, '</thead>','</table>');
 			file_contents = "";
-	
+
 			var array_aux = extraer_html_array(aux_string,'<tr>','</tr>');
-		
+
 			var array_servidores=[];
-		
+
 			for (var i=0;i<array_aux.length;i++)
 				{
 				url_host=extraer_texto(array_aux[i],'href="','"');
@@ -1709,14 +1709,14 @@
 						break;
 					}
 				calidad = extraer_texto(array_aux[i],'class="tdcalidad">','</td>').replace(/&nbsp;/g,' ');
-			
+
 				var params={
 							"url_host" : url_host,
 							"servidor" : servidor,
 							"idioma" : idioma,
 							"calidad" : calidad
 							};
-	
+
 					var objHost=HostFactory.createHost(servidor,params)
 					if (objHost)
 						{
@@ -1726,7 +1726,7 @@
 			array_servidores.sortBy('idioma');
 			return array_servidores;
 		}
-		
+
 		/****************************************************************************
 		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)					*
@@ -1737,7 +1737,7 @@
 		this.geturl_host= function (url){
 			return extraer_texto(get_urlsource(url),'title="Bajar..." href="','">'); 
 		}
-	
+
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
 		/*	Parametros: ninguno																*
@@ -1746,9 +1746,9 @@
 		this.getitem_alfabeto= function() {
 			return (new Item_menu("Peliculas Pepito - Orden Alfabetico","views/img/folder.png",':vercontenido:peliculaspepito:tipolistado:','http://www.peliculaspepito.com/lista-peliculas/'))
 		}
-	
+
 		//Metodos Privados
-		
+
 	function parsepeliculaspepitotipo1(url_servidor, tipo, page)
 		{
 		//http://www.peliculaspepito.com (ultimosestrenoscine,nuevocontenido,masvisto,masvotado)
@@ -1775,7 +1775,7 @@
 				break;
 				}
 		page.metadata.title = 'Peliculas Pepito - ' + titulo_pagina;
-	
+
 
 		var file_contents = get_urlsource(url_servidor);
 		var aux_string = extraer_texto(file_contents, corte_string, '</ul>');
@@ -1794,7 +1794,7 @@
 			url_video=extraer_texto(array_aux[i],'href="','"');
 			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 			}
-		
+
 		return array_playlist;
 		}
 
@@ -1802,28 +1802,28 @@
 		{
 		url_servidor=unescape(url_servidor) + '/';
 		var file_contents = get_urlsource(url_servidor);
-		
+
 		var aux_string = extraer_texto(file_contents,'<ul class="ullistadoalfa">','</ul>');
 		var array_aux = extraer_html_array(aux_string,'<li>','</li>');
-		
+
 		var titulo;
 		var imagen = "views/img/folder.png";
 
 		var url_video;   
 		var page_uri = ':verenlaces:peliculaspepito:';
-		
+
 		var array_playlist=[];
-		
+
 		for (var i=0;i<array_aux.length;i++)
 		{
 			titulo=extraer_texto(array_aux[i],'title="','"');
 			url_video=extraer_texto(array_aux[i],'href="','"');
 			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 		}
-		
+
 		return array_playlist;
 		}
-	
+
 	function parsepeliculaspepitotipobusqueda(url_servidor, page)
 		{
 		url_servidor=unescape(url_servidor);
@@ -1835,7 +1835,7 @@
 				texto_busqueda = texto_busqueda.replace(/ /g,'-');
 
 				page.metadata.title = 'Peliculas Pepito - Buscar ' + texto_busqueda;
-		
+
 				var file_contents = get_urlsource(url_servidor + '/' + texto_busqueda + '/');
 
 				var resultados = file_contents.indexOf('o hemos encontrado');
@@ -1855,15 +1855,15 @@
 						titulo=extraer_texto(array_aux[i],'title="','"');
 						imagen=extraer_texto(array_aux[i],'src="','"');
 						url_video=extraer_texto(array_aux[i],'href="','"');
-				
+
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));		
 						}
 				}
 			}
-		
+
 		return array_playlist;
 		}
-		
+
 	}
 	//Propiedades y metodos Estaticos
 	Peliculaspepito.categoria= function() {return 'peliculas';}
@@ -1892,7 +1892,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -1924,7 +1924,7 @@
 			}
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -1936,7 +1936,7 @@
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
-			
+
 			var titulo;
 			var imagen;
 			var url_video;
@@ -1944,24 +1944,24 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
+
 			//item_Actual
 			titulo = extraer_texto(file_contents, '<div class="stage_navigation movie_navigation">','</div>');
 			titulo = extraer_texto(titulo, '<a href="','a>');
 			titulo = extraer_texto(titulo, 'name">','</');
 			imagen = extraer_texto(file_contents, '<div class="movie_thumb"><img itemprop="image" src="','"');
 			descripcion = extraer_texto(file_contents ,'<p style="width:460px; display:block;">','</p>');
-			
+
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
+
 
 
 			//aux_string = extraer_texto(file_contents, '</thead>','</table>');
 			var array_aux = extraer_html_array(file_contents,'<table width="100%" cellpadding="0" cellspacing="0" class="movie_version','</table>');
 			file_contents = "";
-		
+
 			var array_servidores=[];
-		
+
 			for (var i=0;i<array_aux.length;i++)
 			{
 				servidor = extraer_texto(array_aux[i],'<span class="version_host">','</span>').replace(/\n/g,'');
@@ -1976,17 +1976,17 @@
 						"idioma" : idioma,
 						"calidad" : calidad
 						};
-	
+
 				var objHost=HostFactory.createHost(servidor,params)
 				if (objHost)
 					{
 						array_servidores.push(objHost);
 					}				
 			}
-		
+
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -1997,8 +1997,8 @@
 		this.geturl_host= function (url){
 			return get_urlheaders(url).headers['Location'];	
 		}
-		
-		
+
+
 		//Estos metodos son publicos para poder acceder desde Vodlyseries
 		this.parsevodlytipobusqueda=function (page, url_servidor,tipo)
 		{
@@ -2014,7 +2014,7 @@
 			}
 		return array_playlist;
 		}
-		
+
 		this.parsevodly = function (url_servidor,tipo)
 		{
 			//http://www.vodly.to/
@@ -2025,14 +2025,14 @@
 			var file_contents = get_urlsource(url_servidor);
 			var array_aux = extraer_html_array(file_contents,'<div class="index_item index_item_ie">','</div>');
 			file_contents = "";
-		
+
 			var titulo;
 			var imagen;
 			var url_video;	
 			var page_uri = ':verenlaces:vodly:';
 			var array_playlist=[];
 			var key;
-			
+
 			switch (tipo)
 			{
 				case "peliculas":
@@ -2043,13 +2043,13 @@
 					page_uri = ':vercontenido:vodlyseries:tiposerie:';
 					break;
 			}
-		
+
 			for (var i=0;i<array_aux.length;i++)
 			{
 				titulo=extraer_texto(array_aux[i],'<h2>','</h2>');
 				imagen=extraer_texto(array_aux[i],'<img src="','"');
 				url_video=extraer_texto(array_aux[i],'<a href="','"');
-		
+
 				//filtrar si es serie o pelicula
 				//si es serie empieza por tv- si es peli por watch-
 				if(url_video.indexOf(key == 0))
@@ -2059,7 +2059,7 @@
 			}
 		return array_playlist;
 		}
-		
+
 	}
 	//Propiedades y metodos Estaticos
 	Vodly.categoria= function() {return 'peliculas';}
@@ -2073,7 +2073,7 @@
 	var PeliculasCoco= function() {	
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -2089,7 +2089,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -2121,7 +2121,7 @@
 			}	
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -2141,55 +2141,55 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-			
+
 			//item_Actual
 			titulo = extraer_texto(file_contents, '<meta property="og:title" content="','"');
 			imagen = extraer_texto(file_contents, '<meta property="og:image" content="','"');
 			descripcion = extraer_texto(file_contents ,'<span class="fn_more">','</span>');
-						
+
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
+
 
 
 			var aux_string = extraer_texto(file_contents, '<table>','</table>');
 			var array_aux = extraer_html_array(aux_string,'</p>','frameborder="0"></iframe>');
 			file_contents = "";
-		
+
 			var array_servidores=[];
-		 
+
 			for (var i=0;i<array_aux.length;i++)
 			{
-			
+
 				if(array_aux[i].indexOf('lang-full/spanish.png')>0) {idioma = 'Español'; }
 				if(array_aux[i].indexOf('lang-full/latino.png')>0) {idioma = 'Latino'; }
 				if(array_aux[i].indexOf('lang-full/vos.png')>0) {idioma = 'V.O.S.'; }
 				url_video = extraer_texto(array_aux[i],'<iframe src="','"');
-			
+
 				if(url_video.indexOf('played.to')>0)
 					{
 					url_video = 'http://played.to/' + extraer_texto(url_video,'embed-','-');
 					}
-			
+
 				servidor = extraer_texto(url_video.toLowerCase(),'//','/').replace('www.','');
 				servidor = servidor.substr(0,servidor.lastIndexOf("."));
-				
+
 				var params={
 						"url_host" : url_video,
 						"servidor" : servidor,
 						"idioma" : idioma,
 						"calidad" : calidad
 						};
-	
+
 				var objHost=HostFactory.createHost(servidor,params)
 				if (objHost)
 					{
 						array_servidores.push(objHost);
 					}				
 			}
-		
+
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -2200,10 +2200,10 @@
 		this.geturl_host= function (url){
 			return url;			
 		}
-		
-		
+
+
 		//Metodos Privados
-		
+
 		function parsepeliculascocotipo1(url_servidor)
 			{
 			//http://www.peliculascoco.pro/index.php?do=cat&category=estrenos
@@ -2221,16 +2221,16 @@
 			var url_video;	
 			var page_uri = ':verenlaces:peliculascoco:';
 			var array_playlist=[];
-		
+
 			for (var i=0;i<array_aux.length;i++)
 				{
 				titulo=extraer_texto(array_aux[i],'title="','"');
 				imagen=extraer_texto(array_aux[i],'<img src="','"');
 				url_video=extraer_texto(array_aux[i],'<a href="','"');
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 			}
-			
+
 		return array_playlist;
 		}
 	}
@@ -2246,7 +2246,7 @@
 	var Pordede= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -2262,7 +2262,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -2294,7 +2294,7 @@
 				}	
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -2314,7 +2314,7 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
+
 			file_contents = this.checkloginpordede(url, file_contents);
 			if(file_contents!=false)
 			{
@@ -2323,7 +2323,7 @@
 				imagen = extraer_texto(file_contents, '<meta property="og:image" content="','"');
 				descripcion = extraer_texto(file_contents ,'<div class="info text" style="max-height: 140px;overflow:hidden">','</div>');
 				descripcion = descripcion.replace(/^\s+|\s+$/g,'');
-				
+
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
 
 
@@ -2333,13 +2333,13 @@
 				file_contents = extraer_texto(file_contents,'<ul class="linksList">','</ul>');
 				var array_aux = extraer_html_array(file_contents,'<form method="POST" target="_blank" ','</form>');
 				file_contents = "";
-		
+
 				var url_video;	
 				var servidor;
 				var idioma;
 				var calidad;
 				var array_servidores=[];
-		 
+
 				for (var i=0;i<array_aux.length;i++)
 				{
 					url_video = extraer_texto(array_aux[i],'action="','"') + '&session=' + session;		
@@ -2347,14 +2347,14 @@
 					idioma = extraer_texto(array_aux[i],'<div class="flag ','"');
 					calidad = extraer_texto(array_aux[i],'<div class="linkInfo quality"><i class="icon-facetime-video"></i>','</div>');
 					calidad = calidad.replace(/^\s+|\s+$/g,'');
-								
+
 					var params={
 						"url_host" : url_video,
 						"servidor" : servidor,
 						"idioma" : idioma,
 						"calidad" : calidad
 						};
-	
+
 					var objHost=HostFactory.createHost(servidor,params)
 					if (objHost)
 						{
@@ -2364,10 +2364,10 @@
 				array_servidores.sort(function(x,y) { return x['calidad'] > y['calidad']});
 				}
 			}
-		
+
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -2379,17 +2379,17 @@
 			var url_servidor = url.substr(0,url.indexOf('&session='));
 			var session = url.substr(url.indexOf('&session=')+9);
 			var url_header = 'error';
-		
+
 			var datos_post = {'_s': session};
 			var file_contents = post_urlsource(url_servidor,datos_post);
-		
+
 			url = 'http://links.pordescargadirecta.com' + extraer_texto(file_contents,'<a class="episodeText" href="','"'); 
 			file_contents = get_urlheaders(url);
 			url_header = file_contents.multiheaders['Location'][0];
-		
+
 		return url_header;	
 		}
-		
+
 
 		this.parsepordedepeliculastipo1 = function (url_servidor, tipo)
 		{
@@ -2513,8 +2513,8 @@
 
 		return valor_retorno;
 		}
-		
-		
+
+
 	}
 	//Propiedades y metodos Estaticos
 	Pordede.categoria= function() {return 'peliculas';}
@@ -2527,7 +2527,7 @@
 	/************************************************************************************/
 	var LiveStream= function() {	
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
-		
+
 		var xml_list=[
 			new Item_menu('GURB','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de GURB:' + escape('http://pastebin.com/raw.php?i=F7YMkysY'), 'http://pastebin.com/raw.php?i=F7YMkysY'),
 			new Item_menu('LARGOBARBATE','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de LARGOBARBATE:' + escape('http://pastebin.com/raw.php?i=YqG2TELL'), 'http://pastebin.com/raw.php?i=YqG2TELL'),
@@ -2538,39 +2538,39 @@
 			//new Item_menu('Plugins XBMC','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Plugins XBMC:' + escape('http://dl.dropboxusercontent.com/u/241193960/pluginsxbmc.xml'), 'http://dl.dropboxusercontent.com/u/241193960/pluginsxbmc.xml'),
 			new Item_menu('PiKoMuLe','img/pikomule.png',':vercontenido:livestream:Lista de PiKoMuLe:' + escape('http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml'), 'http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml')	
 			];
-			
+
 		//Añadir lista service.urlxml_liveStream si existe
 			if ((service.urlxml_liveStream.startsWith('http') && service.urlxml_liveStream.endsWith('.xml')) || service.urlxml_liveStream.startsWith('http://pastebin.com'))
 				{
 				xml_list.push(new Item_menu('Personal','views/img/folder.png',':vercontenido:livestream:lista:' + escape(service.urlxml_liveStream),service.urlxml_liveStream)); 
 				}	
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
 		/*	Retorna: Array de objetos Item_menu									*
 		/************************************************************************/
 		this.getmenu= function(){
-		
+
 			var array_menu=[];
-				
+
 			for (var i=0;i<xml_list.length;i++){
 				var objItem=xml_list[i];
-				
+
 				//Obtener fecha de actualizacion
 				var fecha=getDate(objItem.url);
 				if (fecha !='') objItem.titulo=objItem.titulo + ' \n(' + fecha + ')';	
-								
+
 				array_menu.push(objItem)
 			}
-			
+
 			array_menu.push(new Item_menu('Todo','views/img/folder.png',':vercontenido:livestream:todos:default')); 
-		
+
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -2597,11 +2597,11 @@
 					array_playlist=parselivestreamxmltipo1(url);
 					break;
 			}
-			
-			
+
+
 			return array_playlist.sortBy('titulo');
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -2616,7 +2616,7 @@
 		var array_servidores=[];
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -2629,19 +2629,19 @@
 			//La mantenemos por coherencia
 			return url;		
 		}
-		
-		
+
+
 		//Metodos Privados	
 		function parselivestreamxmltipo1(url_xml)
 		{
 			//url_xml=unescape(url_xml);
-			
+
 			var file_contents = get_urlsource(url_xml);
 
 			//Recuperamos todos los <item> en forma de array
 			var array_aux = extraer_html_array(file_contents,'<item>', '</item>');
 			file_contents = "";
-		
+
 			var titulo;
 			var imagen;
 			var imagen_default = plugin.path + "img/tvonline.png";
@@ -2667,7 +2667,7 @@
 						imagen = extraer_texto(array_aux[i], '<thumbnail>', '</thumbnail>');
 
 						if (imagen == "") {imagen = imagen_default};
-						
+
 						page_uri = ':vervideo:livestream:StreamsRtmp:' + escape(titulo) + ':' + escape(imagen) + ':' ;						
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 					}
@@ -2676,7 +2676,7 @@
 			if (array_playlist.length==0) array_playlist= parselivestreamxmltipodir (url_xml); //Comprobamos si es una recopilacion de Listas Xml
 		return array_playlist;
 		}
-		
+
 		function parselivestreamxmltipodir (url_xml)
 		{
 			var array_playlist=[];
@@ -2685,28 +2685,28 @@
 			//Recuperamos todos los <dir> en forma de array
 			var array_aux = extraer_html_array(file_contents,'<dir>', '</dir>');
 			file_contents = "";
-		
+
 			for (var i=0;i<array_aux.length;i++)
 			{
 				array_playlist=array_playlist.concat(parselivestreamxmltipo1(extraer_texto(array_aux[i], '<link>', '</link>')))
 			}
 		return array_playlist;
 		}
-		
+
 		function getDate(url_xml)
 		{
 			url_xml=unescape(url_xml);
 			var aux;
-			
+
 			var file_contents = get_urlsource(url_xml).toLowerCase();
-		
+
 			var texto= extraer_texto(file_contents,'actualiza','</');
 			aux=texto.match(/\d{1,2}(\/|-)\d{1,2}(\/|-)\d{2,4}/);
-			
+
 			return aux?aux[0]:'';
 		}
-		
-		
+
+
 	}
 	//Propiedades y metodos Estaticos
 	LiveStream.categoria= function() {return 'tvonline';}
@@ -2719,9 +2719,9 @@
 	/************************************************************************************/
 	var SpliveTV= function() {	
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -2739,7 +2739,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -2750,14 +2750,14 @@
 		/************************************************************************************/
 		this.getplaylist= function (page, tipo, url) {
 			var array_playlist=[];
-		
+
 			page.metadata.title =tipo; //En este caso el tipo es el titulo de la page
-			
+
 			array_playlist=parsesplivetvxmltipo1(url);
-			
+
 		return array_playlist.sortBy('titulo');
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -2771,7 +2771,7 @@
 			var array_servidores=[];
 			return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -2784,28 +2784,28 @@
 			//La mantenemos por coherencia
 			return url;		
 		}
-		
-		
+
+
 		//Metodos Privados
 		function parsesplivetvxmltipo1(url_xml){
 			url_xml=unescape(url_xml);
-			
+
 			var titulo;
 			var imagen;
 			var imagen_default =  "img/tvonline.png";
 			var url_video;	
 			var page_uri;
 			var array_playlist=[];
-			
+
 			var file_contents = get_urlsource(url_xml);
-		
+
 			//Recuperamos todos los <channel> en forma de array
 			var array_aux = extraer_html_array(file_contents,'<channel>', '</channel>');
 			file_contents = "";
-		
+
 			for (var i=0;i<array_aux.length;i++)
 			{
-				
+
 				url_video = extraer_texto(array_aux[i], '<rtmp>', '</rtmp>');
 				//Añado el canal al listado si esta disponible y el protocolo es rtmp
 				if (extraer_texto(array_aux[i], '<available>', '</available>') == 1 && url_video.startsWith("rtmp"))
@@ -2813,14 +2813,14 @@
 					titulo = extraer_texto(array_aux[i], '<name>', '</name>').trim()
 					imagen = extraer_texto(array_aux[i], '<link_logo>', '</link_logo>');
 					page_uri = ':vervideo:SpliveTV:StreamsRtmp:' + escape(titulo) + ':' + escape(imagen) + ':' ;
-				
+
 					array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 				}
 			}
-		
+
 		return array_playlist;
 		}
-		
+
 	}
 	//Propiedades y metodos Estaticos
 	SpliveTV.categoria= function() {return 'tvonline';}
@@ -2834,7 +2834,7 @@
 	var SeriesPepito= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -2851,7 +2851,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -2882,7 +2882,7 @@
 			}
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXcapitulo (url)	*
@@ -2895,7 +2895,7 @@
 			url=unescape(url);
 
 			var file_contents = get_urlsource(url);
-			
+
 			var titulo;
 			var imagen;
 			var url_video;
@@ -2903,23 +2903,23 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
+
 			//item_Actual
 			titulo = extraer_texto(file_contents ,'<div class="dtitulo">','</div>');
 			titulo = extraer_texto(titulo ,'<h2>','</h2>');
 			imagen = extraer_texto(file_contents ,'<img class="img-polaroid imgcolserie"','</center>');
 			imagen = extraer_texto(imagen ,'src="','"');
 			descripcion = '';
-			
+
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
 
 			var aux_string = extraer_texto(file_contents, '</thead>','</table>');
 			file_contents = "";
-	
+
 			var array_aux = extraer_html_array(aux_string,'<tr>','</tr>');
-	
+
 			var array_servidores=[];
-		
+
 			for (var i=0;i<array_aux.length;i++)
 				{
 				url_video=extraer_texto(array_aux[i],'href="','"');
@@ -2945,7 +2945,7 @@
 						"idioma" : idioma,
 						"calidad" : calidad
 						};
-	
+
 				var objHost=HostFactory.createHost(servidor,params)
 				if (objHost)
 					{
@@ -2954,7 +2954,7 @@
 				}	
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -2965,7 +2965,7 @@
 		this.geturl_host= function (url){ 
 			return extraer_texto(get_urlsource(url),'title="Ver..." href="','">');	
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
 		/*	Parametros: ninguno																*
@@ -2974,17 +2974,17 @@
 		this.getitem_alfabeto= function() {
 			return (new Item_menu("Series Pepito - Orden Alfabetico","views/img/folder.png",':vercontenido:seriespepito:tipolistado:','http://www.seriespepito.com/lista-series-'))
 		}
-		
+
 		//Metodos Privados
-				
+
 		function parseseriespepitotipoultimoscapitulos(url_servidor, page)
 			{
 			//http://www.seriespepito.com/nuevos-capitulos/
 			url_servidor=unescape(url_servidor);
 			page.metadata.title = 'Series Pepito - Ultimos Capitulos';
-		
+
 			var file_contents = get_urlsource(url_servidor);
-		
+
 			var aux_string = extraer_texto(file_contents, 'lista_series', '</ul>');
 			var array_aux = extraer_html_array(aux_string,'<li>','</li>');
 
@@ -3000,10 +3000,10 @@
 				imagen=extraer_texto(array_aux[i],'src="','"');
 				url_video=extraer_texto(array_aux[i],'&nbsp;<a title="','>');
 				url_video=extraer_texto(url_video,'href="','"');
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 				}
-		
+
 		return array_playlist;
 		}
 
@@ -3027,7 +3027,7 @@
 				{
 				titulo=extraer_texto(array_aux[i],'title="','"');
 				url_video=extraer_texto(array_aux[i],'href="','"');
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 				}
       
@@ -3041,9 +3041,9 @@
 			url_servidor=unescape(url_servidor);
 
 			page.metadata.title = 'Series Pepito - Listado Series';
-		
+
 			var file_contents = get_urlsource(url_servidor);
-		
+
 			var aux_string = extraer_texto(file_contents, '<ul class="lista_series">', '</ul>');
 			var array_aux = extraer_html_array(aux_string,'<li>','</li>');
 
@@ -3059,10 +3059,10 @@
 				titulo=extraer_texto(array_aux[i],'title="','"');
 				imagen=extraer_texto(array_aux[i],'src="','"');
 				url_video=extraer_texto(array_aux[i],'href="','"');
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 				}
-		
+
 		return array_playlist;
 		}
 
@@ -3071,14 +3071,14 @@
 			//buscar
 			url_servidor=unescape(url_servidor);
 			var array_playlist=[];
-			
+
 			var texto_busqueda=that.cuadroBuscar();
 			if ( texto_busqueda != undefined) 
 				{
 					texto_busqueda = texto_busqueda.replace(/ /g,'-');
 
 					page.metadata.title = 'Series Pepito - Buscar ' + texto_busqueda;
-		
+
 					var file_contents = get_urlsource(url_servidor + '/' + texto_busqueda + '/');
 
 					var resultados = file_contents.indexOf('o hemos encontrado');
@@ -3099,15 +3099,15 @@
 							titulo=extraer_texto(array_aux[i],'title="','"');
 							imagen=extraer_texto(array_aux[i],'src="','"');
 							url_video=extraer_texto(array_aux[i],'href="','"');
-					
+
 							array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 							}
 					}
 				}
-				
+
 		return array_playlist;
 		}
-		
+
 		function parseseriespepitoserie(url_serie, page)
 			{
 			url_serie=unescape(url_serie);
@@ -3126,7 +3126,7 @@
 			imagen = extraer_texto(imagen ,'src="','"');		
 			//descripcion = extraer_texto(file_contents ,'<div id="description"> <p> ',' ... <a');
 			//imagen=plugin.path + "views/img/folder.png";
-		
+
 			file_contents = extraer_texto(file_contents,'<div class="accordion"','</div></div></div></div>');
 			var array_aux = extraer_html_array(file_contents,'<tr><td>','</td></tr>');
 			file_contents = "";
@@ -3138,13 +3138,13 @@
 				//titulo=titulo.replace('</strong> ','');
 				//imagen=extraer_texto(array_aux[i],'src="','"');
 				url_video=extraer_texto(array_aux[i],'href="','"');
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 				}
-		
+
 		return array_playlist;
 		}
-		
+
 	}
     //Propiedades y metodos Estaticos
 	SeriesPepito.categoria= function() {return 'series';}
@@ -3158,7 +3158,7 @@
 	var Vodlyseries= function() {	
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -3175,7 +3175,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -3214,7 +3214,7 @@
 			}
 		return array_playlist;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -3225,8 +3225,8 @@
 		this.geturl_host= function (url){
 			return get_urlheaders(url).headers['Location'];		
 		}
-		
-		
+
+
 		//Metodos Privados		
 		function parsevodlyseriestipolatest(url_servidor)
 			{
@@ -3265,7 +3265,7 @@
 			url_servidor=unescape(url_servidor);
 			var file_contents = get_urlsource(url_servidor);
 			var array_aux = extraer_html_array(file_contents,'<div class="tv_episode_item">','</div>');
-			
+
 			var titulo = extraer_texto(file_contents,'<meta property="og:title" content="','"');
 			page.metadata.title = titulo;
 			var imagen = extraer_texto(file_contents ,'<div class="movie_thumb"><img itemprop="image" src="','"');
@@ -3274,12 +3274,12 @@
 			var page_uri = ':verenlaces:vodly:';
 			var array_playlist=[];
 			file_contents = "";
-			
+
 			for (var i=0;i<array_aux.length;i++)
 				{
 				titulo=extraer_texto(array_aux[i],'title="','"');
 				url_video=extraer_texto(array_aux[i],'<a href="','"');
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 			}
       return array_playlist;
@@ -3298,7 +3298,7 @@
 	var Pordedeseries= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -3350,7 +3350,7 @@
 				}	
 		return array_playlist;
 		}		
-		
+
 
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
@@ -3370,7 +3370,7 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-			
+
 			file_contents = this.checkloginpordede(url, file_contents);
 			if(file_contents!=false)
 			{
@@ -3379,24 +3379,24 @@
 				imagen = extraer_texto(file_contents, '<meta property="og:image" content="','"');
 				imagen = "views/img/folder.png";
 				descripcion = '';
-				
+
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
 
 				//var url_enlaces = 'http://www.pordede.com' + extraer_texto(file_contents, '<span class="title defaultPopup" href="','"');
 				//showtime.trace('Debug   :'  + url_enlaces);
 				//file_contents = get_urlsource(url_enlaces);
-				
+
 				var session = extraer_texto(file_contents, 'SESS = "','"');
 				file_contents = extraer_texto(file_contents,'<ul class="linksList">','</ul>');
 				var array_aux = extraer_html_array(file_contents,'<form method="POST" target="_blank" ','</form>');
 				file_contents = "";
-		
+
 				var url_video;	
 				var servidor;
 				var idioma;
 				var calidad;
 				var array_servidores=[];
-		 
+
 				for (var i=0;i<array_aux.length;i++)
 				{
 					url_video = extraer_texto(array_aux[i],'action="','"') + '&session=' + session;		
@@ -3404,14 +3404,14 @@
 					idioma = extraer_texto(array_aux[i],'<div class="flag ','"');
 					calidad = extraer_texto(array_aux[i],'<div class="linkInfo quality"><i class="icon-facetime-video"></i>','</div>');
 					calidad = calidad.replace(/^\s+|\s+$/g,'');
-								
+
 					var params={
 						"url_host" : url_video,
 						"servidor" : servidor,
 						"idioma" : idioma,
 						"calidad" : calidad
 						};
-	
+
 					var objHost=HostFactory.createHost(servidor,params)
 					if (objHost)
 						{
@@ -3421,10 +3421,10 @@
 				array_servidores.sort(function(x,y) { return x['calidad'] > y['calidad']});
 				}
 			}
-		
+
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -3436,20 +3436,20 @@
 			var url_servidor = url.substr(0,url.indexOf('&session='));
 			var session = url.substr(url.indexOf('&session=')+9);
 			var url_header = 'error';
-		
+
 			var datos_post = {'_s': session};
 			var file_contents = post_urlsource(url_servidor,datos_post);
-		
+
 			url = 'http://links.pordescargadirecta.com' + extraer_texto(file_contents,'<a class="episodeText" href="','"'); 
 			file_contents = get_urlheaders(url);
 			url_header = file_contents.multiheaders['Location'][0];
-		
+
 		return url_header;	
 		}
-		
-		
+
+
 		//Metodos Privados
-		
+
 		function parsepordedeseriestipobusqueda(page, url_servidor)	{
 			//http://www.pordede.com/search/
 			var array_playlist=[];
@@ -3463,12 +3463,12 @@
 				}
 			return array_playlist;
 		}
-		
+
 		function parsepordedeserie(page, url_serie)	{
 			//http://www.pordede.com/serie/***************
 			url_serie=unescape(url_serie);
 			var file_contents = get_urlsource(url_serie);
-		
+
 			file_contents = that.checkloginpordede(url_serie, file_contents);
 			if(file_contents!=false)
 				{		
@@ -3500,17 +3500,17 @@
 	Pordedeseries.getitem= function() {return new Item_menu('Pordede',"img/pordede.png",':vercanales:pordedeseries');}
 
 	CanalFactory.registrarCanal("Pordedeseries",Pordedeseries); //Registrar la clase Pordede
-	
+
 	/************************************************************************************************
 	/* var Newpctseries: Objeto que representa el canal Newpctseries en Series. Hereda de Newpct	*
 	/***********************************************************************************************/
 	var Newpctseries= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 
-		
-		
+
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -3525,7 +3525,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -3575,8 +3575,8 @@
 		return array_playlist;
 		}
 
-		
-		
+
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -3588,7 +3588,7 @@
 			var array_servidores=[];
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
-			
+
 			var titulo;
 			var imagen;
 			var url_host;
@@ -3596,7 +3596,7 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
+
 			//check login
 			file_contents = this.checkloginnewpct(url, file_contents);
 			if(file_contents!=false)
@@ -3606,19 +3606,19 @@
 				imagen = extraer_texto(imagen,"src='","'"); 
 				var capitulo = extraer_texto(file_contents,'<h3 class="subtitle" id="subtitle_ficha">','</h3>');
 				capitulo=capitulo.match(/Cap\.\s*\d{3,4}/)
-				
+
 				titulo = extraer_texto(file_contents ,'<h2 class="title" id="title_ficha" itemprop="name"><a href="#content-iframe"','</h2>');
 				titulo = extraer_texto(titulo,'>','</a>') +  ' ' + (capitulo?capitulo[0]:'');
 				descripcion = extraer_texto(file_contents ,' itemprop="description"  >',"</div>"); 
 
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
+
 				file_contents = extraer_texto(file_contents,"<thead id='ver-online'>","</table>");
 				file_contents = extraer_texto(file_contents,'<tbody>','</tbody>');
-			
+
 				var array_aux = extraer_html_array(file_contents,'<tr','</tr>');
 				file_contents = "";
-			
+
 				var array_aux2=[];
 				for (var i=0;i<array_aux.length;i++)
 					{
@@ -3629,14 +3629,14 @@
 						servidor = extraer_texto(array_aux2[0],'<td>','</td>');	
 						idioma = extraer_texto(array_aux2[1],'<td>','</td>');
 						calidad = extraer_texto(array_aux2[2],'<td>','</td>');
-			
+
 						var params={
 							"url_host" : url_host,
 							"servidor" : servidor,
 							"idioma" : idioma,
 							"calidad" : calidad
 						};
-	
+
 						var objHost=HostFactory.createHost(servidor,params)
 						if (objHost)
 							{ 
@@ -3644,11 +3644,11 @@
 							} 
 						}
 					}
-					
+
 			}
 		return array_servidores;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
 		/*	Parametros: ninguno																*
@@ -3657,7 +3657,7 @@
 		this.getitem_alfabeto= function() {
 			return (new Item_menu("NewPct Series HD - Orden Alfabetico","views/img/folder.png",':vercontenido:newpctseries:alfabeto:'));
 		}
-		
+
 
 		//Metodos privados
 		function parsenewpctseriesCapitulos (url_servidor)
@@ -3665,23 +3665,23 @@
 			url_servidor=unescape(url_servidor);
 			var file_contents = get_urlsource(url_servidor);
 			var array_aux = extraer_html_array(file_contents,"<li class='subitem","</li>");
-			
+
 			var titulo;
 			var imagen=extraer_texto(file_contents,'<img  itemprop="image" src=',"' alt=").substring(1);
 			file_contents = "";
-			
+
 			var url_video;	
 			var page_uri = ':verenlaces:newpctseries:';
 			var array_playlist=[];
-		
+
 			for (var i=0;i<array_aux.length;i++)
 				{
 				titulo=extraer_texto(array_aux[i],"title='","'>");
 				url_video=extraer_texto(array_aux[i],"<a href='","'");
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 			}
-		
+
 		return array_playlist;	
 		}
 	}
@@ -3699,7 +3699,7 @@
 	var AnimeFlv= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -3717,7 +3717,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -3752,7 +3752,7 @@
 			}
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -3764,7 +3764,7 @@
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
-		
+
 			var titulo;
 			var imagen;
 			var url_video;
@@ -3772,14 +3772,14 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
+
 			//item_Actual
 			titulo = extraer_texto(file_contents ,'<meta property="og:title" content="','"');
 			imagen = plugin.path + 'views/img/folder.png';
 			descripcion = '';
-				
+
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
+
 			var aux_string = extraer_texto(file_contents, 'var videos','};');
 			file_contents = "";
 			var array_aux = extraer_html_array(aux_string,'[',']');
@@ -3792,11 +3792,11 @@
 			//imagen=extraer_texto(file_contents,'<div class="profile-info">','/>');
 			file_contents ="";
 			//imagen=extraer_texto(imagen,'<img src="','"');
-		
+
 			for (var i=0;i<array_aux.length;i++)
 			{
 				array_aux2 = array_aux[i].split(',');
-			
+
 				servidor = array_aux2[9];
 				servidor = servidor.replace(/"/g,'');
 				idioma = array_aux2[0] + ' Sub ' + array_aux2[1];
@@ -3819,7 +3819,7 @@
 						if(url.indexOf('embed.videoweed.es')!='-1') {url = 'http://www.videoweed.es/file/' + extraer_texto(url,'v=','&');}
 						break;									
 				}
-				
+
 				url = url.replace(/(\\\/)/g,'/');
 
 				var params={
@@ -3828,17 +3828,17 @@
 						"idioma" : idioma,
 						"calidad" : calidad
 						};
-	
+
 				var objHost=HostFactory.createHost(servidor,params)
 				if (objHost)
 					{
 						array_servidores.push(objHost);
 					}				
 			}	
-		
+
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -3847,10 +3847,10 @@
 		/*	Retorna: String que representa la url								*
 		/************************************************************************/
 		this.geturl_host= function (url){
-			
+
 			return url;		
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
 		/*	Parametros: ninguno																*
@@ -3859,16 +3859,16 @@
 		this.getitem_alfabeto= function() {
 			return (new Item_menu("AnimeFlv - Orden Alfabetico","views/img/folder.png",':vercontenido:animeflv:tipolistado:','http://animeflv.net/animes/letra/'));
 		}
-		
+
 		//Metodos Privados
 		function parseanimeflvtipoultimoscapitulos(url_servidor, page)
 		{
 			//http://animeflv.net/
 			url_servidor=unescape(url_servidor);
 			page.metadata.title = 'AnimeFLV - Ultimos Episodios Agregados';
-		
+
 			var file_contents = get_urlsource(url_servidor);
-		
+
 			var aux_string = extraer_texto(file_contents, '<h1>Ultimos Episodios Agregados</h1>', '<div class="bloque_der">');
 			var array_aux = extraer_html_array(aux_string,'<a','</a>');
 
@@ -3878,7 +3878,7 @@
 			var page_uri = ':verenlaces:animeflv:';
 			var array_playlist=[];
 
-		
+
 			//Empiezo en en i=1 x el q 0 siempre es publicidad
 			/*for (var i=1;i<array_aux.length;i++)
 				{
@@ -3898,21 +3898,21 @@
 				titulo=extraer_texto(array_aux[i],'<span class="tit">','</span>');
 				imagen=extraer_texto(array_aux[i],'src="','"');
 				url_video='http://animeflv.net' + extraer_texto(array_aux[i],'href="','"');
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 			}
-		
+
 		return array_playlist;
 		}
-		
+
 		function parseanimeflvtipomasvistosayer(url_servidor, page)
 		{
 			//http://animeflv.net/
 			url_servidor=unescape(url_servidor);
 			page.metadata.title = 'AnimeFLV - Mas Vistos Ayer';
-		
+
 			var file_contents = get_urlsource(url_servidor);
-		
+
 			var aux_string = extraer_texto(file_contents, '<ul class="lista_simple lista_estrella">', '</ul>');
 			var array_aux = extraer_html_array(aux_string,'<li>','</li>');
 
@@ -3921,26 +3921,26 @@
 			var url_video;	
 			var page_uri = ':verenlaces:animeflv:';
 			var array_playlist=[];
-		
+
 			for (var i=0;i<array_aux.length;i++)
 			{
 				titulo=extraer_texto(array_aux[i],'">','</a></li>');
 				url_video='http://animeflv.net' + extraer_texto(array_aux[i],'href="','">');
-				
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 			}
-		
+
 		return array_playlist;
 		}
-		
+
 		function parseanimeflvtipoultimasentradas(url_servidor, page)
 		{
 			//http://animeflv.net/
 			url_servidor=unescape(url_servidor);
 			page.metadata.title = 'AnimeFLV - Ultimas Entradas';
-		
+
 			var file_contents = get_urlsource(url_servidor);
-		
+
 			var aux_string = extraer_texto(file_contents, '<ul class="lista_simple lista_tv">', '</ul>');
 			var array_aux = extraer_html_array(aux_string,'<li>','</li>');
 
@@ -3949,18 +3949,18 @@
 			var url_video;	
 			var page_uri = ':vercontenido:animeflv:tiposerie:';
 			var array_playlist=[];
-		
+
 			for (var i=0;i<array_aux.length;i++)
 			{
 				titulo=extraer_texto(array_aux[i],'">','</a></li>');
 				url_video='http://animeflv.net' + extraer_texto(array_aux[i],'href="','">');
-							
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));						
 			}
-		
+
 		return array_playlist;
 		}
-		
+
 
 		function parseanimeflvtipolistado(url_servidor, page)
 		{
@@ -3976,7 +3976,7 @@
 			var url_video;	
 			var page_uri = ':vercontenido:animeflv:tiposerie:';
 			var array_playlist=[];
-			
+
 			titulo=extraer_texto(file_contents,'/" class="actual">','</a>');
 			page.metadata.title = 'AnimeFLV - ' + titulo;
 
@@ -4002,13 +4002,13 @@
 				var pos_ini = aux_string.lastIndexOf('<a href="')
 				aux_string = aux_string.substr(pos_ini);
 				aux_string = extraer_texto(aux_string,'<a href="','"');
-				
+
 				array_playlist.push(new Item_menu('Siguiente',"views/img/siguiente.png",page_uri,'http://animeflv.net' + aux_string));
 			}
-			
+
 		return array_playlist;
 		}
-		
+
 
 		function parseanimeflvtipobusqueda(url_servidor,page)
 		{
@@ -4040,11 +4040,11 @@
 							titulo=extraer_texto(array_aux[i],'title="','"');
 							imagen=extraer_texto(array_aux[i],'data-original="','"');
 							url_video='http://animeflv.net' + extraer_texto(array_aux[i],'<a href="','"');
-							
+
 							array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 						}
 
-				
+
 						//Paginador	
 						aux_string = extraer_texto(file_contents,'<div class="pagin">','</div>');
 						file_contents = "";
@@ -4056,17 +4056,17 @@
 							var pos_ini = aux_string.lastIndexOf('<a href="')
 							aux_string = aux_string.substr(pos_ini);
 							aux_string = extraer_texto(aux_string,'<a href="','"');
-					
+
 							array_playlist.push(new Item_menu('Siguiente',"views/img/siguiente.png",page_uri,'http://animeflv.net' + aux_string));	
 						}
-						
+
 						return array_playlist;
 					}
 				}
 			showtime.notify('No se encontraron resultados', 3)
 		return array_playlist;
 		}
-		
+
 		function parseanimeflvtiposerie(url_serie, page)
 		{
 			url_serie=unescape(url_serie);
@@ -4076,13 +4076,13 @@
 			var imagen;
 			var url_video;	
 			var page_uri = ':verenlaces:animeflv:';
-		
+
 			titulo=extraer_texto(file_contents,'<h1>','</h1>');
 			page.metadata.title = 'AnimeFLV - ' + titulo;
-			
+
 			imagen = extraer_texto(file_contents ,'<div class="anime_info">','</div>');
 			imagen = extraer_texto(imagen ,'src="','"');		
-		
+
 			file_contents = extraer_texto(file_contents,'<ul class="anime_episodios"','</ul>');
 			var array_aux = extraer_html_array(file_contents,'<li>','</li>');
 			file_contents = "";
@@ -4093,11 +4093,11 @@
 				url_video= extraer_texto(array_aux[i],'href="','"');
 				url_video='http://animeflv.net' + url_video;
 				titulo=extraer_texto(array_aux[i],'">','</a>');
-					
+
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
-				
+
 			}
-		
+
 		return array_playlist;
 		}
 	}
@@ -4112,7 +4112,7 @@
 	var Redtube= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -4127,7 +4127,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -4137,7 +4137,7 @@
 		/*	Retorna: Array de objetos Item_menu											    *
 		/************************************************************************************/
 		this.getplaylist= function (page, tipo, url) {
-			
+
 			var array_playlist = [];
 			switch (tipo)
 			{
@@ -4151,7 +4151,7 @@
 			}
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -4163,7 +4163,7 @@
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
-	
+
 			var titulo;
 			var imagen;
 			var url_video;
@@ -4171,7 +4171,7 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
+
 			//<tr data-server=" to </a></td> </tr>
 
 			//item_Actual
@@ -4180,25 +4180,25 @@
 			descripcion = '';
 
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
-			
+
+
 
 			var array_servidores = [];
-			
+
 			var params={
 				"url_host" : url,
 				"servidor" : servidor
 				};
-	
+
 			var objHost=HostFactory.createHost(servidor,params)
 			if (objHost)
 				{
 					array_servidores.push(objHost);
 				}				
-				
+
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -4207,11 +4207,11 @@
 		/*	Retorna: String que representa la url								*
 		/************************************************************************/
 		this.geturl_host= function (url){
-			
+
 			return url;		
 		}
-		
-		
+
+
 		//Metodos Privados
 		function parseredtube(url)
 		{
@@ -4237,7 +4237,7 @@
 
 		return array_playlist.uniqueObjects(['url']);
 		}
-		
+
 		function parseredtubebusqueda(page,url_servidor)
 		{
 			url_servidor=unescape(url_servidor);
@@ -4252,7 +4252,7 @@
 				}
 		return array_playlist;
 		}
-		
+
 	}
 	Redtube.categoria= function() {return 'adultos';}
 	Redtube.getitem= function() {return new Item_menu('redtube',"img/redtube.png",':vercanales:redtube');}
@@ -4265,7 +4265,7 @@
 	var Xvideos= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -4280,7 +4280,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -4303,7 +4303,7 @@
 			}
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -4323,33 +4323,33 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
-		
+
+
 			//item_Actual
 			titulo = extraer_texto(file_contents ,'<div id="main">','<script');
 			titulo = extraer_texto(titulo ,'<h2>',' <span');
 			imagen = extraer_texto(file_contents ,'url_bigthumb=','&amp');
 			descripcion = '';
-			
+
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
-		
+
+
 			var array_servidores=[];
-			
+
 			var params={
 				"url_host" : url,
 				"servidor" : 'Xvideos'
 				};
-	
+
 			var objHost=HostFactory.createHost('Xvideos',params)
 			if (objHost)
 				{
 					array_servidores.push(objHost);
 				}				
-		
+
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -4358,11 +4358,11 @@
 		/*	Retorna: String que representa la url								*
 		/************************************************************************/
 		this.geturl_host= function (url){
-			
+
 			return url;		
 		}
-		
-		
+
+
 		//Metodos Privados	
 		function parsexvideos(url_servidor)
 		{
@@ -4373,7 +4373,7 @@
 
 			file_contents = "";
 			//array_aux = limpiar_array(array_aux);
-	
+
 			var titulo;
 			var imagen;
 			var url_video;	
@@ -4387,10 +4387,10 @@
 				url_video='http://www.xvideos.com' + extraer_texto(array_aux[i],'<a href="','"');
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 			}
-			
+
 		return array_playlist.uniqueObjects(['url']);
 		}		
-		
+
 		function parsexvideosbusqueda(page,url_servidor)
 		{
 			url_servidor=unescape(url_servidor);
@@ -4404,7 +4404,7 @@
 				}
 		return array_playlist;
 		}		
-		
+
 	}
 	Xvideos.categoria= function() {return 'adultos';}
 	Xvideos.getitem= function() {return new Item_menu('XVideos',"img/xvideos.png",':vercanales:xvideos');}
@@ -4417,7 +4417,7 @@
 	var Xhamster= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -4433,7 +4433,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -4467,7 +4467,7 @@
 			}			
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
@@ -4479,7 +4479,7 @@
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
-		
+
 			var titulo;
 			var imagen;
 			var url_video;
@@ -4487,30 +4487,30 @@
 			var idioma;
 			var calidad;
 			var descripcion;
-		
+
 			//item_Actual
 			titulo = extraer_texto(file_contents ,'<div class="head gr"><h1>','</h1>');
 			imagen = extraer_texto(file_contents ,'<video poster="','"');
 			descripcion = '';
 
 			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-			
-		
+
+
 			var array_servidores=[];
 			var params={
 				"url_host" : url,
 				"servidor" : 'xhamster'
 				};
-	
+
 			var objHost=HostFactory.createHost('xhamster',params)
 			if (objHost)
 				{
 					array_servidores.push(objHost);
 				}				
-		
+
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
@@ -4521,8 +4521,8 @@
 		this.geturl_host= function (url){
 			return url;		
 		}
-		
-		
+
+
 		//Metodos Privados
 		function parsexhamstertipo1(url_servidor)
 		{
@@ -4536,7 +4536,7 @@
 
 			file_contents = "";
 			array_aux.sort();
-	
+
 			var titulo;
 			var imagen;
 			var url_video;	
@@ -4549,10 +4549,10 @@
 				url_video=extraer_texto(array_aux[i],"<a href='","'");
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 			}
-			
+
 		return array_playlist;
 		}
-		
+
 		function parsexhamstertipotoprated(url_servidor)
 		{
 			//http://xhamster.com/rankings/weekly-top-videos.html
@@ -4564,7 +4564,7 @@
 
 			file_contents = "";
 			array_aux.sort();
-	
+
 			var titulo;
 			var imagen;
 			var url_video;	
@@ -4577,10 +4577,10 @@
 				url_video=extraer_texto(array_aux[i],"href='","'");
 				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 			}
-			
+
 		return array_playlist;
 		}
-		
+
 		function parsexhamstertipobusquedainput(page,url_servidor)
 		{
 		var array_playlist=[];
@@ -4631,13 +4631,13 @@
 					url_video=extraer_texto(array_aux[i],"<a href='","'");
 					array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 				}
-				
+
 				//Paginador
 				aux_string = extraer_texto(file_contents,"<div class='pager'>","</table></div></div>");
 				file_contents = "";
 				var check_pagina = aux_string.indexOf('Next');
 				page_uri=':vercontenido:xhamster:tipobusqueda:';
-				
+
 				if(check_pagina!=-1)
 				{
 					var pos_ini = aux_string.indexOf('iconPagerNextHover');
@@ -4650,21 +4650,21 @@
 			}
 		return array_playlist;
 		}
-		
+
 	}
 	Xhamster.categoria= function() {return 'adultos';}
 	Xhamster.getitem= function() {return new Item_menu('XHamster',"img/xhamster.png",':vercanales:xhamster');}
 
 	CanalFactory.registrarCanal("Xhamster",Xhamster); //Registrar la clase Xhamster
-	
+
 	/************************************************************************************
 	/* var Oranline: Objeto que representa el canal Oranline.net en Peliculas	*
 	/************************************************************************************/
 	var Oranline= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
-		
+
 		//metodos publicos
-		
+
 		/************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
 		/*	Parametros: ninguno													*
@@ -4681,7 +4681,7 @@
 				];
 		return array_menu;
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
@@ -4692,12 +4692,12 @@
 		/************************************************************************************/
 		this.getplaylist= function (page, tipo, url) {
 			var array_playlist=[];
-		
+
 			var params={'url_servidor': unescape(url),
 				'page_uri': ':verenlaces:oranline:',
 				'uri_siguiente': ':vercontenido:oranline:tipo1:',
 				'subtitulo':false}	
-		
+
 			switch (tipo)
 			{
 			case "tipoestrenoscine":
@@ -4730,11 +4730,11 @@
 				array_playlist=parseoranlinetipobusqueda(params,page);
 				break;
 			}
-		
-		
+
+
 		return array_playlist;
 		}
-		
+
 		/****************************************************************************************
 		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
 		/*							servidores soportados. 										*
@@ -4746,7 +4746,7 @@
 			var array_servidores=[];
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
-			
+
 			var titulo;
 			var imagen;
 			var url_host;
@@ -4754,7 +4754,7 @@
 			var idioma;
 			var calidad= '';
 			var descripcion;
-		
+
 			if(file_contents!=false)
 			{
 				//item_Actual
@@ -4764,7 +4764,7 @@
 				imagen = extraer_texto(imagen ,'<img src="','"');
 
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-		
+
 				file_contents = extraer_texto(file_contents,'<div id="veronline">','<div id="review-panels">');
 				var array_aux = extraer_html_array(file_contents,'<span><img id','VER AQUÍ');
 				file_contents = "";
@@ -4780,18 +4780,18 @@
 					}				
 					url_host = extraer_texto(array_aux[i],'<a target="_blank" href="','">');
 					if (url_host =='') continue;
-					
+
 					array_aux2 = extraer_html_array(array_aux[i],'<span>','</span>');
 					if (array_aux2.length > 1) calidad = extraer_texto(array_aux2[2],'<span>','</span>');
 					servidor = url_host.split('/')[2].match(/\w+/i)[0];
-		
+
 					var params={
 						"url_host" : url_host,
 						"servidor" : servidor,
 						"idioma" : idioma,
 						"calidad" : calidad
 						};
-	
+
 					var objHost=HostFactory.createHost(servidor,params)
 					if (objHost)
 						{ 
@@ -4801,7 +4801,7 @@
 			}
 		return array_servidores;
 		}
-		
+
 		/************************************************************************
 		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
 		/*	Parametros:															*
@@ -4811,7 +4811,7 @@
 		this.geturl_host= function (url){
 			return url;		
 		}
-		
+
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
 		/*	Parametros: ninguno																*
@@ -4820,20 +4820,20 @@
 		this.getitem_alfabeto= function() {
 			return (new Item_menu("Oranline.net - Orden Alfabetico","views/img/folder.png",':vercontenido:oranline:alfabeto:','http://www.oranline.net/?s=letra-'));
 		}
-		
-		
+
+
 		//Metodos Privados
 		function parseoranline (params) 
 		{	
 			/*var params={'url_servidor': ,'page_uri': ,'uri_siguiente': ,'subtitulo': }*/
 			var numero_pagina = parseInt(extraer_texto(params.url_servidor,"page/","/"));
 			numero_pagina=(numero_pagina > 0 )?numero_pagina:1;
-		
+
 			var file_contents = get_urlsource(params.url_servidor);
 			var ultima_pagina = extraer_texto(file_contents,'<span class="pages">','</span>');
 			ultima_pagina = parseInt(ultima_pagina.substr(ultima_pagina.lastIndexOf("of ") + 3));
 			ultima_pagina = (ultima_pagina > 0)?ultima_pagina:numero_pagina;
-			
+
 			file_contents = extraer_texto(file_contents,'<div class="review-box-container">','<h3>Buscador de peliculas</h3>');	
 			var array_aux = extraer_html_array(file_contents,'<div class="post-thumbnail">','<div id="campos_idiomas">');
 			file_contents = "";
@@ -4852,7 +4852,7 @@
 						array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_video));
 					}	
 				}
-		
+
 			//paginador
 			var pagina_siguiente = (parseInt(numero_pagina) + 1);
 			if(numero_pagina<ultima_pagina)
@@ -4870,16 +4870,16 @@
 								//... de cualquier otro tipo
 								params.url_servidor=params.url_servidor + "page/2/";
 							}
-						
+
 						}
 
 					array_playlist.push(new Item_menu('Siguiente',"views/img/siguiente.png",params.uri_siguiente,params.url_servidor));		
 				}
-		
+
 		return array_playlist;
 		}
-		
-		
+
+
 		function parseoranlinetipobusqueda (params,page)
 		{
 			var array_playlist=[];
@@ -4902,14 +4902,14 @@
 			showtime.notify('No se encontraron resultados', 3);
 		return array_playlist;	
 		}
-		
+
 	}
 	//Propiedades y metodos Estaticos
 	Oranline.categoria= function() {return 'peliculas';}
 	Oranline.getitem= function() {return new Item_menu('Oranline',"img/oranline.png",':vercanales:oranline');}
 
 	CanalFactory.registrarCanal("oranline",Oranline); //Registrar la clase Oranline
-	
+
 //servidores de contenidos
 //
 
@@ -4924,7 +4924,7 @@
 	var Store= function(){
 		//Propiedades
 		this.store;
-				
+
 		//Metodos Publicos (algunos seran redefinidos por las clases herederas)
 		/************************************************************************
 		/*	funcion iniStore: Inicializa el Store.								*
@@ -4936,8 +4936,8 @@
 			this.store.lista="[]";
 		return true;
 		}
-	
-	
+
+
 		/************************************************************************
 		/*	funcion addItem: Añade un nuevo Item al Store.						*
 		/*	Parametros: 														*
@@ -4953,7 +4953,7 @@
 
 			return true;
 		}
-	
+
 		/************************************************************************
 		/*	funcion delItem: Elimina un Item del Store.							*
 		/*	Parametros: 														*
@@ -4975,7 +4975,7 @@
 			}		
 		return false;
 		}
-		
+
 		/************************************************************************
 		/*	funcion getItems: Recupera todos los items almacenados en el Store	*
 		/*	Parametros: ninguno													*
@@ -4984,7 +4984,7 @@
 		this.getItems= function(){
 			return	eval(this.store.lista);
 		}
-		
+
 		/************************************************************************
 		/*	funcion count: Retorna el numero de Items almacenados en el Store	*
 		/*	Parametros: ninguno													*
@@ -5005,7 +5005,7 @@
 		this.store=plugin.createStore('store/favoritos',true);
 	}
 	StoreFavoritos.prototype=new Store(); // <<-- Herencia por prototype
-	
+
 	/********************************************************************************	
 	/* var StoreHistorial: Objeto que representa el Store Historial					*
 	/*		Hereda de Store															*
@@ -5025,7 +5025,7 @@
 			var ahora=new Date();
 			var fechaHoy=new Date(ahora.getFullYear(),ahora.getMonth(),ahora.getDate()); //fecha de hoy
 			var fechaMax,fechaMin; //en milisegundos
-			
+
 			switch (periodo.toLowerCase().replace(/\s+|\.+/g,''))
 				{
 				case 'hoy':
@@ -5062,8 +5062,8 @@
 			}
 		return	array;
 		}
-		
-		
+
+
 		/********************************************************************************************
 		/*	funcion existe: Comprueba si la url pasada como parametro existe en el StoreHistorial	*
 		/*	Parametros: 																			*
@@ -5081,8 +5081,8 @@
 			array.sort(function (a, b){return b-a;});	//nos aseguramos q estan ordenados numericamente en orden inverso	
 		return array[0];
 		}
-		
-		
+
+
 		/****************************************************************************************
 		/*	funcion addItem: Añade un nuevo Item al StoreHistorial, solo en el caso de que no	*
 		/*		se haya añadido ya hoy el mismo item. 											*
@@ -5107,8 +5107,8 @@
 			}
 		return false;
 		}
-		
-		
+
+
 		/************************************************************************
 		/*	funcion iniStore: Inicializa el StoreHistorial.						*
 		/*	Parametros: ninguno													*
@@ -5121,26 +5121,26 @@
 			if (this.store.hoy != undefined) delete this.store.hoy;
 			if (this.store.ultimomes != undefined) delete this.store.ultimomes;
 			if (this.store.resto != undefined) delete this.store.resto;
-	
+
 			//Iniciamos las propiedades nuevas el objeto 
 			this.store.lista="[]";
 		return true;
 		}
-		
+
 	}
 	StoreHistorial.prototype= new Store(); // <<-- Herencia por prototype	
 //Store
 //
-	
-	
-	
-	
+
+
+
+
 //////////////////////////////////////////////////////////////////////////
 //																		//
 // 		Extender tipos primitivos										//
 //																		//
 //////////////////////////////////////////////////////////////////////////	
-	 
+
 	 //Añadir funciones al prototipo de Date
 	if (typeof Date.prototype.formatSp != 'function') {
 		Date.prototype.formatSp = function (){
@@ -5149,11 +5149,11 @@
 			var mes= (this.getMonth()+1)>9?(this.getMonth()+1):"0"+(this.getMonth()+1);
 			var hora= this.getHours()>9?this.getHours():"0"+this.getHours();
 			var minutos=this.getMinutes()>9?this.getMinutes():"0"+this.getMinutes();
-			
+
 			return  dia + '/' + mes + '/' + this.getFullYear() + ' ' + hora +':' + minutos;};
 	}
-	
-	
+
+
     //Añadir funciones al prototipo String
 	if (typeof String.prototype.startsWith != 'function') {
 		String.prototype.startsWith = function (str){
@@ -5171,8 +5171,8 @@
 		String.prototype.toProperCase = function (){
 			return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});};
 		}
-		
-		
+
+
 	//Añadir funciones al prototipo de Array
 	if (typeof Array.prototype.uniqueObjects!= 'function') {
 		Array.prototype.uniqueObjects = function (props) {
@@ -5186,7 +5186,7 @@
 				if (props) {
 					for (var j = 0; j < props.length; j++) {
 						prop = props[j];
-						
+
 						if (a[prop] != b[prop]) return false;
 					}
 				}else {
@@ -5224,7 +5224,7 @@
 					return result;
 				}
 			}
-			
+
 			function dynamicSort(property) {
 				var sortOrder = 1;
 				if(property[0] === "-") {
@@ -5235,7 +5235,7 @@
 					return result * sortOrder;
 				}
 			}
-		
+
 			Array.prototype.sortBy = function() {
 				return this.sort(_dynamicSortMultiple.apply(null, arguments));
 			}
@@ -5249,7 +5249,7 @@
 //																		//
 //////////////////////////////////////////////////////////////////////////		
 
-	
+
 	function get_urlheaders(url_servidor) {
 		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
 		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
@@ -5264,7 +5264,7 @@
 				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
   				}
 			});
-		
+
 		return codigo_html;
 		}
 
@@ -5280,7 +5280,7 @@
 				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
   				}
 			}).toString();
-		
+
 		return codigo_html;
 		}
 
@@ -5297,7 +5297,7 @@
 				'Referer': referer
   				}
 			}).toString();
-		
+
 		return codigo_html;
 		}
 
@@ -5305,7 +5305,7 @@
 		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
 		//				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
 		//JSONEncode 
-		
+
 		var codigo_html = showtime.httpReq(url_servidor, 
 			{
 			debug: false,
@@ -5317,17 +5317,17 @@
 				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
   				}
 			}).toString();
-		
+
 		return codigo_html;
 		}
-	
+
 	function extraer_texto(texto,cadena_inicial,cadena_final) {
 		//Extrae el texto de una cadena pasando una cadena inicial y otra final
 		//Si no existe la cadena inicial o la cadena final dentro del texto retorna un texto vacio
 		var pos_ini;
 		var pos_final;
 
-	
+
 		pos_ini = texto.indexOf(cadena_inicial);
 		if (pos_ini==-1) return '';
 		texto = texto.substr(pos_ini+cadena_inicial.length);
@@ -5341,7 +5341,7 @@
 		//Estrae el texto de manera repetitiva pasando cadena inicial, y final, y lo saca en un array
 		var pos_ini;
 		var pos_final;
-	
+
 		var array_aux=[];
 		var aux_string;
 
@@ -5415,7 +5415,7 @@
 		return tmp_arr.join('');
 	}
 
-	
+
 //////////////////////////////////////////////////////////////////////////
 //																		//
 // 		Main															//
@@ -5427,14 +5427,14 @@
 	var parental_mode = true;
 	var licencia = '';
 	var licencia_md5 = '1e7c1eac9e131fe3a01d7594c071bf8c'; //not4kids
-	
+
 	var canal_test=false; //for testing only
-	
+
 	var objCanal;
 	var objHistorial=new StoreHistorial();
 	var objFavoritos=new StoreFavoritos();
 
-	
+
 	//
 	//Settings
 	var service = plugin.createService("Peli-XR", "peli-xr:start", "video", true, plugin.path + "logo.png");
@@ -5452,12 +5452,12 @@
 		{
 		var opciones_historial = [ 	['sinadultos', 'Si', true], ['no', 'No'] 	];
 		}
-		
+
     settings.createMultiOpt("historyTracking", "Guardar historial", opciones_historial, function(v){
         service.historyTracking = v;
     });
-	
-	
+
+
 	function borrarHistorial() {
 		if (objHistorial) {
 			objHistorial.iniStore();
@@ -5465,16 +5465,16 @@
 		}
 	}	
 	settings.createAction("cleanLocalHistoryPlaylist", "Borrar historial", borrarHistorial);
-	
+
 	function borrarFavoritos () {
 		if (objFavoritos) {
 			objFavoritos.iniStore();
 			showtime.notify('Los Favoritos han sido borrados', 3);
 		}
-		
+
 	}
 	settings.createAction("cleanLocalFavoritesPlaylist", "Borar favoritos",borrarFavoritos);
-	
+
 	settings.createAction("cleanLocalPlaylists", "Borrar todo", function () {
 		borrarHistorial();
 		borrarFavoritos();
@@ -5498,7 +5498,7 @@
 
 	//Settings	
 	//	
-		
+
 	//
 	//startPage
 	function startPage(page) {
@@ -5518,15 +5518,15 @@
 				return;
 				}
 			}
-			
-			
+
+
 		//Crear los objetos del Menu Principal
 		var menu_principal =[
 			new Item_menu('Peliculas',"img/peliculas.png"),
 			new Item_menu('Series',"img/series.png"),
 			new Item_menu('Anime',"img/anime.png"),
 			new Item_menu('TV online',"img/tvonline.png")];
-			
+
 		//Items opcionales
 			//Item_menu Adultos
 				if(parental_mode == false)
@@ -5548,7 +5548,7 @@
 			//Item_menu Historial
 				if(objHistorial.count()>0)
 					menu_principal.push(new Item_menu('Historial',"views/img/history.png","historial:main"));	
-		
+
 		//Añadimos los objetos al Menu Principal
 		for (var i=0; i< menu_principal.length;i++) 
 		{
@@ -5556,9 +5556,9 @@
 				title:menu_principal[i].titulo,
 				titlecover : menu_principal[i].titulo,
 				icon: menu_principal[i].imagen});
-		
+
 		}
-	
+
 		page.metadata.glwview = plugin.path + "views/array3.view";
 		page.type = "directory";
 		page.contents = "items";
@@ -5566,14 +5566,14 @@
 	}
 	//startPage
 	//
-	
-	
+
+
 	//Pagina Peliculas
 	plugin.addURI(PREFIX + ":peliculas", function(page) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var menu_peliculas=CanalFactory.getListadoCanales('peliculas');
-		
+
 		//Añadimos los objetos al menu Peliculas
 		for (var i=0; i< menu_peliculas.length;i++) 
 		{
@@ -5582,7 +5582,7 @@
 				titlecover : menu_peliculas[i].titulo,
 				icon: menu_peliculas[i].imagen});	
 		}	
-			
+
 		page.metadata.glwview = plugin.path + "views/array3.view";
 		page.type = "directory";
 		page.contents = "items";
@@ -5596,7 +5596,7 @@
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var menu_series=CanalFactory.getListadoCanales('series');
-		
+
 		//Añadimos los objetos al menu Series
 		for (var i=0; i< menu_series.length;i++) 
 		{
@@ -5619,7 +5619,7 @@
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var menu_anime=CanalFactory.getListadoCanales('anime');
-		
+
 		//Añadimos los objetos al menu Anime
 		for (var i=0; i< menu_anime.length;i++) 
 		{
@@ -5628,7 +5628,7 @@
 				titlecover : menu_anime[i].titulo,
 				icon: menu_anime[i].imagen});	
 		}	
-						
+
 		page.metadata.glwview = plugin.path + "views/array3.view";
 		page.type = "directory";
 		page.contents = "items";
@@ -5642,7 +5642,7 @@
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var menu_tvonline=CanalFactory.getListadoCanales('tvonline');
-		
+
 		//Añadimos los objetos al menu TV Online
 		for (var i=0; i< menu_tvonline.length;i++) 
 		{
@@ -5651,7 +5651,7 @@
 				titlecover : menu_tvonline[i].titulo,
 				icon: menu_tvonline[i].imagen});	
 		}	
-		
+
 		page.metadata.glwview = plugin.path + "views/array3.view";
 		page.type = "directory";
 		page.contents = "items";
@@ -5665,7 +5665,7 @@
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var menu_adultos=CanalFactory.getListadoCanales('adultos');
-		
+
 		//Añadimos los objetos al menu Adultos
 		for (var i=0; i< menu_adultos.length;i++) 
 		{
@@ -5674,7 +5674,7 @@
 				titlecover : menu_adultos[i].titulo,
 				icon: menu_adultos[i].imagen});	
 		}	
-	
+
 		page.metadata.glwview = plugin.path + "views/array3.view";
 		page.type = "directory";
 		page.contents = "items";
@@ -5682,7 +5682,7 @@
 	});
 	//Pagina Adultos
 
-	
+
 	//Pagina Historial
 	plugin.addURI(PREFIX + ":historial:(.*)", function(page, periodo) {
 		page.metadata.background = plugin.path + "views/img/background.png";
@@ -5697,7 +5697,7 @@
 				new Item_menu('Esta Semana',"views/img/folder.png",':historial:Esta Semana'),
 				new Item_menu('Este Mes',"views/img/folder.png",':historial:Este Mes'),
 				new Item_menu('Anteriores',"views/img/folder.png",':historial:Meses Anteriores')];
-				
+
 			for(var i=0; i<menu_categorias.length;i++)
 				{
 				page.appendItem(menu_categorias[i].page_uri, "directory", {
@@ -5710,7 +5710,7 @@
 		else
 			{
 			page.metadata.title = 'Historial - ' + periodo; 
-			
+
 			var lista =objHistorial.getItems(periodo)
 			for (i=0;i<lista.length;i++)
 				{
@@ -5723,7 +5723,7 @@
 				item.fecha = lista[i].fecha;
 				item.titulo = lista[i].titulo;
 				item.url = lista[i].url;
-				
+
 				item.addOptSeparator("Peli-XR");
 				item.addOptAction("Borrar del historial", "borraritemhistorial");
 				item.onEvent('borraritemhistorial', function (item)
@@ -5738,14 +5738,14 @@
 								}else{
 									page.redirect(PREFIX + ':historial:main');
 								}
-					
-					
+
+
 							}
 					});
 
 				}
 			}
-			
+
 		page.metadata.glwview = plugin.path + "views/array3.view";
 		page.type = "directory";
 		page.contents = "items";
@@ -5753,7 +5753,7 @@
 	});
 	//Pagina Historial
 
-	
+
 	//Pagina Favoritos
 	plugin.addURI(PREFIX + ":favoritos", function(page) {
 		page.metadata.background = plugin.path + "views/img/background.png";
@@ -5772,11 +5772,11 @@
 				title: f_titulo,
 				titlecover : new showtime.RichText('<font color="#ffffff" size="3">' + lista[i].titulo.substring(0,9) + '</font>'),
 				icon: lista[i].imagen});
-				
+
 			item.fecha = lista[i].fecha;
 			item.titulo = lista[i].titulo;
 			item.url_video = lista[i].url;
-									
+
 			item.addOptSeparator("Peli-XR");
 			item.addOptAction("Borrar de favoritos", "borraritemfavoritos");
 			item.onEvent('borraritemfavoritos', function (item)
@@ -5800,16 +5800,16 @@
 		page.loading = false;
 	});
 	//Pagina Favoritos
-	
-	
+
+
 	//Pagina Alfabeto
 	plugin.addURI(PREFIX + ":alfabeto:(.*):(.*)", function(page,servidor,caracter_numerico) {
 		page.metadata.background = plugin.path + "views/img/background.png";
-		
+
 		var item=objCanal.getitem_alfabeto();
-		
+
 		var array_alfabeto=['0-9',"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-		
+
 		page.appendItem(item.page_uri + escape(item.url + caracter_numerico), "directory", {
 				title: array_alfabeto[0],
 				icon: plugin.path + "views/img/folder.png"});
@@ -5828,18 +5828,18 @@
 		page.loading = false;
 	});			
 	//Pagina Alfabeto
-	
-	
+
+
 	//Pagina ver canales
 	plugin.addURI(PREFIX + ":vercanales:(.*)", function(page,canal) {
 		page.metadata.background = plugin.path + "views/img/background.png";
-	
+
 		var array_menu=[];
-				
+
 		objCanal=CanalFactory.createCanal(canal); 
-						
+
 		array_menu= objCanal.getmenu();
-		
+
 		for (var i=0;i<array_menu.length;i++)
 			{
 			page.appendItem(array_menu[i].page_uri, "directory", {
@@ -5857,18 +5857,18 @@
 	});		
 	//Pagina ver canales
 
-	
+
 	//Listado de items generico
 	plugin.addURI(PREFIX + ":vercontenido:(.*):(.*):(.*)", function(page, canal, tipo, url) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
 		var array_playlist=[];
-		
+
 		if (objCanal == undefined) {objCanal=CanalFactory.createCanal(canal);}
 			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
-		
+
 		array_playlist=objCanal.getplaylist(page, tipo, url);
-		
+
 		//pintar el vercontenido se recorre el array y se pinta
 		var item;
 		for (var i=0;i<array_playlist.length;i++)
@@ -5883,10 +5883,10 @@
 			item.host = objCanal.name;
 			item.addOptSeparator("Peli-XR");
 			item.addOptAction("Agregar a Favoritos", "agregarafavoritos");
-				
+
 			item.onEvent('agregarafavoritos', function (item)	
 				{ //Añadir pagina de enlaces
-	
+
 					if (objFavoritos.addItem({
 							'titulo':this.titulo,
 							'imagen':this.imagen,
@@ -5894,7 +5894,7 @@
 							'host':this.host}))	
 								showtime.notify(this.titulo + ' agregado a favoritos',3);	
 				});
-			
+
 
 			}
 
@@ -5912,7 +5912,7 @@
 
 		var array_servidores=[];
 		var tipo_video;
-		
+
 		if (objCanal == undefined) {objCanal=CanalFactory.createCanal(canal);}
 			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
 
@@ -5938,7 +5938,7 @@
 				item.host = array_servidores[i].servidor;
 				item.addOptSeparator("Peli-XR");
 				item.addOptAction("Agregar a Favoritos", "agregarafavoritos");
-		
+
 				item.onEvent('agregarafavoritos', function (item)
 					{ //Añadir enlace del video						
 						if (objFavoritos.addItem({
@@ -5959,8 +5959,8 @@
 		page.loading = false;
 	});
 	//Listado del mismo item x todo los servers disponibles
-	
-	
+
+
 	//Pagina de ver video
 	plugin.addURI(PREFIX + ":vervideo:(.*):(.*):(.*):(.*):(.*)", function (page, canal, host, titulo, imagen, url_video) {
 		page.metadata.background = plugin.path + "views/img/background.png";
@@ -5972,22 +5972,22 @@
 		titulo = unescape(titulo);
 		imagen = unescape(imagen);
 		url_video = unescape(url_video);
-		
+
 		if (objCanal == undefined) {objCanal=CanalFactory.createCanal(canal);}
 			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
-		
+
 		var url_servidor=objCanal.geturl_host(url_video);
-		
+
 		var objHost=HostFactory.createHost(host,{"servidor":host});	
 		var url_video2= objHost.geturl_video(url_servidor);
-				
+
 		if(url_video2 == 'error')
 			{
 			page.metadata.title = 'Error cargando video ... ' + unescape(titulo);
 			}
 		else
 			{
-				
+
 			//parental_mode == false)				
 			if (service.historyTracking != "no")
 				{
@@ -6009,7 +6009,7 @@
 								'host':host})}
 					}
 				}
-	
+
 			var videoparams = {title: unescape(titulo),sources: [{url: url_video2}],no_fs_scan: true};
 			page.source = "videoparams:" + showtime.JSONEncode(videoparams);
 			page.type = "video";
@@ -6018,7 +6018,7 @@
 	});	
 	//Pagina de ver video
 
-	
-	
+
+
 	plugin.addURI(PREFIX + ":start", startPage);
 })(this);

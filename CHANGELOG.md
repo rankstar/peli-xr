@@ -1,8 +1,10 @@
 ###### Changelog
 
+
 ### 0.9.8
 
 - Release
+
 
 ### 0.9.8 beta 2:
 - Corregido bug en function extraer_texto.
@@ -13,6 +15,7 @@
 - Newpct.com esta teniendo problemas con algunos ISP, por lo que cambiamos a www.newpct1.com
 - Corregido un bug en favoritos, ahora deberia funcionar bien.
 - Añadida funcion utf8_decode().
+
 
 ### 0.9.8 beta:
 - Cambio de todo el codigo js, ahora el codigo esta basado en objetos, Gracias a SuperBerny q se lo ha currado.
