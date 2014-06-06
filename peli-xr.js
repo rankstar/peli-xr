@@ -2634,7 +2634,7 @@
 		//Metodos Privados	
 		function parselivestreamxmltipo1(url_xml)
 		{
-			//url_xml=unescape(url_xml);
+			url_xml=unescape(url_xml);
 
 			var file_contents = get_urlsource(url_xml);
 
@@ -4909,6 +4909,320 @@
 	Oranline.getitem= function() {return new Item_menu('Oranline',"img/oranline.png",':vercanales:oranline');}
 
 	CanalFactory.registrarCanal("oranline",Oranline); //Registrar la clase Oranline
+
+	
+	/************************************************************************************
+	/* var Seriesflv: Objeto que representa el canal Seriesflv en Series				*
+	/************************************************************************************/
+	var Seriesflv= function() {	
+		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+		var descripcion="";
+		
+		
+		//metodos publicos
+		
+		/************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
+		/*	Parametros: ninguno													*
+		/*	Retorna: Array de objetos Item_menu									*
+		/************************************************************************/
+		this.getmenu= function(){
+		//retorna el Menu
+			var array_menu=[	
+				new Item_menu('Ultimos Cap. Español','views/img/folder.png',':vercontenido:seriesflv:tipocapituloES:'+ escape('http://www.seriesflv.net/')),
+				new Item_menu('Ultimos Cap. Latino','views/img/folder.png',':vercontenido:seriesflv:tipocapituloLA:'+ escape('http://www.seriesflv.net/')),
+				new Item_menu('Ultimos Cap. VOSE','views/img/folder.png',':vercontenido:seriesflv:tipocapituloVOSE:'+ escape('http://www.seriesflv.net/')),
+				new Item_menu('Ultimos Cap. V.O.','views/img/folder.png',':vercontenido:seriesflv:tipocapituloVO:'+ escape('http://www.seriesflv.net/')),
+				new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:seriesflv:0-9') 
+				];
+		return array_menu;
+		}
+		
+		/************************************************************************************
+		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
+		/*	Parametros: 																    *
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*	Retorna: Array de objetos Item_menu											    *
+		/************************************************************************************/
+		this.getplaylist= function (page, tipo, url) {
+			var array_playlist=[];
+		
+			var params={'url_servidor': unescape(url),
+				'page_uri': ':verenlaces:seriesflv:',
+				'idioma':''};
+		
+			switch (tipo)
+			{
+			case "tipocapituloES":
+				page.metadata.title ="Seriesflv - Ultimos Capitulos - Español";
+				params.idioma="es";
+				array_playlist=parseseriesflv(params);
+				break;
+			case "tipocapituloLA":
+				page.metadata.title ="Seriesflv - Ultimos Capitulos - Latino";
+				params.idioma="la";
+				array_playlist=parseseriesflv(params);
+				break;
+			case "tipocapituloVOSE":
+				page.metadata.title ="Seriesflv - Ultimos Capitulos - VOSE";
+				params.idioma="sub";
+				array_playlist=parseseriesflv(params);
+				break;
+			case "tipocapituloVO":
+				page.metadata.title ="Seriesflv - Ultimos Capitulos - VO";
+				params.idioma="vo";
+				array_playlist=parseseriesflv(params);
+				break;
+			case "alfabeto":
+				page.metadata.title = "Seriesflv - Orden Alfabetico: ";
+				params.letra=url;
+				params.url_servidor= 'http://www.seriesflv.net/';
+				params.page_uri=':vercontenido:seriesflv:tiposerie:'; //+ escape('http://www.seriesflv.net/')
+				array_playlist=parseseriesflvalfabeto(params);
+				break;
+			case "tiposerie":
+				array_playlist=parseseriesflvserie(params,page);
+				break;
+			}
+			
+		return array_playlist;
+		}
+		
+		/****************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
+		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
+		/*	Parametros: 																    	*
+		/*		url: direccion de la que se debe extraer la lista.								*
+		/*	Retorna: Array de servidores												    	*
+		/****************************************************************************************/
+		this.getservidores= function (url){
+			var array_servidores=[];
+			url=unescape(url);
+			var file_contents = get_urlsource(url);
+			var array_servidores=[];
+
+			var titulo;
+			var imagen;
+			var url_host;
+			var servidor;
+			var idioma;
+			var calidad= "";
+			//var descripcion="";
+			
+			file_contents = extraer_texto(file_contents,'<div id="serie">',' </table>');
+			if(file_contents!=false)
+			{
+				//item_Actual
+				titulo = utf8_decode(extraer_texto(file_contents ,'<h1 class="off">','</h1>'));
+				imagen = extraer_texto(file_contents ,'src="','">');
+			
+				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
+				
+				var array_aux = extraer_html_array(file_contents,'<tr>','</tr>');
+				file_contents = "";
+				
+				var l=array_aux.length;
+				for (var i=1;i<l;i++)
+				{
+					var idioma_aux= extraer_texto(array_aux[i] ,'src="','">').split('/');
+					idioma=idioma_aux[idioma_aux.length-1];
+					switch (idioma)
+					{
+					case "es.png":
+						idioma="Español";
+						break;
+					case "sub.png":
+						idioma="V.O.S.E";
+						break;
+					case "la.png":
+						idioma="Latino";
+						break;
+					default:
+						idioma="VO";
+						break;			
+					}
+				
+					url_host = extraer_texto(array_aux[i],'data-uri="','"');
+					servidor = url_host.split('/')[2].match(/\w+/i)[0];
+				
+					var params={
+						"url_host" : url_host,
+						"servidor" : servidor.toProperCase(),
+						"idioma" : idioma,
+						"calidad" : calidad
+						};
+	
+					var objHost=HostFactory.createHost(servidor,params)
+					if (objHost) array_servidores.push(objHost);		
+				}
+				
+			}
+		return array_servidores;
+		}
+		
+		/************************************************************************
+		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
+		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
+		/*	Parametros:															*
+		/*		url: direccion de la que se debe extraer la lista.				*
+		/*	Retorna: String que representa la url								*
+		/************************************************************************/
+		this.geturl_host= function (url){
+			
+			return url;		
+		}
+		
+		/************************************************************************************
+		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
+		/*	Parametros: ninguno																*
+		/*	Retorna:Un objetos Item_menu													*
+		/***********************************************************************************/
+		this.getitem_alfabeto= function() {
+			return (new Item_menu("Seriesflv.net - Orden Alfabetico","views/img/folder.png",':vercontenido:seriesflv:alfabeto:'));
+		}
+		
+		
+		//Metodos Privados
+		function parseseriesflv (params) 
+		{	
+			var array_playlist=[];
+			/*var params={'url_servidor': ,'page_uri': ,'idioma': }*/
+			var file_contents = get_urlsource(params.url_servidor);
+			
+			//Primero recorremos el carrusel para obtener las imagenes ...
+			var array_aux = extraer_html_array(file_contents,'<li class="touchcarousel-item">','</li>');
+			
+			var url_capitulo;
+			var array_imagenes= new Array();
+			var l=array_aux.length;
+			for (var i=0; i<l ;i++)
+				{
+					url_capitulo= extraer_texto(array_aux[i],'<a href="','"');
+					array_imagenes[url_capitulo]= extraer_texto(array_aux[i],'src="','"');
+				}
+				
+			//... despues obtenemos el resto de datos del MAIN-CONT ...
+			file_contents = extraer_texto(file_contents,'<div class="header bg3">','<div class="header bg3">');	
+			array_aux = extraer_html_array(file_contents,'<a','</a>');
+			file_contents = "";
+			l=array_aux.length;
+			for (var i=0; i<l ;i++)
+				{
+					var idioma= extraer_texto(array_aux[i],'lang="','"');
+					if (idioma !="")
+					{
+						// ... y los añadimos al playlist si coincide el idioma buscado
+						if (((params.idioma=='vo') && (idioma !='es' && idioma !='la' && idioma!='sub')) || (params.idioma==idioma))
+						{
+							url_capitulo= extraer_texto(array_aux[i],'href="','"');
+							var imagen = array_imagenes[url_capitulo];
+							if (imagen == undefined) imagen="views/img/nophoto.png";
+
+							var titulo =extraer_texto(array_aux[i],'<div class="i-title">','</div>') + " " + extraer_texto(array_aux[i],'<div class="box-tc">','</div>');
+							array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_capitulo));
+						}
+					}
+				}
+				
+		return array_playlist;
+		}
+		
+		function parseseriesflvalfabeto (params) 
+		{
+			var array_playlist=[];
+			/*var params={'url_servidor': ,'idioma': ,'letra': }*/
+			var file_contents = get_urlsource(params.url_servidor);
+			
+			//Primero recorremos el carrusel para obtener las imagenes ...
+			var array_aux = extraer_html_array(file_contents,'<li class="touchcarousel-item">','</li>');
+			
+			var titulo
+			var array_imagenes= new Array();
+			var l=array_aux.length;
+			for (var i=0; i<l ;i++)
+				{
+					titulo= extraer_texto(array_aux[i],'<span>','</span>').trim();
+					array_imagenes[titulo]= extraer_texto(array_aux[i],'src="','"');
+				}
+				
+			//... despues obtenemos el resto de datos de la lista de series
+			file_contents = extraer_texto(file_contents,'<ul id="list_series_letras"','</ul>');	
+			array_aux = extraer_html_array(file_contents,'<span class="title on"','</span>');
+			file_contents = "";
+			l=array_aux.length;
+			for (var i=0; i<l ;i++)
+				{
+					var url_serie= extraer_texto(array_aux[i],'href="','"');		
+	
+					titulo = extraer_texto(array_aux[i],'title="','/a>');
+					titulo= extraer_texto(titulo,'">','<').trim();
+					
+					var imagen = array_imagenes [titulo];
+					if (imagen == undefined) imagen="views/img/nophoto.png";
+					// ... y los añadimos al playlist si el titulo comienza por la letra buscada
+					switch (params.letra)
+					{
+						case "0-9": // Si el titulo empieza por un numero
+							if (!isNaN(titulo.charAt(0))) 
+								array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_serie));
+							break;
+						case "z":
+							if (titulo.toLowerCase().startsWith('z') || titulo.toLowerCase().startsWith('¡') || titulo.toLowerCase().startsWith('¿'))
+								array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_serie));
+							break;
+						default:
+						
+							if (titulo.toLowerCase().startsWith(params.letra)){
+							
+								array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_serie));
+								}
+							break;
+					}
+				
+				
+				}
+			
+		return array_playlist;
+		}	
+		
+		function parseseriesflvserie (params,page) 
+		{	//http://www.seriesflv.net/serie/arrow.html
+			var array_playlist=[];
+			var url_capitulo;
+			var file_contents = get_urlsource(params.url_servidor);
+			
+			var imagen= extraer_texto(file_contents ,'<div class="portada">','</div>');
+			imagen=  extraer_texto(imagen ,'src="','">');
+			
+			descripcion= extraer_texto(file_contents ,'Sinopsis</div>','/p>');
+			descripcion= extraer_texto(descripcion ,'>','<');
+			
+			//titulo pagina
+			var titulo = utf8_decode(extraer_texto(file_contents ,'<h1 class="off">','</h1>'));
+			page.metadata.title = "Seriesflv: " + titulo;
+			
+			file_contents = extraer_texto(file_contents ,'<div id="capitulos">','<div id="comentarios">');
+			var array_aux = extraer_html_array(file_contents,' <tr>',' </tr>');
+			file_contents ='';
+			
+			var l=array_aux.length;
+			for (var i=1; i<l ;i++)
+				{
+					url_capitulo= extraer_texto(array_aux[i],'href="','"');
+					if (url_capitulo == '') continue;
+					titulo = utf8_decode(extraer_texto(array_aux[i] ,'class="color4">','</a>'));
+					array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_capitulo));
+				}		
+		return array_playlist;
+		}
+	}
+	//Propiedades y metodos Estaticos
+	Seriesflv.categoria= function() {return 'series';}
+	Seriesflv.getitem= function() {return new Item_menu('Seriesflv',"img/seriesflv.png",':vercanales:seriesflv');}
+
+	CanalFactory.registrarCanal("seriesflv",Seriesflv); //Registrar la clase Seriesflv
 
 //servidores de contenidos
 //
