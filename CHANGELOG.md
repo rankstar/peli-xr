@@ -3,6 +3,7 @@
 ### 0.9.9 beta 1:
 - Corregido bug en canal LiveStream.
 - Añadido canal de series Seriesflv.net
+- Corregido de manera provisional el bug en Oranline al mostrar los titulos (bad surrogate character)
 
 
 ### 0.9.8

@@ -4845,7 +4845,14 @@
 
 			for (var i=0;i<array_aux.length;i++)
 				{
-					titulo=utf8_decode(extraer_texto(array_aux[i],'title="','">'));
+					//titulo=utf8_decode(extraer_texto(array_aux[i],'title="','">'));
+					titulo=extraer_texto(array_aux[i],'title="','">');
+					try{
+						showtime.print(utf8_decode(titulo)); //Provocamos el error
+						titulo=utf8_decode(titulo);
+					}catch (e){
+						showtime.trace(e.message); 
+					}
 					if (titulo !='') {			
 						imagen=extraer_texto(array_aux[i],'<img src="','"');
 						url_video=extraer_texto(array_aux[i],'<a href="','"');
@@ -5672,7 +5679,6 @@
 		return array_aux;
     }
 
-
 	function utf8_decode(str_data) {
 		//  discuss at: http://phpjs.org/functions/utf8_decode/
 		// original by: Webtoolkit.info (http://www.webtoolkit.info/)
@@ -5729,7 +5735,7 @@
 		return tmp_arr.join('');
 	}
 
-
+	
 //////////////////////////////////////////////////////////////////////////
 //																		//
 // 		Main															//
