@@ -1,5 +1,9 @@
 ###### Changelog
 
+### 0.9.8b
+- Corregido el problema de los titulos en oranline
+- Añadido a servidores de video Youtube.
+
 ### 0.9.8
 
 - Release
