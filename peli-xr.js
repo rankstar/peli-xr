@@ -4845,7 +4845,8 @@
 
 			for (var i=0;i<array_aux.length;i++)
 				{
-					titulo=utf8_decode(extraer_texto(array_aux[i],'title="','">'));
+					titulo=extraer_texto(array_aux[i],'title="','">');
+					titulo = fixtitles(titulo);
 					if (titulo !='') {			
 						imagen=extraer_texto(array_aux[i],'<img src="','"');
 						url_video=extraer_texto(array_aux[i],'<a href="','"');
@@ -4902,6 +4903,21 @@
 			showtime.notify('No se encontraron resultados', 3);
 		return array_playlist;	
 		}
+		
+		function fixtitles (titulo)	{
+			//var array_1 = ['á'    ,'é'    ,'í'    ,'ó'    ,'ú'    ,'Á'     ,'É'     ,'Í'     ,'Ó'      ,'Ú'     ,'ñ'    ,'Ñ'     ,'ü','à' ,'è' ,'ì','ò' ,'ù'];
+			var array_1 = [String.fromCharCode(161),String.fromCharCode(169),String.fromCharCode(173),String.fromCharCode(179),String.fromCharCode(186),String.fromCharCode(129),String.fromCharCode(137),String.fromCharCode(141),String.fromCharCode(147),String.fromCharCode(154),String.fromCharCode(177),String.fromCharCode(145),String.fromCharCode(188),String.fromCharCode(160),String.fromCharCode(168),String.fromCharCode(172),String.fromCharCode(178),String.fromCharCode(185)];
+			var array_2 = [String.fromCharCode(225),String.fromCharCode(233),String.fromCharCode(237),String.fromCharCode(243),String.fromCharCode(250),String.fromCharCode(193),String.fromCharCode(201),String.fromCharCode(205),String.fromCharCode(211),String.fromCharCode(218),String.fromCharCode(241),String.fromCharCode(209),String.fromCharCode(252),String.fromCharCode(224),String.fromCharCode(232),String.fromCharCode(236),String.fromCharCode(242),String.fromCharCode(249)];
+			//String.fromCharCode(195)
+
+			var resultado = titulo;
+			for (var i=0;i<array_1.length;i++)
+				{
+				var reg = new RegExp(String.fromCharCode(195) +  array_1[i],"g");
+				resultado = resultado.replace(reg,array_2[i]);
+				}
+			return resultado;
+			}
 		
 	}
 	//Propiedades y metodos Estaticos
