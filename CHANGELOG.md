@@ -3,6 +3,7 @@
 ### 0.9.8b
 - Corregido el problema de los titulos en oranline
 - Añadido a servidores de video Youtube.
+- Deteccion mejorada de contenido no disponible vk
 
 ### 0.9.8
 

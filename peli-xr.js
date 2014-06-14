@@ -963,7 +963,8 @@
 			var file_contents = get_urlsource(url_servidor);
 			var url_video;
 			var error = file_contents.indexOf('No videos found')
-			if(error==-1)
+			var error2 = file_contents.indexOf('This video has been removed')
+			if(error==-1 && error2==-1)
 			{
 				if(file_contents.indexOf('url240=')!=-1) { url_video=extraer_texto(file_contents,'url240=','&amp'); }				
 				if(file_contents.indexOf('url360=')!=-1) { url_video=extraer_texto(file_contents,'url360=','&amp'); }				
