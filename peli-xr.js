@@ -19,7 +19,7 @@
  
 (function(plugin) {
 
-// var version = '0.9.8';
+// var version = '0.9.9b';
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -5049,7 +5049,222 @@
 	Oranline.getitem= function() {return new Item_menu('Oranline',"img/oranline.png",':vercanales:oranline');}
 
 	CanalFactory.registrarCanal("oranline",Oranline); //Registrar la clase Oranline
+
+	/************************************************************************************
+	/* var Pelispekes: Objeto que representa el canal PeliculasCanal en Categoria	*
+	/************************************************************************************/
+	var Pelispekes= function() {	
+		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+
+		//metodos publicos
+		
+		/************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
+		/*	Parametros: ninguno													*
+		/*	Retorna: Array de objetos Item_menu									*
+		/************************************************************************/
+		this.getmenu= function(){
+		//retorna el Menu
+			var array_menu=[
+				new Item_menu('Novedades','views/img/folder.png',':vercontenido:pelispekes:novedades:' + escape('http://www.pelispekes.com')),
+				new Item_menu('Estrenos','views/img/folder.png',':vercontenido:pelispekes:estrenos:' + escape('http://www.pelispekes.com/categoria/estrenos')),
+				new Item_menu('Listado Alfabetico','views/img/folder.png',':alfabeto:pelispekes:1-9')
+				//new Item_menu('Buscar','views/img/search.png',':vercontenido:pelispekes:tipobusqueda:' + escape('http://www.pelispekes.com/search/'))
+				];
+		return array_menu;
+		}
+		
+		/************************************************************************************
+		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
+		/*	Parametros: 																    *
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*	Retorna: Array de objetos Item_menu											    *
+		/************************************************************************************/
+		this.getplaylist= function (page, tipo, url) {
+			var array_playlist=[];
+			switch (tipo)
+				{
+				case "novedades":	
+					array_playlist=parsepelispekestipo1(url, 'novedades', page);
+					break;
+				case "estrenos":		
+					array_playlist=parsepelispekestipo1(url,'estrenos', page);
+					break;
+				case "alfabeto":		
+					array_playlist=parsepelispekestipo1(url,'alfabeto', page);
+					break;					
+				/*case "tipobusqueda":
+					page.metadata.title = 'PelisPekes - Buscar';			
+					array_playlist=parsepelispekestipobusqueda(url, page);
+					break;*/
+				}			
+		
+		return array_playlist;
+		}
+		
+		/****************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
+		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
+		/*	Parametros: 																    	*
+		/*		url: direccion de la que se debe extraer la lista.								*
+		/*	Retorna: Array de servidores												    	*
+		/****************************************************************************************/
+		this.getservidores= function (url)	{
+			url=unescape(url);
+			var file_contents = get_urlsource(url);
+
+			var titulo;
+			var imagen;
+			var url_video;
+			var servidor;
+			var idioma;
+			var calidad;
+			var descripcion;
+			
+			//item_Actual
+			titulo = extraer_texto(file_contents, '<h1 class="peliculatitulo">','</h1>');
+			imagen = extraer_texto(file_contents, 'alt="ver pelicula " title="ver pelicula " src="','">');
+			descripcion = extraer_texto(file_contents ,'<b>Sinopsis:</b> ',' <div');
+						
+			this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
+			
+			var aux_string = extraer_texto(file_contents, '<ul class="tabs">','</ul>');
+			var array_aux = extraer_html_array(aux_string,'<li','</li>');
+			//file_contents = "";
+		
+			var array_servidores=[];
+		 
+			for (var i=0;i<array_aux.length;i++)
+				{
+				servidor = extraer_texto(array_aux[i],'<div class="','">');
+				if(servidor=='vkontakte') {servidor='vk';}
+				idioma = extraer_texto(array_aux[i], 'menu">','</a>');
+				url_video = extraer_texto(file_contents, '<div class="tab_content" id="' + (i+1) + '_content"','</div>');
+				url_video = extraer_texto(url_video,'<iframe src="','"');
+				var params={
+						"url_host" : url_video,
+						"servidor" : servidor,
+						"idioma" : idioma,
+						"calidad" : calidad
+						};
 	
+				var objHost=HostFactory.createHost(servidor,params)
+				if (objHost)
+					{
+						array_servidores.push(objHost);
+					}				
+				}
+			file_contents = "";
+		return array_servidores;
+		}
+		
+		/************************************************************************
+		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
+		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
+		/*	Parametros:															*
+		/*		url: direccion de la que se debe extraer la lista.				*
+		/*	Retorna: String que representa la url								*
+		/************************************************************************/
+		this.geturl_host= function (url){
+			return url;		
+		}
+		
+		/************************************************************************************
+		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
+		/*	Parametros: ninguno																*
+		/*	Retorna:Un objetos Item_menu												*
+		/***********************************************************************************/
+		this.getitem_alfabeto= function() {
+			return (new Item_menu("PelisPekes - Orden Alfabetico","views/img/folder.png",':vercontenido:pelispekes:alfabeto:','http://www.pelispekes.com/categoria/letra/'));
+		}
+		
+		
+		//Metodos Privados
+		
+		function parsepelispekestipo1(url_servidor, tipo, page)
+			{
+			//http://www.pelispekes.com/
+			switch (tipo)
+				{
+				case "novedades":
+					page.metadata.title = 'PelisPekes - Novedades';	
+					break;
+				case "estrenos":
+					page.metadata.title = 'PelisPekes - Estrenos';	
+					break;
+				case "alfabeto":
+					page.metadata.title = 'PelisPekes - Orden Alfabetico';	
+					break;	
+				}
+				
+			url_servidor=unescape(url_servidor);		
+			var file_contents = get_urlsource(url_servidor);
+			var flag_pagina_siguiente = file_contents.indexOf("class='nextpostslink'>»</a>");
+			var array_aux = extraer_html_array(file_contents,'<div style="margin-right:10px" onmouseout="javascript:hideToolTip','<div class="sinopsis">');
+			file_contents = "";
+				
+			var titulo;
+			var imagen;
+			var url_video;	
+			var page_uri = ':verenlaces:pelispekes:';
+			var array_playlist=[];
+		
+			for (var i=0;i<array_aux.length;i++)
+				{
+				titulo=extraer_texto(array_aux[i],'<span class="titulotool">','</div>');
+				imagen=extraer_texto(array_aux[i],'src="','"');
+				url_video=extraer_texto(array_aux[i],'href="','"');
+				
+				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
+				}
+			
+			//Paginador
+			if(flag_pagina_siguiente!=-1)
+				{
+				page_uri = ':vercontenido:pelispekes:' + tipo +':';
+				if(url_servidor.indexOf('/page/')==-1)	
+					{
+					url_servidor=url_servidor + '/page/2';
+					}
+				else
+					{
+					var numero_pagina=url_servidor.substr(url_servidor.indexOf('/page/') + 6);
+					url_servidor=url_servidor.replace('/page/' + numero_pagina,'/page/' + (parseInt(numero_pagina)+1));
+					}
+				array_playlist.push(new Item_menu('Siguiente',"views/img/siguiente.png",page_uri,url_servidor));
+			}
+			
+			return array_playlist;
+			}
+			
+		/*function parsepelispekestipobusqueda(url_servidor, page)
+			{
+			url_servidor=unescape(url_servidor);
+			var array_playlist=[];
+			var texto_busqueda=that.cuadroBuscar();
+
+			if (texto_busqueda != undefined) 
+				{	
+				texto_busqueda = texto_busqueda.replace(/ /g,'-');
+				page.metadata.title = 'PelisPekes - Buscar ' + texto_busqueda;
+
+				var file_contents = get_urlsource(url_servidor + 'q=' + texto_busqueda + '&sa');
+				var resultados = file_contents.indexOf('No hemos encontrado');
+				if(resultados==-1)
+				}
+				
+			return array_playlist;	
+			}*/
+	}		
+	//Propiedades y metodos Estaticos
+	Pelispekes.categoria= function() {return 'peliculas';}
+	Pelispekes.getitem= function() {return new Item_menu('Pelis Pekes',"img/pelispekes.png",':vercanales:pelispekes');}
+
+	CanalFactory.registrarCanal("pelispekes",Pelispekes); //Registrar la clase Pelispekes
+
+
 //servidores de contenidos
 //
 

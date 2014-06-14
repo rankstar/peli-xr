@@ -1,9 +1,10 @@
 ###### Changelog
 
-### 0.9.8b
+### 0.9.9b
 - Corregido el problema de los titulos en oranline
 - Añadido a servidores de video Youtube.
 - Deteccion mejorada de contenido no disponible vk
+- Implementando pelispekes
 
 ### 0.9.8
 
