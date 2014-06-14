@@ -39,7 +39,7 @@
 	/********************************************************************************/
 	var Item_menu = function(titulo,imagen,page_uri,url,descripcion) {
 		this.titulo=titulo;
-		this.imagen= (imagen.startsWith('http:'))? imagen:(imagen.startsWith('file:'))? imagen:plugin.path + imagen;
+		this.imagen= (imagen.startsWith('http'))? imagen:(imagen.startsWith('file:'))? imagen:plugin.path + imagen;
 		var uri= page_uri || titulo.toLowerCase().replace(/\s+|\.+/g,'');
 		this.page_uri=PREFIX + ':' + uri.replace(/^:/,'');
 		this.url =url || "";
@@ -1143,7 +1143,7 @@
 						}
 					}
 				}
-			//showtime.trace ('Youtube cypher=' + ytCypherUsed);
+			showtime.trace ('Youtube cypher=' + ytCypherUsed);
 			
 			file_contents = get_urlsource(url_servidor);
 			var aux_string = extraer_texto(file_contents,'"url_encoded_fmt_stream_map":',':');
@@ -1167,15 +1167,17 @@
 				pos_fin = aux_array[i].indexOf('\\u0026',pos_ini);
 				(pos_fin>-1) ? yt_url = aux_array[i].substr(pos_ini,pos_fin-pos_ini) : yt_url = aux_array[i].substr(pos_ini);
 
-				pos_ini = aux_array[i].indexOf('u0026s=');
+				pos_ini = aux_array[i].indexOf('s=');
 				pos_fin = aux_array[i].indexOf('\\u0026',pos_ini);
 				(pos_fin>-1) ? signature = aux_array[i].substr(pos_ini,pos_fin-pos_ini) : signature = aux_array[i].substr(pos_ini);
 				
 				var params = {
 						'itag': parseInt(itag.substr(5)),
-						'signature': signature.substr(7),
+						'signature': signature.substr(2),
 						'url': unescape(yt_url.substr(4))};
 				yt_urls.push(params);
+				//showtime.trace (yt_urls[i].signature.length + ' ' + yt_urls[i].signature);
+				//<showtime.trace (signature.length + ' ' + signature);
 				}
 				
 			yt_urls.sortBy('itag');
@@ -1201,14 +1203,16 @@
 				var signature_parcheada = get_urlsource('http://rantanplan.net46.net/takata/index.php?kk=' + yt_urls[indice].signature);
 				signature_parcheada = signature_parcheada.substr(0,signature_parcheada.indexOf('\n'));
 				yt_urls[indice].url = yt_urls[indice].url + '&signature=' + signature_parcheada;
-
+				//signature_parcheada=signature_parcheada.replace('.','');
+				//showtime.trace(yt_urls[indice].signature.length);
 				//showtime.trace(yt_urls[indice].signature);
 				//showtime.trace(signature_parcheada);
+				//url_video='error';
 				}
 			
 			url_video = yt_urls[indice].url;
 			//showtime.trace (url_video) + ' ' + yt_urls[indice].itag;
-
+			//url_video='error';
 		return url_video;
 		}
 		
@@ -5409,7 +5413,7 @@
 		var codigo_html = showtime.httpReq(url_servidor, 
 			{
 			debug: false,
-			compression: false,
+			compression: true,
 			headers: 
 				{
 				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
@@ -6231,7 +6235,7 @@ function utf8_encode(argString) {
 	/* var TESTCHANNEL: Objeto que representa el canal TESTCHANNEL	*
 	/************************************************************************************/
 	var ZTestchannel= function() {	
-		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 		
 		/************************************************************************
@@ -6243,7 +6247,7 @@ function utf8_encode(argString) {
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Test Videoservers','views/img/folder.png',':vercontenido:ztestchannel:urlvideo:null'),
-				new Item_menu('Url directa de video','views/img/folder.png',':vercontenido:ztestchannel:urlvideo:null')
+				new Item_menu('Busqueda youtube','views/img/folder.png',':vercontenido:ztestchannel:buscaryoutube:null')
 				];
 		return array_menu;
 		}
@@ -6264,6 +6268,10 @@ function utf8_encode(argString) {
 					page.metadata.title = 'Test Videoservers';			
 					array_playlist=testurlvideo();
 					break;
+				case "buscaryoutube":
+					page.metadata.title = 'Busqueda Youtube';			
+					array_playlist=buscaryoutube();
+					break;					
 			}	
 		return array_playlist;
 		}
@@ -6334,7 +6342,43 @@ function utf8_encode(argString) {
 			return array_playlist;
 			}	
 		
+		function buscaryoutube() {
+			//Para probar busquedas youtube
+			var array_playlist=[];
+			var titulo;
+			var imagen = 'views/img/folder.png';
+			var url_video;
+			var page_uri;
+			
+			/*titulo = 'Test Played.To';
+			url_video = 'http://played.to/0vpqv384hysv';
+			page_uri = ':vervideo:ztestchannel:played:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));*/			
+			
+			var texto_busqueda=that.cuadroBuscar();
+			
+			if(texto_busqueda!= undefined)
+				{
+				texto_busqueda = texto_busqueda.replace(/ /g,'+');
+				var file_contents = get_urlsource('https://gdata.youtube.com/feeds/api/videos?q=' + texto_busqueda);
+				var array_aux = extraer_html_array(file_contents,'<entry>','</entry>');
+			
+				for (var i=0;i<array_aux.length;i++)
+					{
+					titulo = extraer_texto(array_aux[i],"<title type='text'>","</title>");
+					imagen = extraer_texto(array_aux[i],"<media:thumbnail url='","'");
+					url_video = extraer_texto(array_aux[i],"<media:player url='","'");
+					url_video = url_video.replace('&feature=youtube_gdata_player','');
+					page_uri = ':vervideo:ztestchannel:youtube:' + titulo + ':' + escape(imagen) + ':';
+					array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+					//showtime.trace(imagen);
+					}
+				}
+			
+			return array_playlist;
+			}
 		
+    
 	}
 	//Propiedades y metodos Estaticos
 	ZTestchannel.categoria= function() {return 'test';}
