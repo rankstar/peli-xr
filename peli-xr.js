@@ -1096,6 +1096,125 @@
 
 	}
 	HostFactory.registrarHost("xvideos",Xvideos); //Registrar la clase Xvideos
+	
+	
+	
+	/********************************************************************************	
+	/* var Youtube: Objeto que representa el servidor Vidspot						*
+	/*		Hereda de Host															*
+	/********************************************************************************/
+	var Youtube= function() {
+		
+		//metodos publicos
+		
+		/************************************************************************
+		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
+		/*	Parametros: ninguno													*
+		/*	Retorna: true si es un servidor de adultos, false si no lo es.		*
+		/***********************************************************************/
+		this.esservidoradulto= function () {
+			return false;
+		}
+		
+		/****************************************************************************
+		/*	funcion geturl_video: Devuelve la url del video.						*
+		/*	Parametros:																*
+		/*		url_servidor: direccion de la que se debe extraer la url del video.	*	
+		/*	Retorna: String que representa la url del video o 'error'				*									*
+		/***************************************************************************/
+		this.geturl_video= function (url_servidor)	{
+			
+			var vidInfoTypes = new Array('&el=embedded', '&el=detailpage', '&el=vevo', '');
+			var vidId = url_servidor.replace('http://www.youtube.com/watch?v=','');
+			vidId = vidId.replace('https://www.youtube.com/watch?v=','');
+			
+			var ytCypherUsed=false;
+			var file_contents;
+			
+			for (var i=0;i<vidInfoTypes.length;i++)
+				{
+				file_contents = get_urlsource('http://www.youtube.com/get_video_info?&video_id=' + vidId + vidInfoTypes[i] + '&ps=default&eurl=&gl=US&hl=en');
+				if (file_contents.indexOf('status=ok')>0)
+					{
+					if(file_contents.indexOf('use_cipher_signature=True')>0)
+						{
+						ytCypherUsed=true;
+						break;									
+						}
+					}
+				}
+			//showtime.trace ('Youtube cypher=' + ytCypherUsed);
+			
+			file_contents = get_urlsource(url_servidor);
+			var aux_string = extraer_texto(file_contents,'"url_encoded_fmt_stream_map":',':');
+			//var aux_string = extraer_texto(file_contents,'"adaptive_fmts":',':');
+			aux_string = extraer_texto(aux_string,'"','",');
+			var aux_array = aux_string.split(',');
+			var itag;
+			var yt_url;
+			var signature;
+			
+			var pos_ini;
+			var pos_fin;
+			var yt_urls=[];	
+			for (i=0;i<aux_array.length;i++)
+				{
+				pos_ini = aux_array[i].indexOf('itag=');
+				pos_fin = aux_array[i].indexOf('\\u0026',pos_ini);
+				(pos_fin>-1) ? itag = aux_array[i].substr(pos_ini,pos_fin-pos_ini) : itag = aux_array[i].substr(pos_ini);
+
+				pos_ini = aux_array[i].indexOf('url=');
+				pos_fin = aux_array[i].indexOf('\\u0026',pos_ini);
+				(pos_fin>-1) ? yt_url = aux_array[i].substr(pos_ini,pos_fin-pos_ini) : yt_url = aux_array[i].substr(pos_ini);
+
+				pos_ini = aux_array[i].indexOf('u0026s=');
+				pos_fin = aux_array[i].indexOf('\\u0026',pos_ini);
+				(pos_fin>-1) ? signature = aux_array[i].substr(pos_ini,pos_fin-pos_ini) : signature = aux_array[i].substr(pos_ini);
+				
+				var params = {
+						'itag': parseInt(itag.substr(5)),
+						'signature': signature.substr(7),
+						'url': unescape(yt_url.substr(4))};
+				yt_urls.push(params);
+				}
+				
+			yt_urls.sortBy('itag');
+			 
+			var url_video = 'error';
+			var indice=0;
+			for (i=0;i<yt_urls.length;i++)
+				{
+				if(yt_urls[i].itag==18)
+					{
+					indice=i;
+					}
+				if(yt_urls[i].itag==22) //720p
+					{
+					indice=i;
+					break;
+					}
+				}					
+
+			//Si es contenido protegido recomponer la firma
+			if(ytCypherUsed==true)
+				{
+				var signature_parcheada = get_urlsource('http://rantanplan.net46.net/takata/index.php?kk=' + yt_urls[indice].signature);
+				signature_parcheada = signature_parcheada.substr(0,signature_parcheada.indexOf('\n'));
+				yt_urls[indice].url = yt_urls[indice].url + '&signature=' + signature_parcheada;
+
+				//showtime.trace(yt_urls[indice].signature);
+				//showtime.trace(signature_parcheada);
+				}
+			
+			url_video = yt_urls[indice].url;
+			//showtime.trace (url_video) + ' ' + yt_urls[indice].itag;
+
+		return url_video;
+		}
+		
+	}
+	HostFactory.registrarHost("youtube",Youtube); //Registrar la clase Youtube
+	
 //servidores de video
 //
 
@@ -4845,14 +4964,11 @@
 
 			for (var i=0;i<array_aux.length;i++)
 				{
-					//titulo=utf8_decode(extraer_texto(array_aux[i],'title="','">'));
+
+
 					titulo=extraer_texto(array_aux[i],'title="','">');
-					try{
-						showtime.print(utf8_decode(titulo)); //Provocamos el error
-						titulo=utf8_decode(titulo);
-					}catch (e){
-						showtime.trace(e.message); 
-					}
+					titulo = fixtitles(titulo);
+
 					if (titulo !='') {			
 						imagen=extraer_texto(array_aux[i],'<img src="','"');
 						url_video=extraer_texto(array_aux[i],'<a href="','"');
@@ -4910,6 +5026,22 @@
 		return array_playlist;	
 		}
 
+		function fixtitles (titulo)	
+		{
+			//var array_1 = ['á'    ,'é'    ,'í'    ,'ó'    ,'ú'    ,'Á'     ,'É'     ,'Í'     ,'Ó'      ,'Ú'     ,'ñ'    ,'Ñ'     ,'ü','à' ,'è' ,'ì','ò' ,'ù'];
+			var array_1 = [String.fromCharCode(161),String.fromCharCode(169),String.fromCharCode(173),String.fromCharCode(179),String.fromCharCode(186),String.fromCharCode(129),String.fromCharCode(137),String.fromCharCode(141),String.fromCharCode(147),String.fromCharCode(154),String.fromCharCode(177),String.fromCharCode(145),String.fromCharCode(188),String.fromCharCode(160),String.fromCharCode(168),String.fromCharCode(172),String.fromCharCode(178),String.fromCharCode(185)];
+			var array_2 = [String.fromCharCode(225),String.fromCharCode(233),String.fromCharCode(237),String.fromCharCode(243),String.fromCharCode(250),String.fromCharCode(193),String.fromCharCode(201),String.fromCharCode(205),String.fromCharCode(211),String.fromCharCode(218),String.fromCharCode(241),String.fromCharCode(209),String.fromCharCode(252),String.fromCharCode(224),String.fromCharCode(232),String.fromCharCode(236),String.fromCharCode(242),String.fromCharCode(249)];
+			//String.fromCharCode(195)
+
+			var resultado = titulo;
+			for (var i=0;i<array_1.length;i++)
+				{
+				var reg = new RegExp(String.fromCharCode(195) +  array_1[i],"g");
+				resultado = resultado.replace(reg,array_2[i]);
+				}
+		return resultado;
+		}
+		
 	}
 	//Propiedades y metodos Estaticos
 	Oranline.categoria= function() {return 'peliculas';}
@@ -5224,7 +5356,9 @@
 				}		
 		return array_playlist;
 		}
-	}
+		
+		
+	}	
 	//Propiedades y metodos Estaticos
 	Seriesflv.categoria= function() {return 'series';}
 	Seriesflv.getitem= function() {return new Item_menu('Seriesflv',"img/seriesflv.png",':vercanales:seriesflv');}
@@ -5595,7 +5729,7 @@
 		var codigo_html = showtime.httpReq(url_servidor, 
 			{
 			debug: false,
-			compression: true,
+			compression: false,
 			headers: 
 				{
 				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
@@ -5735,7 +5869,77 @@
 		return tmp_arr.join('');
 	}
 
-	
+function utf8_encode(argString) {
+  //  discuss at: http://phpjs.org/functions/utf8_encode/
+  // original by: Webtoolkit.info (http://www.webtoolkit.info/)
+  // improved by: Kevin van Zonneveld (http://kevin.vanzonneveld.net)
+  // improved by: sowberry
+  // improved by: Jack
+  // improved by: Yves Sucaet
+  // improved by: kirilloid
+  // bugfixed by: Onno Marsman
+  // bugfixed by: Onno Marsman
+  // bugfixed by: Ulrich
+  // bugfixed by: Rafal Kukawski
+  // bugfixed by: kirilloid
+  //   example 1: utf8_encode('Kevin van Zonneveld');
+  //   returns 1: 'Kevin van Zonneveld'
+
+  if (argString === null || typeof argString === 'undefined') {
+    return '';
+  }
+
+  var string = (argString + ''); // .replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+  var utftext = '',
+    start, end, stringl = 0;
+
+  start = end = 0;
+  stringl = string.length;
+  for (var n = 0; n < stringl; n++) {
+    var c1 = string.charCodeAt(n);
+    var enc = null;
+
+    if (c1 < 128) {
+      end++;
+    } else if (c1 > 127 && c1 < 2048) {
+      enc = String.fromCharCode(
+        (c1 >> 6) | 192, (c1 & 63) | 128
+      );
+    } else if ((c1 & 0xF800) != 0xD800) {
+      enc = String.fromCharCode(
+        (c1 >> 12) | 224, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+      );
+    } else { // surrogate pairs
+      if ((c1 & 0xFC00) != 0xD800) {
+        throw new RangeError('Unmatched trail surrogate at ' + n);
+      }
+      var c2 = string.charCodeAt(++n);
+      if ((c2 & 0xFC00) != 0xDC00) {
+        throw new RangeError('Unmatched lead surrogate at ' + (n - 1));
+      }
+      c1 = ((c1 & 0x3FF) << 10) + (c2 & 0x3FF) + 0x10000;
+      enc = String.fromCharCode(
+        (c1 >> 18) | 240, ((c1 >> 12) & 63) | 128, ((c1 >> 6) & 63) | 128, (c1 & 63) | 128
+      );
+    }
+    if (enc !== null) {
+      if (end > start) {
+        utftext += string.slice(start, end);
+      }
+      utftext += enc;
+      start = end = n + 1;
+    }
+  }
+
+  if (end > start) {
+    utftext += string.slice(start, stringl);
+  }
+
+  return utftext;
+}
+
+
+
 //////////////////////////////////////////////////////////////////////////
 //																		//
 // 		Main															//
@@ -6339,6 +6543,128 @@
 	//Pagina de ver video
 
 
+
+	//TEST
+	plugin.addURI(PREFIX + ":test", function(page) {
+		page.redirect(PREFIX + ':vercanales:ztestchannel');
+	});
+	
+	/************************************************************************************
+	/* var TESTCHANNEL: Objeto que representa el canal TESTCHANNEL	*
+	/************************************************************************************/
+	var ZTestchannel= function() {	
+		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+		//metodos publicos
+		
+		/************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
+		/*	Parametros: ninguno													*
+		/*	Retorna: Array de objetos Item_menu									*
+		/************************************************************************/
+		this.getmenu= function(){
+		//retorna el Menu
+			var array_menu=[
+				new Item_menu('Test Videoservers','views/img/folder.png',':vercontenido:ztestchannel:urlvideo:null'),
+				new Item_menu('Url directa de video','views/img/folder.png',':vercontenido:ztestchannel:urlvideo:null')
+				];
+		return array_menu;
+		}
+		
+		/************************************************************************************
+		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
+		/*	Parametros: 																    *
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*	Retorna: Array de objetos Item_menu											    *
+		/************************************************************************************/
+		this.getplaylist= function (page, tipo, url) {
+			var array_playlist=[];
+			switch (tipo)
+			{
+				case "urlvideo":
+					page.metadata.title = 'Test Videoservers';			
+					array_playlist=testurlvideo();
+					break;
+			}	
+		return array_playlist;
+		}
+		
+		/****************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
+		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
+		/*	Parametros: 																    	*
+		/*		url: direccion de la que se debe extraer la lista.								*
+		/*	Retorna: Array de servidores												    	*
+		/****************************************************************************************/
+		this.getservidores= function (url)	{
+			return false;
+		}
+		
+		/************************************************************************
+		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
+		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
+		/*	Parametros:															*
+		/*		url: direccion de la que se debe extraer la lista.				*
+		/*	Retorna: String que representa la url								*
+		/************************************************************************/
+		this.geturl_host= function (url){
+			return url;			
+		}
+		
+		
+		//Metodos Privados
+		function testurlvideo() {
+			//Para probar una url directa de un videoserver
+			var array_playlist=[];
+			var titulo;
+			var imagen = 'views/img/folder.png';
+			var url_video;
+			var page_uri;
+			
+			titulo = 'Test Played.To';
+			url_video = 'http://played.to/0vpqv384hysv';
+			page_uri = ':vervideo:ztestchannel:played:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+			
+			titulo = 'Test Youtube No Cypher';
+			url_video = 'https://www.youtube.com/watch?v=mzhM6xNB8sQ';
+			page_uri = ':vervideo:ztestchannel:youtube:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+			
+			titulo = 'Test Youtube Cypher';
+			url_video = 'https://www.youtube.com/watch?v=JF8BRvqGCNs';
+			page_uri = ':vervideo:ztestchannel:youtube:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));			
+			
+			//var cuadrotexto = showtime.textDialog('Url de video', true, true);
+			//url_video=cuadrotexto.input;
+			/*
+			var array_1 = ['à' ,'è' ,'ì','ò' ,'ù'];
+						var pp;
+						var kk;
+			for (var i=0;i<array_1.length;i++)
+				{
+					pp=array_1[i];
+					kk=array_1[i];
+				pp=utf8_encode(pp);
+					showtime.trace(array_1[i] + ' - ' + pp.charCodeAt(1) + ' - ' + kk.charCodeAt(0));
+				}
+			//str_data.charCodeAt(j)
+			*/
+			
+			return array_playlist;
+			}	
+		
+		
+	}
+	//Propiedades y metodos Estaticos
+	ZTestchannel.categoria= function() {return 'test';}
+	ZTestchannel.getitem= function() {return new Item_menu('Test Channel',"img/test.png",':vercanales:ztestchannel');}
+
+	CanalFactory.registrarCanal("ZTestchannel",ZTestchannel); //Registrar la clase testchannel	
+	//TEST
+	
 
 	plugin.addURI(PREFIX + ":start", startPage);
 })(this);
