@@ -5,6 +5,7 @@
 - Añadido a servidores de video Youtube.
 - Deteccion mejorada de contenido no disponible vk
 - Implementando pelispekes
+- Deteccion mejorada de contenido no disponible videspot
 
 ### 0.9.8
 
