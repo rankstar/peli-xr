@@ -931,8 +931,8 @@
 					}
 				}
 				
-			return url_video;
-			}
+		return url_video;
+		}
 		
 	}
 	HostFactory.registrarHost("vidspot",Vidspot); //Registrar la clase Vidspot
@@ -1173,7 +1173,7 @@
 				pos_ini = aux_array[i].indexOf('s=');
 				pos_fin = aux_array[i].indexOf('\\u0026',pos_ini);
 				(pos_fin>-1) ? signature = aux_array[i].substr(pos_ini,pos_fin-pos_ini) : signature = aux_array[i].substr(pos_ini);
-				showtime.trace (signature);
+				//showtime.trace (signature);
 				var params = {
 						'itag': parseInt(itag.substr(5)),
 						'signature': signature.substr(2),
@@ -5176,6 +5176,14 @@
 			return url;		
 		}
 		
+		/************************************************************************************
+		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
+		/*	Parametros: ninguno																*
+		/*	Retorna:Un objetos Item_menu												*
+		/***********************************************************************************/
+		this.getitem_alfabeto= function() {
+			return (new Item_menu("PelisPekes - Orden Alfabetico","views/img/folder.png",':vercontenido:pelispekes:alfabeto:','http://www.pelispekes.com/categoria/letra/'));
+		}
 
 		//Metodos Privados
 		
@@ -6211,7 +6219,7 @@ function utf8_encode(argString) {
 	var licencia = '';
 	var licencia_md5 = '1e7c1eac9e131fe3a01d7594c071bf8c'; //not4kids
 	
-	var canal_test=true; //for testing only
+	var canal_test=false; //for testing only
 	
 	var objCanal;
 	var objHistorial=new StoreHistorial();
