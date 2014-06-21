@@ -2658,7 +2658,7 @@
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		
 		var xml_list=[
-			new Item_menu('GURB','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de GURB:' + escape('http://pastebin.com/raw.php?i=F7YMkysY'), 'http://pastebin.com/raw.php?i=F7YMkysY'),
+			new Item_menu('GURB','img/xbmc_spot.jpg',':vercontenido:livestream: Lista de GURB:' + escape('http://pastebin.com/raw.php?i=F7YMkysY'), 'http://pastebin.com/raw.php?i=F7YMkysY'),
 			new Item_menu('LARGOBARBATE','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de LARGOBARBATE:' + escape('http://pastebin.com/raw.php?i=YqG2TELL'), 'http://pastebin.com/raw.php?i=YqG2TELL'),
 			new Item_menu('Ivanetxml','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de Ivanetxml:' + escape('http://pastebin.com/raw.phb?i=u8f4YwKg'), 'http://pastebin.com/raw.phb?i=u8f4YwKg'),
 			new Item_menu('Dani Cajilla TV','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de Dani Cajilla:' + escape('http://dl.dropboxusercontent.com/u/58407848/dani.xml'), 'http://dl.dropboxusercontent.com/u/58407848/dani.xml'),
@@ -2687,12 +2687,16 @@
 				
 			for (var i=0;i<xml_list.length;i++){
 				var objItem=xml_list[i];
-				
 				//Obtener fecha de actualizacion
 				var fecha=getDate(objItem.url);
-				if (fecha !='') objItem.titulo=objItem.titulo + ' \n(' + fecha + ')';	
-								
-				array_menu.push(objItem)
+				if (fecha != 'error')
+					{
+					if (fecha !='')
+						{
+						objItem.titulo=objItem.titulo + ' \n(' + fecha + ')';							
+						}
+					array_menu.push(objItem)
+					}
 			}
 			
 			array_menu.push(new Item_menu('Todo','views/img/folder.png',':vercontenido:livestream:todos:default')); 
@@ -2722,7 +2726,7 @@
 					array_playlist=array_playlist.uniqueObjects(['url']); //Eliminar duplicados
 					break;
 				default:
-					page.metadata.title =tipo; //En este caso el tipo es tb el titulo de la page
+					page.metadata.title = tipo; //En este caso el tipo es tb el titulo de la page
 					array_playlist=parselivestreamxmltipo1(url);
 					break;
 			}
@@ -2763,8 +2767,7 @@
 		//Metodos Privados	
 		function parselivestreamxmltipo1(url_xml)
 		{
-			//url_xml=unescape(url_xml);
-			
+			url_xml=unescape(url_xml);
 			var file_contents = get_urlsource(url_xml);
 
 			//Recuperamos todos los <item> en forma de array
@@ -2824,15 +2827,21 @@
 		
 		function getDate(url_xml)
 		{
-			url_xml=unescape(url_xml);
-			var aux;
+			try {
+				url_xml=unescape(url_xml);
+				var aux;
 			
-			var file_contents = get_urlsource(url_xml).toLowerCase();
-		
-			var texto= extraer_texto(file_contents,'actualiza','</');
-			aux=texto.match(/\d{1,2}(\/|-)\d{1,2}(\/|-)\d{2,4}/);
+				var file_contents = get_urlsource(url_xml).toLowerCase();
+				var texto= extraer_texto(file_contents,'actualiza','</');
+				aux=texto.match(/\d{1,2}(\/|-)\d{1,2}(\/|-)\d{2,4}/);
 			
 			return aux?aux[0]:'';
+			}
+			catch (err) {
+				//if (err == "Error: HTTP error: 404")
+				return 'error';
+			}
+			
 		}
 		
 		
@@ -5602,7 +5611,7 @@
 			//generar auth_token
 			var url_api_auth = "http://api.series.ly/v2/auth_token/";
 			//cambiar id_api, y secret x la mia
-
+			
 			var file_contents = get_urlsource(url_api_auth + '?id_api=' + '2454' + '&secret=' + 'ChD9ucvpfUC7N4zufunp');
 			auth_token=showtime.JSONDecode(file_contents);
 			//showtime.trace (auth_token);
@@ -6161,7 +6170,7 @@
 		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
 		var codigo_html = showtime.httpReq(url_servidor, 
 			{
-			debug: false,
+			debug: true,
 			compression: true,
 			noFollow: true,
 			headRequest: true,

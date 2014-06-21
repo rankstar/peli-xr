@@ -8,6 +8,7 @@
 - Deteccion mejorada de contenido no disponible videspot
 - Agregado soporte peliculas series.ly
 - Agregado soporte series series.ly
+- Solucionado error 404 en livestreams
 
 ### 0.9.8
 
