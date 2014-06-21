@@ -6,6 +6,8 @@
 - Deteccion mejorada de contenido no disponible vk
 - Implementando pelispekes
 - Deteccion mejorada de contenido no disponible videspot
+- Agregado soporte peliculas series.ly
+- Agregado soporte series series.ly
 
 ### 0.9.8
 

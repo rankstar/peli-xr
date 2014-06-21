@@ -5310,23 +5310,23 @@
 				{
 				case "vistas":
 					page.metadata.title = 'Seriesly - Vistas';
-					array_playlist=parseseriesly_peliculas(url, 'pvistas');
+					array_playlist=this.parseseriesly(url, 'pvistas');
 					break;
 				case "favoritas":
 					page.metadata.title = 'Seriesly - Favoritas';
-					array_playlist=parseseriesly_peliculas(url, 'pfavoritas');
+					array_playlist=this.parseseriesly(url, 'pfavoritas');
 					break;
 				case "pendientes":
 					page.metadata.title = 'Seriesly - Pendientes';
-					array_playlist=parseseriesly_peliculas(url, 'ppendientes');
+					array_playlist=this.parseseriesly(url, 'ppendientes');
 					break;					
 				case "masvistas":
 					page.metadata.title = 'Seriesly - Mas Vistas';
-					array_playlist=parseseriesly_peliculas(url, 'masvistas');
+					array_playlist=this.parseseriesly(url, 'pmasvistas');
 					break;				
 				case "buscar":
 					page.metadata.title = 'Seriesly - Buscar';			
-					array_playlist=parseseriesly_buscar(url, 2, page); //filter=2 para movies
+					array_playlist=this.parseseriesly_buscar(url, 2, page); //filter=2 para movies
 					break;
 				}			
 		
@@ -5343,7 +5343,7 @@
 		this.getservidores= function (url)	{
 			url=unescape(url);
 			
-			var error=comprobar_credenciales();
+			var error=this.comprobar_credenciales();
 			var array_servidores=[];
 			
 			if(error==0)
@@ -5365,26 +5365,29 @@
 				
 				//item_Actual
 				titulo = resultado_json.name;
-				imagen = resultado_json.poster.large;
-				descripcion = resultado_json.plot;
+				imagen = (typeof resultado_json.poster == 'undefined') ? 'views/img/folder.png' : resultado_json.poster.large;
+				descripcion = (typeof resultado_json.plot == 'undefined') ? '' : resultado_json.plot;
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
 				
 				file_contents = get_urlsource(url);
 				resultado_json = showtime.JSONDecode(file_contents);
 				file_contents = "";
-				
-				for (var i=0;i<resultado_json.streaming.length;i++)
+				if(resultado_json.error==0)
 					{
-					servidor = resultado_json.streaming[i].host;
-					var params=	{
-						"url_host" : resultado_json.streaming[i].video_url,
-						"servidor" : resultado_json.streaming[i].host,
-						"idioma" : resultado_json.streaming[i].lang,
-						"calidad" : resultado_json.streaming[i].quality
-						};
+					for (var i=0;i<resultado_json.streaming.length;i++)
+						{
+						servidor = (resultado_json.streaming[i].host=='Played.to') ? 'Played' : resultado_json.streaming[i].host;
+						idioma = (resultado_json.streaming[i].subtitles=='') ? resultado_json.streaming[i].lang : resultado_json.streaming[i].lang + ' sub ' + resultado_json.streaming[i].subtitles;
+						var params=	{
+							"url_host" : resultado_json.streaming[i].video_url,
+							"servidor" : servidor,
+							"idioma" : idioma,
+							"calidad" : resultado_json.streaming[i].quality
+							};
 	
-					var objHost=HostFactory.createHost(servidor,params)
-					if (objHost) {array_servidores.push(objHost);}	
+						var objHost=HostFactory.createHost(servidor,params)
+						if (objHost) {array_servidores.push(objHost);}	
+						}
 					}
 				}
 			else
@@ -5403,7 +5406,7 @@
 		/*	Retorna: String que representa la url								*
 		/************************************************************************/
 		this.geturl_host= function (url){
-			var error=comprobar_credenciales();
+			var error=this.comprobar_credenciales();
 			var resultado='error';
 			if(error==0)
 				{
@@ -5415,9 +5418,182 @@
 		}
 		
 		
-		//Variables privadas
+		this.parseseriesly = function (url_servidor, tipo)	{	
+			var error=this.comprobar_credenciales();
+			var array_playlist=[];
+			if(error==0)
+				{
+				//var url_api = 'http://api.series.ly/v2/user/media/movies/?auth_token=' + auth_token.auth_token + '&user_token=' + user_token.user_token;
+				var url_api = unescape(url_servidor) + '?auth_token=' + auth_token.auth_token + '&user_token=' + user_token.user_token;
+				var status;
+				var mediatype=2;				
+				switch (tipo)
+					{
+					case "pvistas":
+						status = 1;
+						break;
+					case "ssiguiendo":
+						status = 1;
+						mediatype = 1;
+						break;
+					case "pfavoritas":
+						status = 2;
+						break;
+					case "spendientes":
+						status = 2;
+						mediatype = 1;
+						break;					
+					case "ppendientes":
+						status = 3;
+						break;
+					case "svistas":
+						status = 3;
+						mediatype = 1;
+						break;						
+					case "pmasvistas":
+						//url_api = 'http://api.series.ly/v2/media/most_seen/movies/?auth_token=' + auth_token.auth_token + '&limit=50';
+						url_api = unescape(url_servidor) + '&auth_token=' + auth_token.auth_token + '&user_token=' + user_token.user_token + '&limit=50';
+						status = -1;						
+						break;
+					case "smasvistas":
+						//url_api = 'http://api.series.ly/v2/media/most_seen/series/?auth_token=' + auth_token.auth_token + '&limit=50';
+						url_api = unescape(url_servidor) + '&auth_token=' + auth_token.auth_token + '&user_token=' + user_token.user_token + '&limit=50';
+						status = -1;						
+						mediatype = 1;
+						break;							
+					}
+				array_playlist=parseserieslytipo1(url_api, status, mediatype); //mediatype= 2 para movies 1 para series
+				}
+			else
+				{
+				showtime.notify('Hay un problema con las credenciales', 3);
+				}				
+
+		return array_playlist;
+		}
+		
+		this.comprobar_credenciales = function()	{
+			var error = 0;
+			
+			if (auth_token=='' || user_token=='')
+				{
+				//no existen tokens los genero de nuevo
+				error = generar_tokens();
+				}			
+			else
+				{
+				//comprobar expiracion auth_token & user_token
+				var time_actual = showtime.time();
+				if(auth_token.auth_expires_date>time_actual && user_token.user_expires_date>time_actual)
+					{
+					error = 0;							
+					}
+				else
+					{
+					//generar tokens de nuevo
+					error = generar_tokens();
+					}
+				}
+		return error;
+		}
+
+
+		this.parseseriesly_serie = function(url_api, page)	{
+			var error=this.comprobar_credenciales();
+			var array_playlist=[];
+			
+			if(error==0)
+				{
+				url_api = unescape(url_api) + '&auth_token='+ auth_token.auth_token;
+				var file_contents = get_urlsource(url_api);
+				var resultado_json = showtime.JSONDecode(file_contents);
+				file_contents = "";
+				
+				if(resultado_json.error==0)
+					{
+					var titulo;
+					var imagen=resultado_json.poster.large;
+					var url_video;	 
+					var page_uri = ':verenlaces:seriesly:';
+					var aux_json;
+					var aux_num;
+					for (var j in resultado_json.seasons_episodes) 
+						{
+						aux_json = (resultado_json.seasons_episodes[j]);
+						for (var i=0;i<aux_json.length;i++)
+							{
+							aux_num = aux_json[i].episode.toString();
+							aux_json[i].episode = (aux_num.length==1) ? '0' + aux_json[i].episode : aux_json[i].episode;
+							titulo=aux_json[i].season + 'x' +  aux_json[i].episode + ' - ' + aux_json[i].title;
+							url_video='http://api.series.ly/v2/media/episode/links?idm=' + aux_json[i].idm + '&mediaType=' + aux_json[i].mediaType;
+							array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
+							}
+						}
+					}				
+				}
+			else
+				{
+				showtime.notify('Hay un problema con las credenciales', 3);
+				}
+										
+		return array_playlist;
+		}
+
+
+		this.parseseriesly_buscar = function (url_api, filter, page)	{
+			var error=this.comprobar_credenciales();
+			var array_playlist=[];
+			
+			if(error==0)
+				{
+				var texto_busqueda=that.cuadroBuscar();
+				if(texto_busqueda!= undefined)
+					{
+					page.metadata.title = "Series.ly -Buscar - " + texto_busqueda;
+					texto_busqueda = texto_busqueda.replace(/ /g,'+');
+					url_api = unescape(url_api) + '?auth_token='+ auth_token.auth_token + '&q=' + texto_busqueda + '&filter=' + filter + '&limit=50';
+					var file_contents = get_urlsource(url_api);
+					var resultado_json = showtime.JSONDecode(file_contents);
+					file_contents = "";
+						
+					var titulo;
+					var imagen;
+					var url_video;
+					var page_uri;
+					
+					if(filter==2)
+						{
+						url_api = 'http://api.series.ly/v2/media/episode/links?idm=';
+						page_uri = ':verenlaces:seriesly:';
+						}
+					else
+						{
+						url_api = 'http://api.series.ly/v2/media/full_info?idm=';							
+						page_uri = ':vercontenido:serieslyseries:tiposerie:';
+						}
+
+					for (var i=0;i<resultado_json.response.results.length;i++)
+						{
+						titulo = resultado_json.response.results[i].object.name;
+						imagen = resultado_json.response.results[i].object.poster.large;
+						url_video = url_api + resultado_json.response.results[i].object.idm + '&mediaType=' + filter;
+						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+						}
+					}
+				}
+			else
+				{
+				showtime.notify('Hay un problema con las credenciales', 3);
+				}
+										
+		return array_playlist;
+		}
+		
+		
+		//Variables privadas o eso creo jajaja
 		var auth_token='';
 		var user_token='';
+		
 		
 		//Metodos Privados
 		function generar_tokens()	{
@@ -5425,6 +5601,8 @@
 			
 			//generar auth_token
 			var url_api_auth = "http://api.series.ly/v2/auth_token/";
+			//cambiar id_api, y secret x la mia
+
 			var file_contents = get_urlsource(url_api_auth + '?id_api=' + '2454' + '&secret=' + 'ChD9ucvpfUC7N4zufunp');
 			auth_token=showtime.JSONDecode(file_contents);
 			//showtime.trace (auth_token);
@@ -5488,66 +5666,7 @@
 		return error;
 		}
 		
-		function comprobar_credenciales()	{
-			var error = 0;
-			
-			if (auth_token=='' || user_token=='')
-				{
-				//no existen tokens los genero de nuevo
-				error = generar_tokens();
-				}			
-			else
-				{
-				//comprobar expiracion auth_token & user_token
-				var time_actual = showtime.time();
-				if(auth_token.auth_expires_date>time_actual && user_token.user_expires_date>time_actual)
-					{
-					error = 0;							
-					}
-				else
-					{
-					//generar tokens de nuevo
-					error = generar_tokens();
-					}
-				}
-		return error;
-		}
-		
-		function parseseriesly_peliculas(url_servidor, tipo)	{
-			
-			var error=comprobar_credenciales();
-			var array_playlist=[];
-			
-			if(error==0)
-				{
-				var url_api = 'http://api.series.ly/v2/user/media/movies/?auth_token=' + auth_token.auth_token + '&user_token=' + user_token.user_token;
-				var status;
-				switch (tipo)
-					{
-					case "pvistas":
-						status = 1;
-						break;
-					case "pfavoritas":
-						status = 2;
-						break;
-					case "ppendientes":
-						status = 3;
-						break;
-					default:
-						url_api = 'http://api.series.ly/v2/media/most_seen/movies/?auth_token=' + auth_token.auth_token + '&limit=50';
-						status = -1;						
-						break;	
-					}
-				array_playlist=parseserieslytipo1(url_api, status, 2); //mediatype=2 para movies
-				}
-			else
-				{
-				showtime.notify('Hay un problema con las credenciales', 3);
-				}				
-
-		return array_playlist;
-		}
-		
+					
 		function parseserieslytipo1(url_api, status, mediatype)	{
 			//http://api.series.ly/v2/user/media/movies/????
 			//http://api.series.ly/v2/media/most_seen/movies/???
@@ -5562,20 +5681,32 @@
 				var titulo;
 				var imagen;
 				var url_video;	 
-				var page_uri = ':verenlaces:seriesly:';
-			
-				for (var i=0;i<resultado_json.movies.length;i++)
+				var page_uri;
+				if(mediatype==2)
 					{
-					titulo=resultado_json.movies[i].name;
-					imagen=resultado_json.movies[i].poster.large;
-					url_video='http://api.series.ly/v2/media/episode/links?idm=' + resultado_json.movies[i].idm + '&mediaType=' + mediatype;
+					resultado_json=resultado_json.movies;
+					page_uri = ':verenlaces:seriesly:';
+					url_api = 'http://api.series.ly/v2/media/episode/links?idm=';
+					}
+				else
+					{
+					resultado_json=resultado_json.series;
+					page_uri = ':vercontenido:serieslyseries:tiposerie:';
+					url_api = 'http://api.series.ly/v2/media/full_info?idm=';
+					}
+				
+				for (var i=0;i<resultado_json.length;i++)
+					{
+					titulo=resultado_json[i].name;
+					imagen=resultado_json[i].poster.large;
+					url_video=url_api + resultado_json[i].idm + '&mediaType=' + mediatype;
 					if(status==-1)
 						{
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));								
 						}
 					else
 						{
-						if(resultado_json.movies[i].status==status) {array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));}								
+						if(resultado_json[i].status==status) {array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));}								
 						}
 					}
 				}
@@ -5588,49 +5719,102 @@
 		}
 
 
-		function parseseriesly_buscar(url_api, filter, page)	{
-			var error=comprobar_credenciales();
-			var array_playlist=[];
-			
-			if(error==0)
-				{
-				var texto_busqueda=that.cuadroBuscar();
-				if(texto_busqueda!= undefined)
-					{
-					page.metadata.title = "Series.ly -Buscar - " + texto_busqueda;
-					texto_busqueda = texto_busqueda.replace(/ /g,'+');
-					url_api = unescape(url_api) + '?auth_token='+ auth_token.auth_token + '&q=' + texto_busqueda + '&filter=' + filter + '&limit=50';
-					var file_contents = get_urlsource(url_api);
-					var resultado_json = showtime.JSONDecode(file_contents);
-					file_contents = "";
-						
-					var titulo;
-					var imagen;
-					var url_video;	 
-					var page_uri = ':verenlaces:seriesly:';
-						
-					for (var i=0;i<resultado_json.response.results.length;i++)
-						{
-						titulo = resultado_json.response.results[i].object.name;
-						imagen = resultado_json.response.results[i].object.poster.large;
-						url_video ='http://api.series.ly/v2/media/episode/links?idm=' + resultado_json.response.results[i].object.idm + '&mediaType=' + filter;
-						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
-						}
-					}
-				}
-			else
-				{
-				showtime.notify('Hay un problema con las credenciales', 3);
-				}						
-		return array_playlist;
-		}
-
 	}		
 	//Propiedades y metodos Estaticos
 	Seriesly.categoria= function() {return 'peliculas';}
 	Seriesly.getitem= function() {return new Item_menu('Series.ly',"img/seriesly.png",':vercanales:seriesly');}
 
 	CanalFactory.registrarCanal("seriesly",Seriesly); //Registrar la clase Seriesly
+
+
+	/************************************************************************************
+	/* var Seriesly series: Objeto que representa el canal Vodly en Series. Hereda de Vodly	*
+	/************************************************************************************/
+	var Serieslyseries= function() {	
+		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+		//metodos publicos
+		
+		/************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
+		/*	Parametros: ninguno													*
+		/*	Retorna: Array de objetos Item_menu									*
+		/************************************************************************/
+		this.getmenu= function(){
+		//retorna el Menu
+			var array_menu=[
+				new Item_menu('Siguiendo','views/img/folder.png',':vercontenido:serieslyseries:siguiendo:' + escape('http://api.series.ly/v2/user/media/series/')),
+				new Item_menu('Pendientes','views/img/folder.png',':vercontenido:serieslyseries:pendientes:' + escape('http://api.series.ly/v2/user/media/series/')),
+				new Item_menu('Vistas','views/img/folder.png',':vercontenido:serieslyseries:vistas:' + escape('http://api.series.ly/v2/user/media/series/')),
+				new Item_menu('Mas Vistas','views/img/folder.png',':vercontenido:serieslyseries:masvistas:' + escape('http://api.series.ly/v2/media/most_seen/series/?limit=50')),
+				//new Item_menu('Categorias','views/img/folder.png',':vercontenido:seriesly:vistas:' + escape('http://api.series.ly/v2/media/browse')),
+				new Item_menu('Buscar','views/img/search.png',':vercontenido:serieslyseries:buscar:' + escape('http://api.series.ly/v2/search/'))
+				];
+		return array_menu;
+		}
+		
+		/************************************************************************************
+		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
+		/*	Parametros: 																    *
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*	Retorna: Array de objetos Item_menu											    *
+		/************************************************************************************/
+		this.getplaylist= function (page, tipo, url) {
+			var array_playlist=[];
+			switch (tipo)
+				{
+				case "siguiendo":
+					page.metadata.title = 'Seriesly - Siguiendo';
+					array_playlist=this.parseseriesly(url, 'ssiguiendo');
+					break;
+				case "pendientes":
+					page.metadata.title = 'Seriesly - Pendientes';
+					array_playlist=this.parseseriesly(url, 'spendientes');
+					break;
+				case "vistas":
+					page.metadata.title = 'Seriesly - Vistas';
+					array_playlist=this.parseseriesly(url, 'svistas');
+					break;					
+				case "masvistas":
+					page.metadata.title = 'Seriesly - Mas Vistas';
+					array_playlist=this.parseseriesly(url, 'smasvistas');
+					break;
+				case "tiposerie":
+					page.metadata.title = 'Seriesly - Serie';
+					array_playlist=this.parseseriesly_serie(url, page);
+					break;					
+				case "buscar":
+					page.metadata.title = 'Seriesly - Buscar';			
+					array_playlist=this.parseseriesly_buscar(url, 1, page); //filter=1 para series
+					break;
+				}			
+		
+		return array_playlist;
+		}
+		
+		/************************************************************************
+		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
+		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
+		/*	Parametros:															*
+		/*		url: direccion de la que se debe extraer la lista.				*
+		/*	Retorna: String que representa la url								*
+		/************************************************************************/
+		this.geturl_host= function (url){
+			return url;	
+		}
+		
+		//Metodos Privados
+
+
+      
+	}
+	//Propiedades y metodos Estaticos
+	Serieslyseries.padre='Seriesly';
+	Serieslyseries.categoria= function() {return 'series';}
+	Serieslyseries.getitem= function() {return new Item_menu('Series.ly',"img/seriesly.png",':vercanales:serieslyseries');}
+
+	CanalFactory.registrarCanal("serieslyseries",Serieslyseries); //Registrar la clase Seriesly series
 
 //servidores de contenidos
 //
