@@ -9,10 +9,6 @@
     "title": "Peli-XR",
     "icon": "logo.png",
     "synopsis": "Navegador web que soporta distintos sitios web con contenido multimedia",
-    "description": "Navegador web que soporta distintos sitios web con contenido multimedia\n
-	  \nAdemas tb soporta listas de livestreams con streamings rmtp\n
-      \n\nHan colaborado en este plugin\n\n
-    - SuperBerny. Reportando bugs, y con la implementacion de livestreams (q es un lujazo)\n
-    - klaxnek. Codigo para seriespepito y vodly\n
-    - aldostools. Codigo redtube, y con ideas para un tipo control parental"
+    "description": "<p>Naveador web que soporta distintos sitios web con contenido multimedia e incluye soporte para listas livestreams</p><p>Agradecimientos a SuperBerny, klaxnek, aldostools</p><p>Mas info aqui, <a href=\"http://www.elotrolado.net/hilo_plugin-showtime-peli-xr-v0-9-8_1981017>\">EOL</a>",
+    "homepage":"https://github.com/rankstar/peli-xr" 
 }

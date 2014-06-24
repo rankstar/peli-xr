@@ -1,12 +1,18 @@
 ###### Changelog
 
 ### 0.9.9 beta 1:
-- Corregido bug en canal LiveStream.
 - Añadido canal de series Seriesflv.net
 - Corregido el problema de los titulos en oranline
 - Añadido a servidores de video Youtube.
 - A�adido canal de series SeriesDanko.com
 - Actualizacion de listas LiveStream
+- Deteccion mejorada de contenido no disponible vk
+- Implementando pelispekes
+- Deteccion mejorada de contenido no disponible videspot
+- Agregado soporte peliculas series.ly
+- Agregado soporte series series.ly
+- Solucionado error 404 en livestreams
+
 
 ### 0.9.8
 
