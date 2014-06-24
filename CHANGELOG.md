@@ -5,7 +5,8 @@
 - Añadido canal de series Seriesflv.net
 - Corregido el problema de los titulos en oranline
 - Añadido a servidores de video Youtube.
-
+- A�adido canal de series SeriesDanko.com
+- Actualizacion de listas LiveStream
 
 ### 0.9.8
 

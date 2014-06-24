@@ -2649,11 +2649,13 @@
 
 		var xml_list=[
 			new Item_menu('GURB','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de GURB:' + escape('http://pastebin.com/raw.php?i=F7YMkysY'), 'http://pastebin.com/raw.php?i=F7YMkysY'),
-			new Item_menu('LARGOBARBATE','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de LARGOBARBATE:' + escape('http://pastebin.com/raw.php?i=YqG2TELL'), 'http://pastebin.com/raw.php?i=YqG2TELL'),
+			new Item_menu('Live TV \nby Demon88','img/livetv.jpg',':vercontenido:livestream:Lista Live TV:' + escape('http://dennaka.googlecode.com/svn/trunk/LiveTV2.xml'), 'http://dennaka.googlecode.com/svn/trunk/LiveTV2.xml'),
 			new Item_menu('Ivanetxml','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de Ivanetxml:' + escape('http://pastebin.com/raw.phb?i=u8f4YwKg'), 'http://pastebin.com/raw.phb?i=u8f4YwKg'),
 			new Item_menu('Dani Cajilla TV','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de Dani Cajilla:' + escape('http://dl.dropboxusercontent.com/u/58407848/dani.xml'), 'http://dl.dropboxusercontent.com/u/58407848/dani.xml'),
-			new Item_menu('Reggen','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Reggen:' + escape('http://dl.dropboxusercontent.com/s/ux08eepcy1m94zq/Reggen.xml'), 'http://dl.dropboxusercontent.com/s/ux08eepcy1m94zq/Reggen.xml'),
-			//new Item_menu('VCX7 IPTV','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de VCX7:' + escape('https://dl.dropboxusercontent.com/u/35059486/vcx7.xml'), 'https://dl.dropboxusercontent.com/u/35059486/vcx7.xml'),
+			new Item_menu('Veremapc','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Veremapc:' + escape('http://dl.dropboxusercontent.com/u/142085967/lista2.xml'), 'http://dl.dropboxusercontent.com/u/142085967/lista2.xml'),
+			//new Item_menu('Barroso','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Barroso:' + escape('http://dl.dropboxusercontent.com/u/135269751/lista de barroso.xml'), 'http://dl.dropboxusercontent.com/u/135269751/lista de barroso.xml'),
+			new Item_menu('BlackList','http://sphotos-f.ak.fbcdn.net/hphotos-ak-xfa1/t1.0-9/223879_10150330678531663_3828387_n.jpg',':vercontenido:livestream:La lista Negra:' + escape('http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'), 'http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'),
+			//new Item_menu('Staael','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Staael:' + escape('https://github.com/mash2k3/Staael1982/raw/master/LIVE TV/SPORT.xml'), 'https://github.com/mash2k3/Staael1982/raw/master/LIVE TV/SPORT.xml'),
 			//new Item_menu('Plugins XBMC','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Plugins XBMC:' + escape('http://dl.dropboxusercontent.com/u/241193960/pluginsxbmc.xml'), 'http://dl.dropboxusercontent.com/u/241193960/pluginsxbmc.xml'),
 			new Item_menu('PiKoMuLe','img/pikomule.png',':vercontenido:livestream:Lista de PiKoMuLe:' + escape('http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml'), 'http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml')	
 			];
@@ -2677,12 +2679,15 @@
 
 			for (var i=0;i<xml_list.length;i++){
 				var objItem=xml_list[i];
-
-				//Obtener fecha de actualizacion
+				//Obtener fecha de actualizacion y comprobar que la lista existe
 				var fecha=getDate(objItem.url);
-				if (fecha !='') objItem.titulo=objItem.titulo + ' \n(' + fecha + ')';	
-
-				array_menu.push(objItem)
+				
+				if (fecha != 'error')
+				{
+					if (fecha !='') objItem.titulo=objItem.titulo + ' \n(' + fecha + ')';	
+					array_menu.push(objItem)
+				}
+				
 			}
 
 			array_menu.push(new Item_menu('Todo','views/img/folder.png',':vercontenido:livestream:todos:default')); 
@@ -2754,7 +2759,6 @@
 		function parselivestreamxmltipo1(url_xml)
 		{
 			url_xml=unescape(url_xml);
-
 			var file_contents = get_urlsource(url_xml);
 
 			//Recuperamos todos los <item> en forma de array
@@ -2791,7 +2795,7 @@
 						array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
 					}
 				}
-			}
+			}			
 			if (array_playlist.length==0) array_playlist= parselivestreamxmltipodir (url_xml); //Comprobamos si es una recopilacion de Listas Xml
 		return array_playlist;
 		}
@@ -2814,15 +2818,21 @@
 
 		function getDate(url_xml)
 		{
-			url_xml=unescape(url_xml);
-			var aux;
+			try {
+				url_xml=unescape(url_xml);
+				var aux;
 
-			var file_contents = get_urlsource(url_xml).toLowerCase();
-
-			var texto= extraer_texto(file_contents,'actualiza','</');
-			aux=texto.match(/\d{1,2}(\/|-)\d{1,2}(\/|-)\d{2,4}/);
+				var file_contents = get_urlsource(url_xml).toLowerCase();
+				var texto= extraer_texto(file_contents,'actualiza','</');
+				aux=texto.match(/\d{1,2}(\/|-)\d{1,2}(\/|-)\d{2,4}/);
 
 			return aux?aux[0]:'';
+			}
+			catch (err) {
+				//if (err == "Error: HTTP error: 404")
+				return 'error';
+			}
+
 		}
 
 
@@ -2850,6 +2860,7 @@
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Deportes','img/splivetv_deportes.png',':vercontenido:splivetv:Deportes:'+ escape('http://spliveapp.com/listas/Deportes.xml')),
+				//new Item_menu('InterDeportes','img/splivetv_interdeportes.png',':vercontenido:splivetv:InterDeportes:'+ escape('http://spliveapp.com/listas/InterDeportes_Splive.xml')),
 				new Item_menu('Cine','img/splivetv_cine.png',':vercontenido:splivetv:Cine:'+ escape('http://spliveapp.com/listas/Cine.xml')),
 				new Item_menu('Series','img/splivetv_series.png',':vercontenido:splivetv:Series:'+ escape('http://spliveapp.com/listas/Series.xml')),
 				new Item_menu('Infantil','img/splivetv_infantiles.png',':vercontenido:splivetv:Infantil:'+ escape('http://spliveapp.com/listas/Infantil.xml')),
@@ -5048,7 +5059,6 @@
 	Oranline.getitem= function() {return new Item_menu('Oranline',"img/oranline.png",':vercanales:oranline');}
 
 	CanalFactory.registrarCanal("oranline",Oranline); //Registrar la clase Oranline
-
 	
 	/************************************************************************************
 	/* var Seriesflv: Objeto que representa el canal Seriesflv en Series				*
@@ -5260,6 +5270,7 @@
 							if (imagen == undefined) imagen="views/img/nophoto.png";
 
 							var titulo =extraer_texto(array_aux[i],'<div class="i-title">','</div>') + " " + extraer_texto(array_aux[i],'<div class="box-tc">','</div>');
+							//titulo = fixtitles(titulo);
 							array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_capitulo));
 						}
 					}
@@ -5297,10 +5308,11 @@
 	
 					titulo = extraer_texto(array_aux[i],'title="','/a>');
 					titulo= extraer_texto(titulo,'">','<').trim();
-					
+										
 					var imagen = array_imagenes [titulo];
 					if (imagen == undefined) imagen="views/img/nophoto.png";
 					// ... y los añadimos al playlist si el titulo comienza por la letra buscada
+					//titulo = fixtitles(titulo);
 					switch (params.letra)
 					{
 						case "0-9": // Si el titulo empieza por un numero
@@ -5339,7 +5351,8 @@
 			descripcion= extraer_texto(descripcion ,'>','<');
 			
 			//titulo pagina
-			var titulo = utf8_decode(extraer_texto(file_contents ,'<h1 class="off">','</h1>'));
+			var titulo = extraer_texto(file_contents ,'<h1 class="off">','</h1>');
+
 			page.metadata.title = "Seriesflv: " + titulo;
 			
 			file_contents = extraer_texto(file_contents ,'<div id="capitulos">','<div id="comentarios">');
@@ -5351,7 +5364,20 @@
 				{
 					url_capitulo= extraer_texto(array_aux[i],'href="','"');
 					if (url_capitulo == '') continue;
-					titulo = utf8_decode(extraer_texto(array_aux[i] ,'class="color4">','</a>'));
+					titulo = extraer_texto(array_aux[i] ,'class="color4">','</a>');
+					
+					//Obtener idiomas
+					var array_flags= extraer_html_array(array_aux[i],'<img src','/>');
+	
+					for (var k=0;k< array_flags.length; k++)
+					{
+						var flag= extraer_texto(array_flags[k],'"','"').split('/');					
+			
+						if (flag[flag.length -1]=='es.png') titulo= titulo + " Español";
+						if (flag[flag.length -1]=='la.png') titulo= titulo + " Latino";
+						if (flag[flag.length -1]=='sub.png') titulo= titulo + " VOSE";
+					}
+										
 					array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_capitulo));
 				}		
 		return array_playlist;
@@ -5364,7 +5390,286 @@
 	Seriesflv.getitem= function() {return new Item_menu('Seriesflv',"img/seriesflv.png",':vercanales:seriesflv');}
 
 	CanalFactory.registrarCanal("seriesflv",Seriesflv); //Registrar la clase Seriesflv
+	
+	/************************************************************************************
+	/* var Seriesdanko: Objeto que representa el canal Seriesdanko.com en Series		*
+	/************************************************************************************/
+	var Seriesdanko= function() {	
+		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+		var descripcion="";
+		var imagen_actual="";
+		
+		//metodos publicos
+		
+		/************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
+		/*	Parametros: ninguno													*
+		/*	Retorna: Array de objetos Item_menu									*
+		/************************************************************************/
+		this.getmenu= function(){
+		//retorna el Menu
+			var array_menu=[
+				new Item_menu('Novedades','views/img/folder.png',':vercontenido:seriesdanko:novedades:'+ escape('http://seriesdanko.com//')),
+				new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:seriesdanko:0'), 
+				new Item_menu('Buscar Serie','views/img/search.png',':vercontenido:seriesdanko:tipobusqueda:'+ escape('http://seriesdanko.com/pag_search.php?q1=')) 
+				];
+		return array_menu;
+		}
+		
+		/************************************************************************************
+		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
+		/*	Parametros: ninguno																*
+		/*	Retorna:Un objetos Item_menu													*
+		/***********************************************************************************/
+		this.getitem_alfabeto= function() {
+			return (new Item_menu("SeriesDanko.com - Orden Alfabetico","views/img/folder.png",':vercontenido:seriesdanko:alfabeto:','http://seriesdanko.com/series.php?id='));
+		}
+			
+		/************************************************************************************
+		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
+		/*	Parametros: 																    *
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*	Retorna: Array de objetos Item_menu											    *
+		/************************************************************************************/
+		this.getplaylist= function (page, tipo, url) {
+			var array_playlist=[];
+		
+			var params={'url_servidor': unescape(url),
+				'page_uri': ':vercontenido:seriesdanko:tiposerie:'}	
 
+			switch (tipo)
+			{
+				case "novedades": //retorna el listado de las ultimas series actualizadas
+					page.metadata.title ="SeriesDanko - Ultimos Capitulos";
+					array_playlist=parseseriesdankoNew(params);
+					break;
+				case "alfabeto": //retorna el listado de las series que comienzan por una letra
+					var letra=unescape(url).slice(-1).toUpperCase();
+					if (letra=='0') letra= '0-9';
+					page.metadata.title = "SeriesDanko - Orden Alfabetico: " + letra;
+					params.url_servidor= unescape(url).slice(0,-1) + letra;
+					array_playlist=parseseriesdankoBuscar(params);
+					break;
+				case "tipobusqueda": //retorna el listado de las series que contienen la palabra buscada
+					//http://seriesdanko.com/pag_search.php?q1=		
+					var texto_busqueda=that.cuadroBuscar();
+					if(texto_busqueda!= undefined)
+					{
+						page.metadata.title = "SeriesDanko -Buscar - " + texto_busqueda;	
+						params.url_servidor=escape(unescape(params.url_servidor) + texto_busqueda); 
+						array_playlist= parseseriesdankoBuscar (params);
+					}
+					break;
+				case "tiposerie": //retorna el listado de capitulos de una serie
+					params.page_uri= ':verenlaces:seriesdanko:';
+					array_playlist=parseseriesdankoGetCapitulos(params,page);
+				break;
+			}
+		return array_playlist;
+		}
+		
+		/****************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
+		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
+		/*	Parametros: 																    	*
+		/*		url: direccion de la que se debe extraer la lista.								*
+		/*	Retorna: Array de servidores												    	*
+		/****************************************************************************************/
+		this.getservidores= function (url){
+			var array_servidores=[];
+			url=unescape(url);
+	
+			var file_contents = get_urlsource(url);
+			var array_servidores=[];
+
+			var titulo;
+			var imagen= (!imagen_actual)?"views/img/nophoto.png":imagen_actual; //no hay imagenes en esta pagina
+			var url_host;
+			var servidor;
+			var idioma;
+			var calidad;
+			
+			
+			if(file_contents!=false)
+			{
+				//item_Actual
+				titulo = extraer_texto(file_contents ,"<h3 class='post-title entry-title'>",'</h3>');
+				titulo= titulo.replace("\n","");
+				titulo= titulo.replace(" ver online o descargar","");
+
+				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
+				
+				file_contents= extraer_texto(file_contents,"Opciones online (sin descarga)","Opciones de descarga");
+				var array_aux = extraer_html_array(file_contents,'<img src=','Ver online');
+				file_contents = "";
+				
+				var l=array_aux.length;
+
+				for (var i=0;i<l;i++)
+				{
+					var idioma_aux= extraer_texto(array_aux[i] ,"'/","'").split('/');
+					idioma=idioma_aux[idioma_aux.length-1];
+					switch (idioma)
+					{
+					case "es.png":
+						idioma="Español";
+						break;
+					case "vos.png":
+						idioma="V.O.S.E";
+						break;
+					case "la.png":
+						idioma="Latino";
+						break;
+					case "ca.png":
+						idioma="Catalan";
+						break;
+					default:
+						idioma="VO";
+						break;			
+					}
+				
+					url_host = "http://seriesdanko.com/" + extraer_texto(array_aux[i],"href='","'");
+					servidor = extraer_texto(array_aux[i],"/servidores/","'").split(".");
+		
+					var params={
+						"url_host" : url_host,
+						"servidor" : servidor[0].toProperCase(),
+						"idioma" : idioma,
+						"calidad" : calidad
+						};
+	
+					var objHost=HostFactory.createHost(servidor[0],params)
+					if (objHost) array_servidores.push(objHost);		
+				}
+			}
+		return array_servidores;
+		}
+		
+		/************************************************************************
+		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
+		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
+		/*	Parametros:															*
+		/*		url: direccion de la que se debe extraer la lista.				*
+		/*	Retorna: String que representa la url								*
+		/************************************************************************/
+		this.geturl_host= function (url)
+		{
+			var file_contents = get_urlsource(url);
+			var url_video= extraer_texto(file_contents ,'<meta http-equiv="refresh"','>');
+			url_video= extraer_texto(url_video,'URL=','"');
+			
+			return url_video;		
+		}
+		
+		
+		//Metodos Privados
+		function parseseriesdankoNew (params) 
+		{	//retorna el listado de las ultimas series actualizadas
+			var array_playlist=[];
+			var file_contents = get_urlsource(params.url_servidor);
+			
+			file_contents = extraer_texto(file_contents,"<div class='post hentry'>","<div class='sidebar section' id='sidebar'>");	
+			var array_aux = extraer_html_array(file_contents,"<h3 class='post-title entry-title'","<div class='post-header-line-1'>");
+			file_contents = "";
+			var l=array_aux.length;
+			for (var i=0; i<l ;i++)
+				{
+					var titulo= extraer_texto(array_aux[i],">","</");
+					var text_aux= extraer_texto(array_aux[i],"<div class='post-header'>","</div>");
+					var url_serie= extraer_texto(text_aux,'href="','"');
+				
+					if (url_serie.startsWith("serie.php?")) 
+					{
+						url_serie= 'http://seriesdanko.com//' + url_serie;
+						var imagen= extraer_texto(text_aux,"src='","'");
+						array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_serie));
+					}			
+				}
+		return array_playlist;
+		}
+		
+		function parseseriesdankoGetCapitulos (params,page) 
+		{	//retorna el listado de capitulos de una serie
+			var array_playlist=[];
+			var imagen;
+			
+			var file_contents = get_urlsource(params.url_servidor);
+						
+			var titulo= extraer_texto(file_contents,"<h3 class='post-title entry-title'>","</h3>"); 
+			titulo=titulo.replace("\n","");
+			page.metadata.title = titulo;//Esto no funciona
+				
+			var array_temporadas = extraer_html_array(file_contents,"class='ict'","</span>");
+			var h=array_temporadas.length;
+			for (var i=0; i<h ;i++)
+				{
+					imagen = extraer_texto(array_temporadas[i],"src=","'");
+					
+					var array_capitulos = extraer_html_array(array_temporadas[i],"<a href","<Br>");
+					var j=array_capitulos.length;
+					for (var k=0; k<j ;k++)
+						{
+							var text_aux= extraer_texto(array_capitulos[k],"='","</a>").split(">");
+							var url_capitulo= 'http://seriesdanko.com//' + text_aux[0].substr(0,text_aux[0].length-1);
+							titulo= text_aux[1];
+	
+							//Obtener idiomas
+							var array_flags= extraer_html_array(array_capitulos[k],'<img src=','/>');
+
+							for (var l=0;l< array_flags.length; l++)
+							{
+								var flag= extraer_texto(array_flags[l],'/',' ').split('/');					
+			
+								if (flag[flag.length -1]=='es.png') titulo= titulo + " Español";
+								if (flag[flag.length -1]=='la.png') titulo= titulo + " Latino";
+								if (flag[flag.length -1]=='vos.png') titulo= titulo + " VOSE";
+								if (flag[flag.length -1]=='vo.png') titulo= titulo + " VO";
+								if (flag[flag.length -1]=='ca.png') titulo= titulo + " Catalan";
+							}
+														
+							array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_capitulo));
+						}
+				}
+			imagen_actual=imagen;
+		return array_playlist;
+		}
+		
+		function parseseriesdankoBuscar (params) 
+		{	
+			var array_playlist=[];
+			var file_contents = get_urlsource(unescape(params.url_servidor));
+	
+			file_contents = extraer_texto(file_contents,"<!-- Aquí comienza el rollo de la lista de Series -->","<div class='blog-pager' id='blog-pager'>");	
+			file_contents = file_contents + "text-align:center;'>";
+			var array_aux = extraer_html_array(file_contents,"<a href=","text-align:center;'>");
+			file_contents = "";
+			var l=array_aux.length;
+
+			for (var i=0; i<l ;i++)
+				{
+					var url_serie= extraer_texto(array_aux[i],"'","'");
+					if (url_serie.startsWith('../')) url_serie= url_serie.substr(3);
+					url_serie= 'http://seriesdanko.com//' + url_serie;
+					var titulo= extraer_texto(array_aux[i],"title='Capitulos de: ","'");
+					var imagen= extraer_texto(array_aux[i],"src='","'");
+					array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_serie));			
+				}
+		return array_playlist;
+		}
+						
+	}
+	//Propiedades y metodos Estaticos
+	//Seriesdanko.padre='ClasePadre';
+	Seriesdanko.categoria= function() {return 'series';}
+	Seriesdanko.getitem= function() {return new Item_menu('Seriesdanko',"img/seriesdanko.png",':vercanales:Seriesdanko');}
+
+	CanalFactory.registrarCanal("Seriesdanko",Seriesdanko); //Registrar la clase Seriesdanko
+
+	
+	
+	
 //servidores de contenidos
 //
 
@@ -5727,15 +6032,15 @@
 		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
 		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
 		var codigo_html = showtime.httpReq(url_servidor, 
-			{
-			debug: false,
-			compression: false,
-			headers: 
 				{
-				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
-  				}
-			}).toString();
-
+				debug: false,
+				compression: false,
+				headers: 
+					{
+					'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
+					}
+				}).toString();
+				
 		return codigo_html;
 		}
 
