@@ -1,17 +1,19 @@
 ###### Changelog
 
 ### 0.9.9 beta 1:
+- Corregido canal LiveStream (eliminar listas obsoletas)
+- Corregido bug en peliculas NewPct
+- Eliminado canal SpliveTV (las listas ahora esta encriptadas)
+- Añadido gestion de errores en 'function get_urlsource(url_servidor)': retorna el mensaje de error en caso de producirse
 - Añadido canal de series Seriesflv.net
+- Añadido canal de series SeriesDanko.com
 - Corregido el problema de los titulos en oranline
 - Añadido a servidores de video Youtube.
-- A�adido canal de series SeriesDanko.com
-- Actualizacion de listas LiveStream
-- Deteccion mejorada de contenido no disponible vk
-- Implementando pelispekes
-- Deteccion mejorada de contenido no disponible videspot
-- Agregado soporte peliculas series.ly
-- Agregado soporte series series.ly
-- Solucionado error 404 en livestreams
+- Añadido canal de peliculas Pelispekes.com 
+- (Desactivado) Añadido canal de peliculas Series.ly 
+- (Desactivado) Añadido canal de series Series.ly 
+- Deteccion mejorada de contenido no disponible vk 
+- Deteccion mejorada de contenido no disponible videspot 
 
 
 ### 0.9.8

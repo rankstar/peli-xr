@@ -197,7 +197,7 @@
 				var fname = extraer_texto(file_contents,'<input type="hidden" name="fname" value="','"');
 				var referer = extraer_texto(file_contents,'<input type="hidden" name="referer" value="','"');
 				var method_free = extraer_texto(file_contents,'<input type="hidden" name="method_free" value="','"');		
-				file_contents = ""
+				file_contents = "";
 
 				showtime.sleep(1000);
 
@@ -374,7 +374,7 @@
 					var fname = extraer_texto(file_contents,'<input type="hidden" name="fname" value="','"');
 					var referer = extraer_texto(file_contents,'<input type="hidden" name="referer" value="','"');
 					var method_free = extraer_texto(file_contents,'<input type="hidden" name="method_free" value="','"');		
-					file_contents = ""
+					file_contents = "";
 
 					showtime.sleep(1000);
 					var datos_post = {'op':op,'usr_login':usr_login,'id':id,'fname':fname,'referer':referer,'method_free':method_free,'x':'109','y':'17'};
@@ -706,7 +706,7 @@
 		this.geturl_video= function (url_servidor)
 		{
 			var file_contents = get_urlsource(url_servidor);
-			var error = file_contents.indexOf('<b class="err"')
+			var error = file_contents.indexOf('<b class="err"');
 
 			if(error==-1)
 			{	
@@ -761,7 +761,7 @@
 				var referer = extraer_texto(file_contents,'<input type="hidden" name="referer" value="','"');
 				var hash = extraer_texto(file_contents,'<input type="hidden" name="hash" value="','"');
 				var imhuman = extraer_texto(file_contents,'<input type="submit" name="imhuman" id="btn_download" class="button gray" value="','"');
-				file_contents = ""
+				file_contents = "";
 
 				contador = parseInt(contador) + 5;
 				var j;
@@ -913,7 +913,7 @@
 				var fname = extraer_texto(file_contents,'<input type="hidden" name="fname" value="','"');
 				var referer = extraer_texto(file_contents,'<input type="hidden" name="referer" value="','"');
 				var method_free = extraer_texto(file_contents,'<input type="hidden" name="method_free" value="','"');		
-				file_contents = ""
+				file_contents = "";
 
 				showtime.sleep(1000);
 
@@ -2660,13 +2660,6 @@
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 
 		var xml_list=[
-			//new Item_menu('GURB','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de GURB:' + escape('http://pastebin.com/raw.php?i=F7YMkysY'), 'http://pastebin.com/raw.php?i=F7YMkysY'),
-			//new Item_menu('Live TV \nby Demon88','img/livetv.jpg',':vercontenido:livestream:Lista Live TV:' + escape('http://dennaka.googlecode.com/svn/trunk/LiveTV2.xml'), 'http://dennaka.googlecode.com/svn/trunk/LiveTV2.xml'),
-			//new Item_menu('Ivanetxml','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de Ivanetxml:' + escape('http://pastebin.com/raw.phb?i=u8f4YwKg'), 'http://pastebin.com/raw.phb?i=u8f4YwKg'),
-			//new Item_menu('Dani Cajilla TV','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de Dani Cajilla:' + escape('http://dl.dropboxusercontent.com/u/58407848/dani.xml'), 'http://dl.dropboxusercontent.com/u/58407848/dani.xml'),
-			//new Item_menu('Veremapc','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Veremapc:' + escape('http://dl.dropboxusercontent.com/u/142085967/lista2.xml'), 'http://dl.dropboxusercontent.com/u/142085967/lista2.xml'),
-			//new Item_menu('Staael','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Staael:' + escape('https://github.com/mash2k3/Staael1982/raw/master/LIVE TV/SPORT.xml'), 'https://github.com/mash2k3/Staael1982/raw/master/LIVE TV/SPORT.xml'),
-			//new Item_menu('Plugins XBMC','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Plugins XBMC:' + escape('http://dl.dropboxusercontent.com/u/241193960/pluginsxbmc.xml'), 'http://dl.dropboxusercontent.com/u/241193960/pluginsxbmc.xml'),
 			new Item_menu('BlackList','http://sphotos-f.ak.fbcdn.net/hphotos-ak-xfa1/t1.0-9/223879_10150330678531663_3828387_n.jpg',':vercontenido:livestream:La lista Negra:' + escape('http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'), 'http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'),
 			new Item_menu('PiKoMuLe','img/pikomule.png',':vercontenido:livestream:Lista de PiKoMuLe:' + escape('http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml'), 'http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml')
 			];
@@ -4089,12 +4082,11 @@
 				titulo=extraer_texto(array_aux[i],'">','</a></li>');
 				url_video='http://animeflv.net' + extraer_texto(array_aux[i],'href="','">');
 
-				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));						
+				array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 			}
 
 		return array_playlist;
 		}
-
 
 		function parseanimeflvtipolistado(url_servidor, page)
 		{
@@ -4143,7 +4135,6 @@
 		return array_playlist;
 		}
 
-
 		function parseanimeflvtipobusqueda(url_servidor,page)
 		{
 			url_servidor=unescape(url_servidor);
@@ -4191,7 +4182,7 @@
 							aux_string = aux_string.substr(pos_ini);
 							aux_string = extraer_texto(aux_string,'<a href="','"');
 
-							array_playlist.push(new Item_menu('Siguiente',"views/img/siguiente.png",page_uri,'http://animeflv.net' + aux_string));	
+							array_playlist.push(new Item_menu('Siguiente',"views/img/siguiente.png",page_uri,'http://animeflv.net' + aux_string));
 						}
 
 						return array_playlist;
@@ -4215,7 +4206,7 @@
 			page.metadata.title = 'AnimeFLV - ' + titulo;
 
 			imagen = extraer_texto(file_contents ,'<div class="anime_info">','</div>');
-			imagen = extraer_texto(imagen ,'src="','"');		
+			imagen = extraer_texto(imagen ,'src="','"');
 
 			file_contents = extraer_texto(file_contents,'<ul class="anime_episodios"','</ul>');
 			var array_aux = extraer_html_array(file_contents,'<li>','</li>');
@@ -7181,8 +7172,8 @@ function utf8_encode(argString) {
 				titlecover : menu_peliculas[i].titulo,
 				icon: menu_peliculas[i].imagen});	
 		}	
-		
-		page.reorderer = function(item, before) {
+
+		/*page.reorderer = function(item, before) {
                 item.moveBefore(before);
                 var items = page.getItems();
                 for(var i = 0; i < items.length; i++) {
@@ -7190,7 +7181,7 @@ function utf8_encode(argString) {
                 }
 
                // main_menu_order.order = showtime.JSONEncode(items);
-          	};
+            };*/
 		
 		page.metadata.glwview = plugin.path + "views/array3.view";
 		page.type = "directory";
@@ -7789,7 +7780,7 @@ function utf8_encode(argString) {
 
 	CanalFactory.registrarCanal("ZTestchannel",ZTestchannel); //Registrar la clase testchannel	
 	//TEST
-	
+
 
 	plugin.addURI(PREFIX + ":start", startPage);
 })(this);
