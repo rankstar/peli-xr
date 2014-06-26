@@ -1,10 +1,13 @@
 ###### Changelog
 
 ### 0.9.9b
+- Actualizacion de listas LiveStream
+- Añadido canal de series Seriesflv.net
+- Añadido canal de series SeriesDanko.com
 - Corregido el problema de los titulos en oranline
 - Añadido a servidores de video Youtube.
 - Deteccion mejorada de contenido no disponible vk
-- Implementando pelispekes
+- Añadido pelispekes
 - Deteccion mejorada de contenido no disponible videspot
 - Agregado soporte peliculas series.ly
 - Agregado soporte series series.ly
