@@ -1495,8 +1495,8 @@
 		if(file_contents!=false)
 			{
 			//item_Actual
-			titulo = extraer_texto(file_contents ,'<h2 class="title" id="title_ficha" itemprop="name">','</h2>');
-			titulo = extraer_texto(titulo ,'">','</a>');
+			titulo = extraer_texto(file_contents ,'<img itemprop="image"','/>');
+			titulo = extraer_texto(titulo ,'alt="','"');
 			imagen = extraer_texto(file_contents ,'<meta property="og:image" content="','" />');
 			descripcion = extraer_texto(file_contents ,"<div class='sinopsis'>","</div>");
 
@@ -2658,16 +2658,8 @@
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 
 		var xml_list=[
-			new Item_menu('GURB','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de GURB:' + escape('http://pastebin.com/raw.php?i=F7YMkysY'), 'http://pastebin.com/raw.php?i=F7YMkysY'),
-			new Item_menu('Live TV \nby Demon88','img/livetv.jpg',':vercontenido:livestream:Lista Live TV:' + escape('http://dennaka.googlecode.com/svn/trunk/LiveTV2.xml'), 'http://dennaka.googlecode.com/svn/trunk/LiveTV2.xml'),
-			new Item_menu('Ivanetxml','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de Ivanetxml:' + escape('http://pastebin.com/raw.phb?i=u8f4YwKg'), 'http://pastebin.com/raw.phb?i=u8f4YwKg'),
-			new Item_menu('Dani Cajilla TV','img/xbmc_spot.jpg',':vercontenido:livestream:Lista de Dani Cajilla:' + escape('http://dl.dropboxusercontent.com/u/58407848/dani.xml'), 'http://dl.dropboxusercontent.com/u/58407848/dani.xml'),
-			new Item_menu('Veremapc','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Veremapc:' + escape('http://dl.dropboxusercontent.com/u/142085967/lista2.xml'), 'http://dl.dropboxusercontent.com/u/142085967/lista2.xml'),
-			//new Item_menu('Barroso','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Barroso:' + escape('http://dl.dropboxusercontent.com/u/135269751/lista de barroso.xml'), 'http://dl.dropboxusercontent.com/u/135269751/lista de barroso.xml'),
 			new Item_menu('BlackList','http://sphotos-f.ak.fbcdn.net/hphotos-ak-xfa1/t1.0-9/223879_10150330678531663_3828387_n.jpg',':vercontenido:livestream:La lista Negra:' + escape('http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'), 'http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'),
-			//new Item_menu('Staael','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Staael:' + escape('https://github.com/mash2k3/Staael1982/raw/master/LIVE TV/SPORT.xml'), 'https://github.com/mash2k3/Staael1982/raw/master/LIVE TV/SPORT.xml'),
-			//new Item_menu('Plugins XBMC','img/plugins_xbmc.jpg',':vercontenido:livestream:Lista de Plugins XBMC:' + escape('http://dl.dropboxusercontent.com/u/241193960/pluginsxbmc.xml'), 'http://dl.dropboxusercontent.com/u/241193960/pluginsxbmc.xml'),
-			new Item_menu('PiKoMuLe','img/pikomule.png',':vercontenido:livestream:Lista de PiKoMuLe:' + escape('http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml'), 'http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml')	
+			new Item_menu('PiKoMuLe','img/pikomule.png',':vercontenido:livestream:Lista de PiKoMuLe:' + escape('http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml'), 'http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml')
 			];
 
 		//Añadir lista service.urlxml_liveStream si existe
@@ -2826,21 +2818,14 @@
 
 		function getDate(url_xml)
 		{
-			try {
-				url_xml=unescape(url_xml);
-				var aux;
+			url_xml=unescape(url_xml);
+			var aux;
 
-				var file_contents = get_urlsource(url_xml).toLowerCase();
-				var texto= extraer_texto(file_contents,'actualiza','</');
-				aux=texto.match(/\d{1,2}(\/|-)\d{1,2}(\/|-)\d{2,4}/);
+			var file_contents = get_urlsource(url_xml).toLowerCase();
+			var texto= extraer_texto(file_contents,'actualiza','</');
+			aux=texto.match(/\d{1,2}(\/|-)\d{1,2}(\/|-)\d{2,4}/);
 
-			return aux?aux[0]:'';
-			}
-			catch (err) {
-				//if (err == "Error: HTTP error: 404")
-				return 'error';
-			}
-
+		return aux?aux[0]:'';
 		}
 
 
@@ -2964,7 +2949,7 @@
 	SpliveTV.categoria= function() {return 'tvonline';}
 	SpliveTV.getitem= function() {return new Item_menu('SpliveTV',"img/splivetv.png",':vercanales:splivetv');}
 
-	CanalFactory.registrarCanal("splivetv",SpliveTV); //Registrar la clase SpliveTV
+	//CanalFactory.registrarCanal("splivetv",SpliveTV); //Registrar la clase SpliveTV
 
 	/************************************************************************************
 	/* var SeriesPepito: Objeto que representa el canal Series Pepito en Series			*
@@ -4098,8 +4083,7 @@
 
 		return array_playlist;
 		}
-
-		function parseanimeflvtipolistado(url_servidor, page)
+		function parseanimeflvtipolistado(url_servidor, page)
 		{
 			//http://animeflv.net/animes/letra/(letra)
 			url_servidor=unescape(url_servidor) + '/';
@@ -4145,7 +4129,7 @@
 
 		return array_playlist;
 		}
-
+
 		function parseanimeflvtipobusqueda(url_servidor,page)
 		{
 			url_servidor=unescape(url_servidor);
@@ -6337,7 +6321,7 @@
 	Seriesly.categoria= function() {return 'peliculas';}
 	Seriesly.getitem= function() {return new Item_menu('Series.ly',"img/seriesly.png",':vercanales:seriesly');}
 
-	CanalFactory.registrarCanal("seriesly",Seriesly); //Registrar la clase Seriesly
+	//CanalFactory.registrarCanal("seriesly",Seriesly); //Registrar la clase Seriesly
 
 
 	/************************************************************************************
@@ -6427,7 +6411,7 @@
 	Serieslyseries.categoria= function() {return 'series';}
 	Serieslyseries.getitem= function() {return new Item_menu('Series.ly',"img/seriesly.png",':vercanales:serieslyseries');}
 
-	CanalFactory.registrarCanal("serieslyseries",Serieslyseries); //Registrar la clase Seriesly series
+	//CanalFactory.registrarCanal("serieslyseries",Serieslyseries); //Registrar la clase Seriesly series
 
 //servidores de contenidos
 //
@@ -6790,18 +6774,24 @@
 	function get_urlsource(url_servidor) {
 		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
 		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
-		var codigo_html = showtime.httpReq(url_servidor, 
-			{
-			debug: false,
-			compression: true,
-			headers: 
+		try {	
+			var codigo_html = showtime.httpReq(url_servidor, 
 				{
-				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
-  				}
-			}).toString();
-
-		return codigo_html;
-		}
+				debug: false,
+				compression: false,
+				headers: 
+					{
+					'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
+					}
+				}).toString();
+				
+			return codigo_html;
+			}
+		
+		catch (e) {
+			return "Error: " +  e.message;
+			}
+	}
 
 	function get_urlsourcereferer(url_servidor, referer) {
 		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
