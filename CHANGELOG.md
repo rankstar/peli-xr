@@ -1,5 +1,9 @@
 ###### Changelog
 
+### 0.9.10b:
+- Añadida funcion post_urlheaders (me hacia falta para series.ly)
+- Canal de series.ly activo - Api de Series.ly activa (gracias a los admins de series.ly)
+
 ### 0.9.9
 
 - Release

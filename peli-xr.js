@@ -6198,7 +6198,6 @@
 
 			//generar auth_token
 			var url_api_auth = "http://api.series.ly/v2/auth_token/";
-			//cambiar id_api, y secret x la mia
 
 			var file_contents = get_urlsource(url_api_auth + '?id_api=' + '2454' + '&secret=' + 'ChD9ucvpfUC7N4zufunp');
 			auth_token=showtime.JSONDecode(file_contents);
@@ -6208,7 +6207,8 @@
 			if(auth_token.error==0)
 				{
 				//generar user_token
-				var url_api_user = "http://api.series.ly/v2/user/user_token/";				
+				//var url_api_user = "http://api.series.ly/v2/user/user_token/";
+				var url_api_user = "http://api.series.ly/v2/user/user_login";
 				var reason = 'Introduce tu usuario y contraseña de http://www.series.ly';
 				var do_query = false;
 				while(1)
@@ -6236,23 +6236,25 @@
 
 					try
 						{
-						file_contents = get_urlsource(url_api_user + '?auth_token=' + auth_token.auth_token + '&username=' + credentials.username + '&password=' + credentials.password + '&remember=1');
-						user_token=showtime.JSONDecode(file_contents);
-						//showtime.trace (user_token);
-						if(user_token.error==0)
-							{
-							error = 0;							
-							//showtime.trace (user_token.user_token);
-							break;
-							}
-						else if(user_token.error==31)
+						//file_contents = get_urlsource(url_api_user + '?auth_token=' + auth_token.auth_token + '&username=' + credentials.username + '&password=' + credentials.password + '&remember=1');
+												
+						var datos_post = {'auth_token': auth_token.auth_token , 'redirect_url': 'http://rantanplan.net46.net/takata/' ,'username': credentials.username ,'password': credentials.password,'remember': '1'};
+						file_contents = post_urlheaders(url_api_user,datos_post);
+						
+						if (typeof file_contents.headers['Location'] == 'undefined')
 							{
 							reason = "Usuario/Contraseña Incorrecta.";
 							continue;
 							}
 						else
 							{
-							showtime.trace('Series.ly: error al autenticarse.');
+							var aux_string = file_contents.headers['Location'];
+							var uusertoken = extraer_texto(aux_string,'user_token=','&');
+							var uexpiresdata = aux_string.substring(aux_string.indexOf('expires_date=')+13);
+							aux_string = '{"user_token":"' + uusertoken + '", "user_expires_date":' + uexpiresdata + '}';
+							user_token = showtime.JSONDecode(aux_string);	
+							//showtime.trace (user_token.user_token);	
+							error = 0;
 							break;
 							}
 						}
@@ -6267,7 +6269,6 @@
 		function parseserieslytipo1(url_api, status, mediatype)	{
 			//http://api.series.ly/v2/user/media/movies/????
 			//http://api.series.ly/v2/media/most_seen/movies/???
-
 			var array_playlist=[];
 			var file_contents = get_urlsource(url_api);
 			var resultado_json = showtime.JSONDecode(file_contents);
@@ -6321,7 +6322,7 @@
 	Seriesly.categoria= function() {return 'peliculas';}
 	Seriesly.getitem= function() {return new Item_menu('Series.ly',"img/seriesly.png",':vercanales:seriesly');}
 
-	//CanalFactory.registrarCanal("seriesly",Seriesly); //Registrar la clase Seriesly
+	CanalFactory.registrarCanal("seriesly",Seriesly); //Registrar la clase Seriesly
 
 
 	/************************************************************************************
@@ -6411,7 +6412,7 @@
 	Serieslyseries.categoria= function() {return 'series';}
 	Serieslyseries.getitem= function() {return new Item_menu('Series.ly',"img/seriesly.png",':vercanales:serieslyseries');}
 
-	//CanalFactory.registrarCanal("serieslyseries",Serieslyseries); //Registrar la clase Seriesly series
+	CanalFactory.registrarCanal("serieslyseries",Serieslyseries); //Registrar la clase Seriesly series
 
 //servidores de contenidos
 //
@@ -6758,7 +6759,7 @@
 		//				'User-Agent': 'Mozilla/5.0 (X11; Ubuntu; Linux i686; rv:26.0) Gecko/20100101 Firefox/26.0'
 		var codigo_html = showtime.httpReq(url_servidor, 
 			{
-			debug: true,
+			debug: false,
 			compression: true,
 			noFollow: true,
 			headRequest: true,
@@ -6829,6 +6830,27 @@
 
 		return codigo_html;
 		}
+		
+	function post_urlheaders(url_servidor, datos_post){
+		//'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:15.0) Gecko/20100101 Firefox/15.0.1'
+		//				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
+		//JSONEncode
+
+		var codigo_html = showtime.httpReq(url_servidor, 
+			{
+			debug: true,
+			compression: true,
+			noFollow: true,
+			method: 'POST',
+			postdata: datos_post,
+			headers: 
+				{
+				'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:27.0) Gecko/20100101 Firefox/27.0'
+  				}
+			});
+
+		return codigo_html;
+		}		
 
 	function extraer_texto(texto,cadena_inicial,cadena_final) {
 		//Extrae el texto de una cadena pasando una cadena inicial y otra final
