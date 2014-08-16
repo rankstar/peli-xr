@@ -5581,12 +5581,11 @@
 		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
 		/*	Retorna: String que representa la url									       *
 		/**********************************************************************************/
-		this.geturl_host= function (url,page)
-		{
+		this.geturl_host= function (url,page) {
 			var file_contents = get_urlsource(url);
-			var url_video= extraer_texto(file_contents ,'<meta http-equiv="refresh"','>');
-			url_video= extraer_texto(url_video,'URL=','"');
-			
+			var url_video= extraer_texto(file_contents ,'<div id="oculto" style="display:none">','</div>');
+			url_video= extraer_texto(url_video ,'href="','">');
+		
 			return url_video;		
 		}
 		
@@ -5597,7 +5596,7 @@
 			var array_playlist=[];
 			var file_contents = get_urlsource(params.url_servidor);
 			
-			file_contents = extraer_texto(file_contents,"<div class='post hentry'>","<div class='sidebar section' id='sidebar'>");	
+			file_contents = extraer_texto(file_contents,"<div class='post hentry'","<div class='sidebar section' id='sidebar'>");	
 			var array_aux = extraer_html_array(file_contents,"<h3 class='post-title entry-title'","<div class='post-header-line-1'>");
 			file_contents = "";
 			var l=array_aux.length;

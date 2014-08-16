@@ -10,6 +10,7 @@
 - Añadido canal Lista PLX con listas autoactualizables y una personal configurable en ajustes.
 - Cambiado el metodo para seriesflv, vuelve a funcionar (han hechos cambios en su pagina)
 - Arreglado Allmyvideos, vuelve a funcionar
+- Arreglado seriesdanko, vuelve a funcionar
 
 ### 0.9.9
 
