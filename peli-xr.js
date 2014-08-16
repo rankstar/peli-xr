@@ -201,10 +201,10 @@
 
 				showtime.sleep(1000);
 
-				var datos_post = {'op':op,'usr_login':usr_login,'id':id,'fname':fname,'referer':referer,'method_free':method_free,'x':'109','y':'17'};
+				var datos_post = {'op':op,'usr_login':usr_login,'id':id,'fname':fname,'referer':referer,'method_free':method_free,'x':'47','y':'19'};
 				file_contents = post_urlsource(url_servidor,datos_post);
 
-				var aux_string = extraer_texto(file_contents,'"sources" : [',']');
+				var aux_string = extraer_texto(file_contents,"jwplayer('flv1player').setup({",");");
 				var pos_ini = aux_string.lastIndexOf('"file"');
 				aux_string = aux_string.substr(pos_ini);
 				var url_video = extraer_texto(aux_string,'file" : "','",');
@@ -7288,7 +7288,7 @@
 
 		var codigo_html = showtime.httpReq(url_servidor, 
 			{
-			debug: true,
+			debug: false,
 			compression: true,
 			noFollow: true,
 			method: 'POST',
@@ -8260,6 +8260,11 @@ function utf8_encode(argString) {
 			url_video = 'http://played.to/0vpqv384hysv';
 			page_uri = ':vervideo:ztestchannel:played:test:views/img/folder.png:';
 			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+			
+			titulo = 'Test Allmmyvideos';
+			url_video = 'http://allmyvideos.net/u1z2tdsv9rrw';
+			page_uri = ':vervideo:ztestchannel:allmyvideos:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));			
 			
 			titulo = 'Test Youtube No Cypher';
 			url_video = 'https://www.youtube.com/watch?v=mzhM6xNB8sQ';
