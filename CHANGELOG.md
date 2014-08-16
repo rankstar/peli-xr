@@ -8,6 +8,7 @@
 - LiveStream: Eliminar getDate (tardaba mucho) y añadir recursividad para leer listas multiples.
 - Añadido canal Lista M3U con tres listas autoactualizables y una personal configurable en ajustes.
 - Añadido canal Lista PLX con listas autoactualizables y una personal configurable en ajustes.
+- Cambiado el metodo para seriesflv, vuelve a funcionar (han hechos cambios en su pagina)
 
 ### 0.9.9
 

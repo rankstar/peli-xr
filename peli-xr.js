@@ -5176,7 +5176,7 @@
 			var calidad= "";
 			//var descripcion="";
 			
-			file_contents = extraer_texto(file_contents,'<div id="serie">',' </table>');
+			file_contents = extraer_texto(file_contents,'<div id="serie">','<!-- END -->');
 			if(file_contents!=false)
 			{
 				//item_Actual
@@ -5184,7 +5184,8 @@
 				imagen = extraer_texto(file_contents ,'src="','">');
 			
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-				
+				file_contents = extraer_texto(file_contents,'<div class="titles4 font4 bold">Ver online</div>',' </table>');
+				file_contents = extraer_texto(file_contents,'<tbody>',' </tbody>');
 				var array_aux = extraer_html_array(file_contents,'<tr>','</tr>');
 				file_contents = "";
 				
@@ -5209,9 +5210,12 @@
 						break;			
 					}
 				
-					url_host = extraer_texto(array_aux[i],'data-uri="','"');
-					servidor = url_host.split('/')[2].match(/\w+/i)[0];
-				
+					//url_host = extraer_texto(array_aux[i],'data-uri="','"');
+					url_host = extraer_texto(array_aux[i],'data-key="','"');
+					//servidor = url_host.split('/')[2].match(/\w+/i)[0];
+					servidor = extraer_texto(array_aux[i],'http://www.google.com/s2/favicons?domain=','"');
+					servidor = servidor.split('.')[0];
+					
 					var params={
 						"url_host" : url_host,
 						"servidor" : servidor.toProperCase(),
@@ -5235,7 +5239,10 @@
 		/*	Retorna: String que representa la url									       *
 		/**********************************************************************************/
 		this.geturl_host= function (url,page){
-			
+				var url_post = 'http://www.seriesflv.net/goto/';
+				var datos_post = {'url': 'EExTp9uXQYfmxJKg2I2bqXLFi3IatpqPhDWCm/mpOZ8='};
+				var file_contents = post_urlsource(url_post,datos_post);
+				url = extraer_texto(file_contents,'<meta http-equiv="Refresh" content="15;URL=','"/>');
 			return url;		
 		}
 		
