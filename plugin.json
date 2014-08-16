@@ -4,11 +4,11 @@
     "file": "peli-xr.js",
     "category": "video",
     "showtimeVersion": "4.4",
-    "version": "0.9.10b",
+    "version": "0.10.0b",
     "author": "Rankstar & SuperBerny",
     "title": "Peli-XR",
     "icon": "logo.png",
     "synopsis": "Navegador web que soporta distintos sitios web con contenido multimedia",
-    "description": "<p>Naveador web que soporta distintos sitios web con contenido multimedia e incluye soporte para listas livestreams</p><p>Agradecimientos a SuperBerny, klaxnek, aldostools</p><p>Mas info aqui, <a href=\"http://www.elotrolado.net/hilo_plugin-showtime-peli-xr-v0-9-8_1981017>\">EOL</a>",
+    "description": "<p>Naveador web que soporta distintos sitios web con contenido multimedia e incluye soporte para listas livestreams</p><p>Agradecimientos a SuperBerny, klaxnek, aldostools</p><p>Mas info aqui, <a href=\"http://www.elotrolado.net/hilo_plugin-showtime-peli-xr-v0-9-8_1981017\">EOL</a>",
     "homepage":"https://github.com/rankstar/peli-xr" 
 }

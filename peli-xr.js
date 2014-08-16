@@ -1340,12 +1340,13 @@
 		}
 
 		//Metodos Publicos que seran redefinidos por las clases herederas
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){return [];}
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){return [];}
 
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
@@ -1362,24 +1363,27 @@
 		/*							servidores soportados. 								    *
 		/*	Parametros: 																    *
 		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
 		/*	Retorna: Array de servidores												    *
 		/************************************************************************************/
-		this.getservidores= function (url) {return [];}
+		this.getservidores= function (url,page) {return [];}
 
-		/****************************************************************************
-		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	*
-		/*	Parametros:																*
-		/*		url: direccion de la que se debe extraer la lista.					*
-		/*	Retorna: String que representa la url									*
-		/***************************************************************************/
-		this.geturl_host= function (url){return url;}
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){return url;}
 
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
 		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {return {};}
+		this.getitem_alfabeto= function(page) {return {};}
 
 	}	
 
@@ -1392,12 +1396,13 @@
 
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Br-Dvd Castellano','views/img/folder.png',':vercontenido:newpct:tipobrdvd:'+ escape('http://www.newpct1.com/peliculas-castellano/peliculas-rip/')),
@@ -1468,14 +1473,15 @@
 		}
 
 		/************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 		*
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
 		/*							servidores soportados. 								    *
 		/*	Parametros: 																    *
 		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
 		/*	Retorna: Array de servidores												    *
 		/************************************************************************************/
 		// Antes function parsenewpctpelicula
-		this.getservidores= function (url)
+		this.getservidores= function (url,page)
 		{
 		url=unescape(url);
 		var file_contents = get_urlsource(url);
@@ -1540,13 +1546,14 @@
 		return array_servidores;
 		}
 
-		/****************************************************************************
-		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	*
-		/*	Parametros:																*
-		/*		url: direccion de la que se debe extraer la lista.					*
-		/*	Retorna: String que representa la url									*
-		/***************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return url;	
 		}
 
@@ -1725,12 +1732,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Ultimos estrenos en cine','views/img/folder.png',':vercontenido:peliculaspepito:tipoultimosestrenos:' + escape('http://www.peliculaspepito.com')),
@@ -1779,13 +1787,14 @@
 		}
 
 		/************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 		*
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
 		/*							servidores soportados. 								    *
 		/*	Parametros: 																    *
 		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
 		/*	Retorna: Array de servidores												    *
 		/************************************************************************************/
-		this.getservidores= function (url)
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -1856,23 +1865,24 @@
 			return array_servidores;
 		}
 
-		/****************************************************************************
-		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)					*
-		/*	Parametros:																*
-		/*		url: direccion de la que se debe extraer la lista.					*
-		/*	Retorna: String que representa la url									*
-		/***************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return extraer_texto(get_urlsource(url),'title="Bajar..." href="','">'); 
 		}
 
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
 		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {
+		this.getitem_alfabeto= function(page) {
 			return (new Item_menu("Peliculas Pepito - Orden Alfabetico","views/img/folder.png",':vercontenido:peliculaspepito:tipolistado:','http://www.peliculaspepito.com/lista-peliculas/'))
 		}
 
@@ -2006,12 +2016,13 @@
 	var Vodly= function() {	
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Just Added','views/img/folder.png',':vercontenido:vodly:tipojustadd:' + escape('http://www.vodly.to/')),
@@ -2054,14 +2065,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -2116,14 +2128,14 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return get_urlheaders(url).headers['Location'];	
 		}
 
@@ -2203,12 +2215,13 @@
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Estrenos','views/img/folder.png',':vercontenido:peliculascoco:estrenos:' + escape('http://www.peliculascoco.pro/index.php?do=cat&category=estrenos')),
@@ -2251,14 +2264,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -2319,14 +2333,14 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return url;			
 		}
 
@@ -2376,12 +2390,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Novedades','views/img/folder.png',':vercontenido:pordede:novedades:' + escape('http://www.pordede.com/pelis/index')),
@@ -2424,14 +2439,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -2497,14 +2513,14 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			var url_servidor = url.substr(0,url.indexOf('&session='));
 			var session = url.substr(url.indexOf('&session=')+9);
 			var url_header = 'error';
@@ -2658,7 +2674,8 @@
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 
 		var xml_list=[
-			new Item_menu('BlackList','http://sphotos-f.ak.fbcdn.net/hphotos-ak-xfa1/t1.0-9/223879_10150330678531663_3828387_n.jpg',':vercontenido:livestream:La lista Negra:' + escape('http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'), 'http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'),
+			//new Item_menu('BlackList','http://sphotos-f.ak.fbcdn.net/hphotos-ak-xfa1/t1.0-9/223879_10150330678531663_3828387_n.jpg',':vercontenido:livestream:La lista Negra:' + escape('http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'), 'http://dl.dropbox.com/s/ug80e43ykfussn3/The Black List.xml'),
+			//new Item_menu('Lista multiple','views/img/folder.png',':vercontenido:livestream:Lista multiple:' + escape('http://pastebin.com/raw.php?i=rSh9iJq4'), 'http://pastebin.com/raw.php?i=rSh9iJq4'),
 			new Item_menu('PiKoMuLe','img/pikomule.png',':vercontenido:livestream:Lista de PiKoMuLe:' + escape('http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml'), 'http://dl.dropboxusercontent.com/s/al4x26cyp947kc1/PiKoMuLe.xml')
 			];
 
@@ -2666,31 +2683,26 @@
 			if ((service.urlxml_liveStream.startsWith('http') && service.urlxml_liveStream.endsWith('.xml')) || service.urlxml_liveStream.startsWith('http://pastebin.com'))
 				{
 				xml_list.push(new Item_menu('Personal','views/img/folder.png',':vercontenido:livestream:lista:' + escape(service.urlxml_liveStream),service.urlxml_liveStream)); 
-				}	
+				}
 
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 
 			var array_menu=[];
 
 			for (var i=0;i<xml_list.length;i++){
 				var objItem=xml_list[i];
-				//Obtener fecha de actualizacion y comprobar que la lista existe
-				var fecha=getDate(objItem.url);
-				if (fecha != 'error')
-					{
-					if (fecha !='') objItem.titulo=objItem.titulo + ' \n(' + fecha + ')';	
 					array_menu.push(objItem)
 					}
-			}
-
-			array_menu.push(new Item_menu('Todo','views/img/folder.png',':vercontenido:livestream:todos:default')); 
+			if (array_menu.length >1) 
+				array_menu.push(new Item_menu('Todo','views/img/folder.png',':vercontenido:livestream:todos:default')); 
 
 		return array_menu;
 		}
@@ -2711,29 +2723,26 @@
 				case "todos":
 					page.metadata.title ='Todas las listas';
 					for (var i=0;i<xml_list.length;i++)
-					{
 						array_playlist=array_playlist.concat(parselivestreamxmltipo1(xml_list[i].url));
-					}
-					array_playlist=array_playlist.uniqueObjects(['url']); //Eliminar duplicados
 					break;
 				default:
 					page.metadata.title = tipo; //En este caso el tipo es tb el titulo de la page
 					array_playlist=parselivestreamxmltipo1(url);
 					break;
 			}
-
-
-			return array_playlist.sortBy('titulo');
+			array_playlist=array_playlist.uniqueObjects(['url']); //Eliminar duplicados
+			return array_playlist.sortBy('titulo'); //Ordenar por titulo
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 		//En este caso esta funcion no es necesaria
 		//La mantenemos por coherencia pero retornamos una Array vacio
@@ -2741,14 +2750,14 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			//En este caso esta funcion no es necesaria
 			//La mantenemos por coherencia
 			return url;		
@@ -2760,9 +2769,18 @@
 		{
 			url_xml=unescape(url_xml);
 			var file_contents = get_urlsource(url_xml);
+			var array_playlist=[];
+
+			//Recuperamos todos los <dir> en forma de array y parseamos de forma recursiva (listas multiples)
+			var array_aux = extraer_html_array(file_contents,'<dir>', '</dir>');
+			var l=array_aux.length;
+			for (var i=0;i<l;i++)
+			{
+				array_playlist=array_playlist.concat(parselivestreamxmltipo1(extraer_texto(array_aux[i], '<link>', '</link>')))
+			}
 
 			//Recuperamos todos los <item> en forma de array
-			var array_aux = extraer_html_array(file_contents,'<item>', '</item>');
+			array_aux = extraer_html_array(file_contents,'<item>', '</item>');
 			file_contents = "";
 
 			var titulo;
@@ -2770,22 +2788,24 @@
 			var imagen_default = plugin.path + "img/tvonline.png";
 			var url_video;	
 			var page_uri;
-			var array_playlist=[];
-			for (var i=0;i<array_aux.length;i++)
+			
+			l=array_aux.length;
+			for (var i=0;i<l;i++)
 			{
 				url_video = extraer_texto(array_aux[i], '<link>', '</link>');
 				//Añado el canal al listado si creo que la url_video es valida ...
-				// rtmp...; http....m3u8; http...mp4?xxxx
-				if ((url_video.startsWith("rtmp")) || (url_video.search(/^(http(:|s:)).+\.mp4\?.+/i)!=-1) || (url_video.search(/^(http(:|s:)).+\.m3u8$/i)!=-1))
+				// rtmp...; http....m3u8; http....m3u8?xxxx; http...mp4?xxxx
+				if ((url_video.startsWith("rtmp")) || (url_video.search(/^(http(:|s:)).+\.mp4\?.+/i)!=-1) || (url_video.search(/^(http(:|s:)).+(\.m3u8$|\.m3u8\?.+)/i)!=-1))
 				{
 					titulo = extraer_texto(array_aux[i], '<title>', '</title>').trim()
 					//Eliminar posibles tags de formato del tipo [COLOR red] ...[/COLOR]
-					titulo=titulo.replace(/\[\/?\w*\s*\w*/g,'');
+					titulo=titulo.replace(/\[\/?\w*=?\s*\w*/g,'');
 					titulo=titulo.replace(/\]/g,'');
+					titulo=titulo.trim();
 
-					if (titulo.length !=0 && titulo.substring(0,5).search(/off/i) == -1 && titulo.substring(-5).search(/off/i) == -1)
+					if (titulo.length !=0 && titulo.substring(0,5).search(/off/i) == -1 && titulo.substring(-5).search(/off/i) == -1 && pass_control_parental (titulo))
 					{
-						// ... y el titulo no comienza, ni termina por OFF
+						// ... el titulo no comienza, ni termina por OFF y supera el control_parental
 						titulo=titulo.toProperCase();
 						imagen = extraer_texto(array_aux[i], '<thumbnail>', '</thumbnail>');
 
@@ -2796,39 +2816,24 @@
 					}
 				}
 			}			
-			if (array_playlist.length==0) array_playlist= parselivestreamxmltipodir (url_xml); //Comprobamos si es una recopilacion de Listas Xml
 		return array_playlist;
 		}
-
-		function parselivestreamxmltipodir (url_xml)
+		
+		function pass_control_parental (name)
 		{
-			var array_playlist=[];
-			var file_contents = get_urlsource(unescape(url_xml));
-
-			//Recuperamos todos los <dir> en forma de array
-			var array_aux = extraer_html_array(file_contents,'<dir>', '</dir>');
-			file_contents = "";
-
-			for (var i=0;i<array_aux.length;i++)
+			var res=true;
+			if (name.search(/(\+18|XX|porno)/i) != -1)
 			{
-				array_playlist=array_playlist.concat(parselivestreamxmltipo1(extraer_texto(array_aux[i], '<link>', '</link>')))
+				res=false;
+				if(parental_mode == false)
+				{
+					if (service.modoadultos == true) res=true;
+				}else {
+					if(showtime.md5digest(licencia) == licencia_md5) res=true;	
+				}
 			}
-		return array_playlist;
+		return res;
 		}
-
-		function getDate(url_xml)
-		{
-			url_xml=unescape(url_xml);
-			var aux;
-
-			var file_contents = get_urlsource(url_xml).toLowerCase();
-			var texto= extraer_texto(file_contents,'actualiza','</');
-			aux=texto.match(/\d{1,2}(\/|-)\d{1,2}(\/|-)\d{2,4}/);
-
-		return aux?aux[0]:'';
-		}
-
-
 	}
 	//Propiedades y metodos Estaticos
 	LiveStream.categoria= function() {return 'tvonline';}
@@ -2844,12 +2849,13 @@
 
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Deportes','img/splivetv_deportes.png',':vercontenido:splivetv:Deportes:'+ escape('http://spliveapp.com/listas/Deportes.xml')),
@@ -2881,28 +2887,29 @@
 		return array_playlist.sortBy('titulo');
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url){
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page){
 			//En este caso esta funcion no es necesaria
 			//La mantenemos por coherencia pero retornamos una Array vacio
 			var array_servidores=[];
 			return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			//En este caso esta funcion no es necesaria
 			//La mantenemos por coherencia
 			return url;		
@@ -2958,12 +2965,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Ultimos capitulos','views/img/folder.png',':vercontenido:seriespepito:tipoultimoscapitulos:' + escape('http://www.seriespepito.com/nuevos-capitulos')),
@@ -3006,14 +3014,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXcapitulo (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 
@@ -3078,23 +3087,24 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){ 
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){ 
 			return extraer_texto(get_urlsource(url),'title="Ver..." href="','">');	
 		}
 
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
 		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {
+		this.getitem_alfabeto= function(page) {
 			return (new Item_menu("Series Pepito - Orden Alfabetico","views/img/folder.png",':vercontenido:seriespepito:tipolistado:','http://www.seriespepito.com/lista-series-'))
 		}
 
@@ -3282,12 +3292,13 @@
 		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Latest Prime-Time Episodes','views/img/folder.png',':vercontenido:vodlyseries:tipolatest:' + escape('http://www.vodly.to/?tv')),
@@ -3302,7 +3313,7 @@
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
-		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
 		/*		url: direccion de la que se debe extraer la lista.							*
 		/*	Retorna: Array de objetos Item_menu											    *
@@ -3338,14 +3349,14 @@
 		return array_playlist;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return get_urlheaders(url).headers['Location'];		
 		}
 
@@ -3422,12 +3433,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Novedades','views/img/folder.png',':vercontenido:pordedeseries:novedades:' + escape('http://www.pordede.com/series/index')),
@@ -3475,39 +3487,36 @@
 		}		
 
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url){
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page){
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
 
 			var titulo;
-			var imagen;
 			var url_video;
 			var servidor;
 			var idioma;
 			var calidad;
-			var descripcion;
+			
 
 			file_contents = this.checkloginpordede(url, file_contents);
 			if(file_contents!=false)
 			{
 				//item_Actual
-				titulo = extraer_texto(file_contents, '<meta property="og:title" content="','"');
-				imagen = extraer_texto(file_contents, '<meta property="og:image" content="','"');
-				imagen = "views/img/folder.png";
-				descripcion = '';
+				titulo = extraer_texto(file_contents, '<h2>','</div>');	
+				titulo = extraer_texto(titulo,'Enlaces de ','</h2>');
+				
+				 if (!imagen) imagen = "views/img/video.png";
+				
 
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
-
-				//var url_enlaces = 'http://www.pordede.com' + extraer_texto(file_contents, '<span class="title defaultPopup" href="','"');
-				//showtime.trace('Debug   :'  + url_enlaces);
-				//file_contents = get_urlsource(url_enlaces);
 
 				var session = extraer_texto(file_contents, 'SESS = "','"');
 				file_contents = extraer_texto(file_contents,'<ul class="linksList">','</ul>');
@@ -3548,14 +3557,14 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			var url_servidor = url.substr(0,url.indexOf('&session='));
 			var session = url.substr(url.indexOf('&session=')+9);
 			var url_header = 'error';
@@ -3572,6 +3581,8 @@
 
 
 		//Metodos Privados
+		var imagen;
+		var descripcion;
 
 		function parsepordedeseriestipobusqueda(page, url_servidor)	{
 			//http://www.pordede.com/search/
@@ -3597,7 +3608,9 @@
 				{		
 				var array_aux = extraer_html_array(file_contents,'<div class="info">','</div></div>');
 				var titulo = extraer_texto(file_contents,'<meta property="og:title" content="','"');
-				var imagen = extraer_texto(file_contents,'<meta property="og:image" content="','"');
+				imagen = extraer_texto(file_contents,'<meta property="og:image" content="','"');
+				descripcion= extraer_texto(file_contents,'<div class="info text" style="max-height: 140px;overflow:hidden">','</div>').trim();
+
 				var url_video;
 				file_contents = "";
 				var page_uri = ':verenlaces:pordedeseries:';
@@ -3634,12 +3647,13 @@
 
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Ultimos Capitulos','views/img/folder.png',':vercontenido:newpctseries:ultimoscapitulos:'+ escape('http://www.newpct1.com/series-alta-definicion-hd/')),
@@ -3652,7 +3666,7 @@
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
-		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
 		/*		url: direccion de la que se debe extraer la lista.							*
 		/*	Retorna: Array de objetos Item_menu											    *
@@ -3700,14 +3714,15 @@
 
 
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url){
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page){
 			var array_servidores=[];
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -3727,11 +3742,10 @@
 				//item_Actual
 				imagen = extraer_texto(file_contents ,'<div id="left_ficha">','" />');
 				imagen = extraer_texto(imagen,"src='","'"); 
-				var capitulo = extraer_texto(file_contents,'<h3 class="subtitle" id="subtitle_ficha">','</h3>');
-				capitulo=capitulo.match(/Cap\.\s*\d{3,4}/)
-
-				titulo = extraer_texto(file_contents ,'<h2 class="title" id="title_ficha" itemprop="name"><a href="#content-iframe"','</h2>');
-				titulo = extraer_texto(titulo,'>','</a>') +  ' ' + (capitulo?capitulo[0]:'');
+				
+				titulo = extraer_texto(file_contents ,'<title>','</title>');
+				titulo = titulo.substr(0,titulo.indexOf('Descarga'));
+				
 				descripcion = extraer_texto(file_contents ,' itemprop="description"  >',"</div>"); 
 
 				this.item_Actual=new Item_menu(titulo,imagen,null,url,descripcion);
@@ -3774,10 +3788,11 @@
 
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
-		/*	Retorna:Un objetos Item_menu												*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {
+		this.getitem_alfabeto= function(page) {
 			return (new Item_menu("NewPct Series HD - Orden Alfabetico","views/img/folder.png",':vercontenido:newpctseries:alfabeto:'));
 		}
 
@@ -3823,12 +3838,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Ultimos Episodios','views/img/folder.png',':vercontenido:animeflv:tipoultimosepisodios:' + escape('http://animeflv.net/')),
@@ -3844,7 +3860,7 @@
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
-		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
 		/*		url: direccion de la que se debe extraer la lista.							*
 		/*	Retorna: Array de objetos Item_menu											    *
@@ -3876,14 +3892,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -3962,24 +3979,25 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 
 			return url;		
 		}
 
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
-		/*	Retorna:Un objetos Item_menu												*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {
+		this.getitem_alfabeto= function(page) {
 			return (new Item_menu("AnimeFlv - Orden Alfabetico","views/img/folder.png",':vercontenido:animeflv:tipolistado:','http://animeflv.net/animes/letra/'));
 		}
 
@@ -4083,7 +4101,8 @@
 
 		return array_playlist;
 		}
-		function parseanimeflvtipolistado(url_servidor, page)
+
+		function parseanimeflvtipolistado(url_servidor, page)
 		{
 			//http://animeflv.net/animes/letra/(letra)
 			url_servidor=unescape(url_servidor) + '/';
@@ -4162,7 +4181,7 @@
 							url_video='http://animeflv.net' + extraer_texto(array_aux[i],'<a href="','"');
 
 							array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
-						}
+						}
 
 						//Paginador	
 						aux_string = extraer_texto(file_contents,'<div class="pagin">','</div>');
@@ -4232,12 +4251,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('New Videos','views/img/folder.png', ':vercontenido:redtube:New Videos:' + escape('http://www.redtube.com')),
@@ -4271,14 +4291,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -4318,14 +4339,14 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 
 			return url;		
 		}
@@ -4385,12 +4406,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('New Videos','views/img/folder.png',':vercontenido:xvideos:New Videos:' + escape('http://www.xvideos.com')),
@@ -4423,14 +4445,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -4469,14 +4492,14 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 
 			return url;		
 		}
@@ -4537,12 +4560,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('New Videos','views/img/folder.png',':vercontenido:xhamster:tiponewvideos:' + escape('http://www.xhamster.com')),
@@ -4587,14 +4611,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -4630,14 +4655,14 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return url;		
 		}
 
@@ -4784,12 +4809,13 @@
 
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Estrenos de cine','views/img/folder.png',':vercontenido:oranline:tipoestrenoscine:'+ escape('http://www.oranline.net/ver/Pel%C3%ADculas/estrenos-de-cine/')),
@@ -4854,14 +4880,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. 										*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url){
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page){
 			var array_servidores=[];
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -4921,22 +4948,24 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return url;		
 		}
 
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
 		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {
+		this.getitem_alfabeto= function(page) {
 			return (new Item_menu("Oranline.net - Orden Alfabetico","views/img/folder.png",':vercontenido:oranline:alfabeto:','http://www.oranline.net/?s=letra-'));
 		}
 
@@ -5055,12 +5084,13 @@
 		
 		//metodos publicos
 		
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[	
 				new Item_menu('Ultimos Cap. Español','views/img/folder.png',':vercontenido:seriesflv:tipocapituloES:'+ escape('http://www.seriesflv.net/')),
@@ -5124,14 +5154,15 @@
 		return array_playlist;
 		}
 		
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url){
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page){
 			var array_servidores=[];
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
@@ -5196,24 +5227,25 @@
 		return array_servidores;
 		}
 		
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			
 			return url;		
 		}
 		
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
 		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {
+		this.getitem_alfabeto= function(page) {
 			return (new Item_menu("Seriesflv.net - Orden Alfabetico","views/img/folder.png",':vercontenido:seriesflv:alfabeto:'));
 		}
 		
@@ -5386,12 +5418,13 @@
 		
 		//metodos publicos
 		
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Novedades','views/img/folder.png',':vercontenido:seriesdanko:novedades:'+ escape('http://seriesdanko.com//')),
@@ -5403,17 +5436,18 @@
 		
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
 		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {
+		this.getitem_alfabeto= function(page) {
 			return (new Item_menu("SeriesDanko.com - Orden Alfabetico","views/img/folder.png",':vercontenido:seriesdanko:alfabeto:','http://seriesdanko.com/series.php?id='));
 		}
 			
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
-		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
 		/*		url: direccion de la que se debe extraer la lista.							*
 		/*	Retorna: Array de objetos Item_menu											    *
@@ -5455,14 +5489,15 @@
 		return array_playlist;
 		}
 		
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url){
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page){
 			var array_servidores=[];
 			url=unescape(url);
 	
@@ -5532,14 +5567,14 @@
 		return array_servidores;
 		}
 		
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url)
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page)
 		{
 			var file_contents = get_urlsource(url);
 			var url_video= extraer_texto(file_contents ,'<meta http-equiv="refresh"','>');
@@ -5584,8 +5619,11 @@
 						
 			var titulo= extraer_texto(file_contents,"<h3 class='post-title entry-title'>","</h3>"); 
 			titulo=titulo.replace("\n","");
-			page.metadata.title = titulo;//Esto no funciona
-				
+			descripcion= extraer_texto(file_contents,'<div style="margin-top: 10px; height: 10px; border-top: 1px dotted #999999;"></div><Br />','<Br');
+			
+			page.metadata.title = new showtime.RichText(titulo);
+			//page.metadata.description=  new showtime.RichText(descripcion);
+			
 			var array_temporadas = extraer_html_array(file_contents,"class='ict'","</span>");
 			var h=array_temporadas.length;
 			for (var i=0; i<h ;i++)
@@ -5614,7 +5652,7 @@
 								if (flag[flag.length -1]=='ca.png') titulo= titulo + " Catalan";
 							}
 														
-							array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_capitulo));
+							array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_capitulo,descripcion));
 						}
 				}
 			imagen_actual=imagen;
@@ -5660,12 +5698,13 @@
 
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Novedades','views/img/folder.png',':vercontenido:pelispekes:novedades:' + escape('http://www.pelispekes.com')),
@@ -5706,14 +5745,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)	{
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)	{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
 
@@ -5762,23 +5802,24 @@
 		return array_servidores;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return url;		
 		}
 
 		/************************************************************************************
 		/*	funcion getitem_alfabeto: Devuelve un listado de las subsecciones del canal. 	*
-		/*	Parametros: ninguno																*
-		/*	Retorna:Un objetos Item_menu												*
+		/*	Parametros:                                                                     *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna:Un objetos Item_menu													*
 		/***********************************************************************************/
-		this.getitem_alfabeto= function() {
+		this.getitem_alfabeto= function(page) {
 			return (new Item_menu("PelisPekes - Orden Alfabetico","views/img/folder.png",':vercontenido:pelispekes:alfabeto:','http://www.pelispekes.com/categoria/letra/'));
 		}
 
@@ -5874,12 +5915,13 @@
 
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Vistas','views/img/folder.png',':vercontenido:seriesly:vistas:' + escape('http://api.series.ly/v2/user/media/movies/')),
@@ -5930,14 +5972,15 @@
 		return array_playlist;
 		}
 
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)	{
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page)	{
 			url=unescape(url);
 
 			var error=this.comprobar_credenciales();
@@ -5995,14 +6038,14 @@
 		return array_servidores;	
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			var error=this.comprobar_credenciales();
 			var resultado='error';
 			if(error==0)
@@ -6240,7 +6283,7 @@
 												
 						var datos_post = {'auth_token': auth_token.auth_token , 'redirect_url': 'http://rantanplan.net46.net/takata/' ,'username': credentials.username ,'password': credentials.password,'remember': '1'};
 						file_contents = post_urlheaders(url_api_user,datos_post);
-						
+
 						if (typeof file_contents.headers['Location'] == 'undefined')
 							{
 							reason = "Usuario/Contraseña Incorrecta.";
@@ -6332,12 +6375,13 @@
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Siguiendo','views/img/folder.png',':vercontenido:serieslyseries:siguiendo:' + escape('http://api.series.ly/v2/user/media/series/')),
@@ -6391,14 +6435,14 @@
 		return array_playlist;
 		}
 
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return url;	
 		}
 
@@ -6413,6 +6457,396 @@
 	Serieslyseries.getitem= function() {return new Item_menu('Series.ly',"img/seriesly.png",':vercanales:serieslyseries');}
 
 	CanalFactory.registrarCanal("serieslyseries",Serieslyseries); //Registrar la clase Seriesly series
+
+	/************************************************************************************
+	/* var ListasM3U: Objeto que representa el canal ListasM3U en TV Online				*
+	/************************************************************************************/
+	var ListasM3U= function() {	
+		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+
+		var m3u_list=[
+			new Item_menu('IPTV Latinos','img/latinos.png',':vercontenido:listasm3u:IPTV Latinos M3U:' + escape('https://dl.dropbox.com/s/tw05v9ojbssuca1/Latinos.m3u'), 'https://dl.dropbox.com/s/tw05v9ojbssuca1/Latinos.m3u'),
+			//new Item_menu('Largo Barbate','https://lh5.googleusercontent.com/-RLbBw37dzE0/AAAAAAAAAAI/AAAAAAAAADo/rrPz1EZsFio/s120-c/photo.jpg',':vercontenido:listasm3u:Largo Barbate M3U:' + escape('http://pastebin.com/raw.php?i=6uSPRTUi'), 'http://pastebin.com/raw.php?i=6uSPRTUi'),
+			new Item_menu('AllSat','img/allsat.png',':vercontenido:listasm3u:AllSat M3U:' + escape('https://www.dropbox.com/s/mlvsotodoxugtbf/allsatmundialista.m3u?dl=1'), 'https://www.dropbox.com/s/mlvsotodoxugtbf/allsatmundialista.m3u?dl=1')
+			];
+		
+		//Añadir lista service.urlm3u_listasm3u si existe
+		if ((service.urlm3u_listasm3u.startsWith('http') && service.urlm3u_listasm3u.endsWith('.m3u')) || service.urlm3u_listasm3u.startsWith('http://pastebin.com'))
+			{
+			m3u_list.push(new Item_menu('Personal','views/img/folder.png',':vercontenido:listasm3u:Lista Personal:' + escape(service.urlm3u_listasm3u),service.urlm3u_listasm3u)); 
+			}	
+		
+		//metodos publicos
+		
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
+			var array_menu=[];
+
+			for (var i=0;i<m3u_list.length;i++){
+				var objItem=m3u_list[i];
+				array_menu.push(objItem)
+			}
+		
+			if (array_menu.length >1) 
+				array_menu.push(new Item_menu('Todo','views/img/folder.png',':vercontenido:listasm3u:todos:default')); 
+
+		return array_menu;
+		}
+		
+		/************************************************************************************
+		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
+		/*	Parametros: 																    *
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*	Retorna: Array de objetos Item_menu											    *
+		/************************************************************************************/
+		this.getplaylist= function (page, tipo, url) {
+			var array_playlist=[];
+			switch (tipo)
+			{					
+				case "todos":
+					page.metadata.title ='Todas las listas';
+					for (var i=0;i<m3u_list.length;i++)
+						array_playlist=array_playlist.concat(parselistam3u(m3u_list[i].url));
+					break;
+				default:
+					page.metadata.title = tipo; //En este caso el tipo es tb el titulo de la page
+					array_playlist= parselistam3u(unescape(url));
+					break;
+			}
+			array_playlist=array_playlist.uniqueObjects(['url']); //Eliminar duplicados
+			return array_playlist.sortBy('titulo'); //Ordenar por titulo
+		}
+		
+		
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page){
+			//En este caso esta funcion no es necesaria
+			//La mantenemos por coherencia pero retornamos una Array vacio
+			var array_servidores=[];
+			return array_servidores;
+		}
+		
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
+			//En este caso esta funcion no es necesaria
+			//La mantenemos por coherencia
+			return url;			
+		}
+		
+		
+		//Metodos Privados
+		
+		function parselistam3u (url) {
+			var array_playlist=[];
+			
+			var file_contents = get_urlsource(url);
+			var lineas= file_contents.split('\n');
+	
+			if (lineas[0].indexOf("#EXTM3U") > -1 )  //Comprobamos que sea una lista M3U
+			{
+				var l=lineas.length;
+				for (var i=0;i<l-1;i++)
+				{
+					if (lineas[i].startsWith("#EXTINF") && (lineas[i+1].length > 30))
+					{
+						var titulo;
+						var categoria;
+						var imagen;
+						var url_video;	
+						var page_uri;
+						var aux;
+						
+						// Url
+						aux = lineas[i+1].trim();
+						if ((aux.search(/^(http(:|s:)).+\.mp4\?.+/i)!=-1) || (aux.search(/^(http(:|s:)).+(\.m3u8$|\.m3u8\?.+)/i)!=-1))	{ //http....m3u8; http....m3u8?xxxx; http...mp4?xxxx
+							url_video= aux;
+						} else if (aux.startsWith('rtmp://$OPT')){
+							url_video= aux.substr(aux.indexOf('rtmp-raw=') + 9);
+						} else if (aux.startsWith('rtmp') ){
+							url_video= aux;
+						} else continue;
+						
+						
+						// Titulo y categoria
+						categoria= extraer_texto(lineas[i],'group-title="','"');
+							// si existe group-title=  detras de la ultima coma esta el titulo
+						aux= lineas[i].split(',');
+						titulo= aux[aux.length-1];
+							// si no, detras de la ultima coma puede estar la categoria y el titulo o solo el titulo
+						if (categoria ==""){
+							aux= titulo.split(':');
+							if (aux.length >1 ){
+								categoria= aux[0];
+								titulo= aux[1];
+							} else {
+								categoria="Desconocida";
+							}		
+						}
+												
+						categoria= categoria.trim();
+						titulo= titulo.trim();
+						//titulo= categoria + "--> " + titulo;
+						
+						//Eliminar posibles tags de formato del tipo [COLOR red] ...[/COLOR]
+						titulo=titulo.replace(/\[\/?\w*=?\s*\w*/g,'');
+						titulo=titulo.replace(/\]/g,'');
+						
+						//Eliminar caracteres no alfanumericos al inicio del titulo y capitalizar
+						titulo=titulo.replace(/^\W+/,'').toProperCase();
+												
+						// Imagen
+						imagen= extraer_texto(lineas[i],'tvg-logo="','"');
+						if (imagen.startsWith("..") || imagen=="")
+							imagen= plugin.path + "img/tvonline.png";
+						
+						
+						
+						// Añadir item
+						if (titulo != "" && url_video != "" && pass_control_parental (titulo) )
+						{
+							page_uri = ':vervideo:listasm3u:StreamsRtmp:' + escape(titulo) + ':' + escape(imagen) + ':' ;						
+							array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));						
+						}	
+					}
+				}	
+			}
+		return array_playlist;
+		}
+		
+		function pass_control_parental (name)
+		{
+			var res=true;
+			if (name.search(/(\+18|XX|porno)/i) != -1)
+			{
+				res=false;
+				if(parental_mode == false)
+				{
+					if (service.modoadultos == true) res=true;
+				}else {
+					if(showtime.md5digest(licencia) == licencia_md5) res=true;	
+				}
+			}
+		return res;
+		}
+	}
+	//Propiedades y metodos Estaticos
+	ListasM3U.categoria= function() {return 'tvonline';}
+	ListasM3U.getitem= function() {return new Item_menu('Listas M3U',"img/simpletv.png",':vercanales:listasm3u');}
+
+	CanalFactory.registrarCanal("listasm3u",ListasM3U); //Registrar la clase ListasM3U
+
+	/************************************************************************************
+	/* var ListasPLX: Objeto que representa el canal ListasPLX en Categoria	*
+	/************************************************************************************/
+	var ListasPLX= function() {	
+		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+
+		var plx_list=[
+			new Item_menu('The BlackList','http://sphotos-f.ak.fbcdn.net/hphotos-ak-xfa1/t1.0-9/223879_10150330678531663_3828387_n.jpg',':vercontenido:listasplx:playlist:' + escape('http://pastebin.com/raw.phb?i=3wv2gGgh'), 'http://pastebin.com/raw.phb?i=3wv2gGgh'),
+			new Item_menu('Listas MrAlwaysAwa','http://www.userlogos.org/files/logos/Rog/livetv_ru_09.png',':vercontenido:listasplx:playlist:' + escape('http://www.navixtreme.com/playlist/97048/live_tv_channels_by_mralwaysaway.plx'), 'http://www.navixtreme.com/playlist/97048/live_tv_channels_by_mralwaysaway.plx')
+			];
+		
+		//Añadir lista service.urlplx_listasplx si existe
+		if (service.urlplx_listasplx.startsWith('http') && service.urlplx_listasplx.endsWith('.plx')) 
+			{
+			plx_list.push(new Item_menu('Personal','views/img/folder.png',':vercontenido:listasplx:Lista Personal:' + escape(service.urlplx_listasplx),service.urlplx_listasplx)); 
+			}	
+		
+		//metodos publicos
+		
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+		/************************************************************************************/
+		this.getmenu= function(page){
+			var array_menu=[];
+			for (var i=0;i<plx_list.length;i++){
+				/*var aux= plx_list[i].page_uri.split(':');	
+				switch (aux[3])
+				{
+					case "playlist": //añadir lista con sublistas
+						array_menu=array_menu.concat(parseplx(plx_list[i].url,page));	
+						break;
+					default:
+						array_menu.push(plx_list[i])
+						break;
+				}	*/
+				
+				array_menu.push(plx_list[i]);
+			}
+
+			/*if (array_menu.length >1) 
+				array_menu.push(new Item_menu('Todo','views/img/folder.png',':vercontenido:listasplx:todos:default')); 
+			*/
+		return array_menu;
+		}
+		
+		/************************************************************************************
+		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
+		/*	Parametros: 																    *
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*	Retorna: Array de objetos Item_menu											    *
+		/************************************************************************************/
+		this.getplaylist= function (page, tipo, url) {
+								
+			var array_playlist=[];
+			array_playlist= parseplx(unescape(url),page);
+			array_playlist=array_playlist.uniqueObjects(['url']); //Eliminar duplicados
+		return array_playlist.sortBy('titulo'); //Ordenar por titulo
+		
+		}
+		
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+		/************************************************************************************/
+		this.getservidores= function (url,page){
+			//En este caso esta funcion no es necesaria
+			//La mantenemos por coherencia pero retornamos una Array vacio
+			var array_servidores=[];
+			return array_servidores;
+		}
+		
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
+			
+			return url;		
+		}
+		
+		
+		//Metodos Privados
+				
+		function parseplx (url, page) {
+			var array_playlist=[];
+			var page_uri;
+			var playlist_count=0;
+			var video_count=0;
+			
+			var file_contents = get_urlsource(url)+ '\n';
+			var titulo= extraer_texto(file_contents,'title=','\n');
+			if (titulo !='') titulo=formatText(titulo);
+			
+			var logo=extraer_texto(file_contents,'logo=','\n').replace(/\W+$/,'');
+			logo= logo || 'http://skystreamx.com/wp-content/uploads/2013/11/script.navi-x.png';
+			
+			var array_listas= file_contents.split('type=');
+			var l=array_listas.length;
+			for (var i=0; i<l ;i++)
+			{
+				if (array_listas[i].startsWith('video') || array_listas[i].startsWith('playlist'))
+				{
+					var name= extraer_texto(array_listas[i],'name=','\n');
+					name= formatText(name);
+					
+					if (pass_control_parental(name))
+					{
+						var imagen= extraer_texto(array_listas[i],'thumb=','\n').replace(/\W+$/,'');
+						imagen= imagen || logo;
+						var url_plx= extraer_texto(array_listas[i],'URL=','\n').replace(/\W+$/,'');
+				
+						if (url_plx.toLowerCase().startsWith('http') || url_plx.toLowerCase().startsWith('rtmp')) 
+						{
+							if (array_listas[i].startsWith('playlist'))
+							{
+								page_uri= ':vercontenido:listasplx:playlist:'  + escape(url_plx);
+								playlist_count +=1;
+							}else{ // tipo== video
+								page_uri= ':vervideo:listasplx:StreamsRtmp:' + escape(name) + ':' + escape(imagen) + ':';	
+								video_count +=1;
+							}	
+							array_playlist.push(new Item_menu(name,imagen,page_uri,url_plx));	
+						}
+					}
+				}
+			}
+			
+			if (playlist_count > video_count)
+			{
+				page.metadata.background = "http://pixabay.com/get/2e84891f5b1daa9ab117/1405294880/warning-light-49721_1280.jpg?direct";
+				//page.metadata.background = "http://pixabay.com/get/53d4ed91e8c6d809ff15/1405294005/tv-1779.jpg?direct";
+				page.metadata.glwview = plugin.path + "views/array3.view";			
+			}else{
+				page.metadata.background = "http://pixabay.com/get/8ede7a2d0ae7fc830840/1405294146/black-21166_1280.jpg?direct";
+				page.metadata.glwview = plugin.path + "views/list3.view";
+				page.metadata.title = titulo;
+			
+			
+			}
+			
+		return array_playlist;
+		}
+		
+		function formatText (texto)
+		{
+			//Eliminar caracteres no alfanumericos al final del texto, excepto: )
+			texto=texto.replace(/[^\w)]$/,'');
+			//El texto no puede incluir una direccion html
+			texto=texto.replace(/https*:/gi,'');
+			//Eliminar posibles tags de formato del tipo [COLOR red] ...[/COLOR]
+			texto=texto.replace(/\[\/?\w*=?\s*\w*/g,'');
+			texto=texto.replace(/\]/g,'');
+			//Eliminar caracteres no alfanumericos al inicio del texto y capitalizar
+			texto=texto.replace(/^\W+/,'').toProperCase();
+		
+		return texto	
+		}
+		
+		function pass_control_parental (name)
+		{
+			var res=true;
+			if (name.search(/(\+18|XX|porno)/i) != -1)
+			{
+				res=false;
+				if(parental_mode == false)
+				{
+					if (service.modoadultos == true) res=true;
+				}else {
+					if(showtime.md5digest(licencia) == licencia_md5) res=true;	
+				}
+			}
+		return res;
+		}
+	}
+	//Propiedades y metodos Estaticos
+	ListasPLX.categoria= function() {return 'tvonline';}
+	ListasPLX.getitem= function() {return new Item_menu('Listas PLX',"http://skystreamx.com/wp-content/uploads/2013/11/script.navi-x.png",':vercanales:listasplx');}
+
+	CanalFactory.registrarCanal("listasplx",ListasPLX); //Registrar la clase ListasPLX
+	
 
 //servidores de contenidos
 //
@@ -6647,8 +7081,8 @@
 
 	 //Añadir funciones al prototipo de Date
 	if (typeof Date.prototype.formatSp != 'function') {
+		//Retorna un String con la fecha en formato DD/MM/YYYY HH:MM
 		Date.prototype.formatSp = function (){
-			//Retorna un String con la fecha en formato DD/MM/YYYY HH:MM
 			var dia= this.getDate()>9?this.getDate():"0"+this.getDate();
 			var mes= (this.getMonth()+1)>9?(this.getMonth()+1):"0"+(this.getMonth()+1);
 			var hora= this.getHours()>9?this.getHours():"0"+this.getHours();
@@ -6660,22 +7094,31 @@
 
     //Añadir funciones al prototipo String
 	if (typeof String.prototype.startsWith != 'function') {
+		// Retorna true si String comienza por 'str'
 		String.prototype.startsWith = function (str){
 			return this.slice(0, str.length) == str;};
 		}
     if (typeof String.prototype.endsWith != 'function') {
+		// Retorna true si String termina con 'str'
 		String.prototype.endsWith = function (str){
 			return this.slice(-str.length) == str;};
 		}
 	if (typeof String.prototype.trim != 'function') {
+		// Elimina los espacios en blanco al comienzo y al final del String 
 		String.prototype.trim = function (str){
 			return this.replace(/^\s+|\s+$/g, '');};
 		}
 	if (typeof String.prototype.toProperCase != 'function') {
+		// Convierte en mayuscula la primera letra de cada palabra del String 
 		String.prototype.toProperCase = function (){
 			return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});};
 		}
-
+	if (typeof String.prototype.format != 'function') {
+		// Formatea el String sustituyendo {0}, {1},...{n} por los argumentos (0..n) pasados a la funcion.
+		String.prototype.format = function() {
+			var args = arguments;
+			return this.replace(/{(\d+)}/g, function(match, number) {return typeof args[number] != 'undefined'? args[number]: match;});};
+		}
 
 	//Añadir funciones al prototipo de Array
 	if (typeof Array.prototype.uniqueObjects!= 'function') {
@@ -6751,7 +7194,7 @@
 //																		//
 // 		Funciones genericas												//
 //																		//
-//////////////////////////////////////////////////////////////////////////		
+//////////////////////////////////////////////////////////////////////////
 
 
 	function get_urlheaders(url_servidor) {
@@ -6869,7 +7312,7 @@
     }
 
     function extraer_html_array(texto_html,cadena_inicial,cadena_final) {
-		//Estrae el texto de manera repetitiva pasando cadena inicial, y final, y lo saca en un array
+		//Extrae el texto de manera repetitiva pasando cadena inicial, y final, y lo saca en un array
 		var pos_ini;
 		var pos_final;
 
@@ -7014,6 +7457,84 @@ function utf8_encode(argString) {
   return utftext;
 }
 
+	/********************************************************************************************************************	
+	/* Funcion get_SerieTvdb: Obtiene los datos de una serie de thetvdb.com 											*
+	/* Argumentos: titulo a buscar, idioma (opcional, por defecto 'es'), NumTemporada (opcional), NumCapitulo (opcional)*
+	/* Retorna un objeto con la siguiente estructura:																	*
+	/* 	serie={	'id':'', // Identificador de la serie en thetvdb.com													*
+	/*			'titulo':'', // Titulo completo de la serie																*
+	/*			'descripcion':'', // Descripcion de la serie o del capitulo si se ha especificado temporada y capitulo 	*
+	/*			'tituloEpisodio':'', // Titulo del capitulo si se ha especificado temporada y capitulo 					*
+	/*			'posters':[], // Array con las imgenes de portada de la serie (680x1000)								*
+	/*			'fanarts':[], // Array imagenes de fondode la serie (1920x1080, 1280x720)								*
+	/*			'seasons':[]}; //Array con las imagenes de portada de las diferentes temporadas o con solo las de la 	*
+	/*								temporada especificada.																*
+	/*******************************************************************************************************************/
+	function get_SerieTvdb (titulo, idioma, NumTemporada, NumCapitulo) {
+	var language= idioma || 'es';
+	var temporada= NumTemporada || "";
+	var capitulo= NumCapitulo || "";
+	
+	var getSeriesByTitleUrl ='http://thetvdb.com/api/GetSeries.php?seriesname={0}&language={1}'; //0:title, 1:language
+	var getBannersBySeriesIdUrl = 'http://thetvdb.com/api/57F6E06B6E8C5394/series/{0}/banners.xml'; //0:id
+	var getEpisodeBySeasonEpisodeUrl= 'http://thetvdb.com/api/57F6E06B6E8C5394/series/{0}/default/{1}/{2}/{3}.xml'; //0:id, 1:Temporada, 2:Episodio, 3:idioma
+	var baseBannersUrl= 'http://thetvdb.com/banners/';
+	var serie={	'id':'','titulo':'','descripcion':'','tituloEpisodio':'','posters':[],'fanarts':[],'seasons':[]};
+			
+	var url = getSeriesByTitleUrl.format(titulo,language);
+	var file_contents = get_urlsource(url);
+	file_contents = extraer_texto(file_contents,"<Data>","</Data>");	
+	
+	if(file_contents!=false)
+		{		
+			var array_aux = extraer_html_array(file_contents,"<Series>","</Series>");
+			file_contents = "";
+
+			if (array_aux.length !=0)
+			{		
+				serie.id = extraer_texto(array_aux[0],"<seriesid>","</seriesid>");
+				serie.titulo = extraer_texto(array_aux[0],"<SeriesName>","</SeriesName>");
+				if (temporada != '' && capitulo !='')
+				{
+					file_contents = get_urlsource(getEpisodeBySeasonEpisodeUrl.format(serie.id,temporada,capitulo,language));
+					serie.descripcion = extraer_texto(file_contents,"<Overview>","</Overview>");	
+					serie.tituloEpisodio= extraer_texto(file_contents,"<EpisodeName>","</EpisodeName>");
+				}else{
+					serie.descripcion = extraer_texto(array_aux[0],"<Overview>","</Overview>");			
+				}
+								
+				file_contents = get_urlsource(getBannersBySeriesIdUrl.format(serie.id));
+
+				array_aux = extraer_html_array(file_contents,"<Banner>","</Banner>");	
+				file_contents = "";
+				
+				var l=array_aux.length;
+				for (var i=0; i<l ;i++)
+				{
+					var bannerPath= baseBannersUrl + extraer_texto (array_aux[i],"<BannerPath>","</BannerPath>");
+					var bannerType = extraer_texto (array_aux[i],"<BannerType>","</BannerType>");
+					var season = extraer_texto (array_aux[i],"<Season>","</Season>");
+				
+					switch (bannerType)
+					{
+						case "poster":
+							serie.posters.push (bannerPath);
+							break;
+						case "fanart":
+							serie.fanarts.push (bannerPath);
+							break;
+						case "season": 
+							if (temporada != '')
+								serie.seasons[season]= bannerPath;
+							else if (temporada == season)
+								serie.seasons.push (bannerPath);	
+							break;
+					}
+				}	
+			}
+		}
+	return serie;
+}
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -7082,6 +7603,8 @@ function utf8_encode(argString) {
 
 	settings.createDivider('Opciones');
 	settings.createString("urlxml_liveStream", "Añadir lista de canales LiveStream (xml)", "", function(v) { service.urlxml_liveStream = v; });
+	settings.createString("urlm3u_listasm3u", "Añadir lista de canales Simple TV (M3U)", "", function(v) { service.urlm3u_listasm3u = v; });
+	settings.createString("urlplx_listasplx", "Añadir lista de canales Navi-X (plx)", "", function(v) { service.urlplx_listasplx = v; });
 
 	if(parental_mode == false)
 		{
@@ -7172,7 +7695,7 @@ function utf8_encode(argString) {
 	plugin.addURI(PREFIX + ":peliculas", function(page) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
-		var menu_peliculas=CanalFactory.getListadoCanales('peliculas');
+		var menu_peliculas=CanalFactory.getListadoCanales('peliculas').sortBy('titulo');
 
 		//Añadimos los objetos al menu Peliculas
 		for (var i=0; i< menu_peliculas.length;i++) 
@@ -7205,7 +7728,7 @@ function utf8_encode(argString) {
 	plugin.addURI(PREFIX + ":series", function(page) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
-		var menu_series=CanalFactory.getListadoCanales('series');
+		var menu_series=CanalFactory.getListadoCanales('series').sortBy('titulo');
 
 		//Añadimos los objetos al menu Series
 		for (var i=0; i< menu_series.length;i++) 
@@ -7228,7 +7751,7 @@ function utf8_encode(argString) {
 	plugin.addURI(PREFIX + ":anime", function(page) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
-		var menu_anime=CanalFactory.getListadoCanales('anime');
+		var menu_anime=CanalFactory.getListadoCanales('anime').sortBy('titulo');
 
 		//Añadimos los objetos al menu Anime
 		for (var i=0; i< menu_anime.length;i++) 
@@ -7251,7 +7774,7 @@ function utf8_encode(argString) {
 	plugin.addURI(PREFIX + ":tvonline", function(page) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
-		var menu_tvonline=CanalFactory.getListadoCanales('tvonline');
+		var menu_tvonline=CanalFactory.getListadoCanales('tvonline').sortBy('titulo');
 
 		//Añadimos los objetos al menu TV Online
 		for (var i=0; i< menu_tvonline.length;i++) 
@@ -7274,7 +7797,7 @@ function utf8_encode(argString) {
 	plugin.addURI(PREFIX + ":adultos", function(page) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
-		var menu_adultos=CanalFactory.getListadoCanales('adultos');
+		var menu_adultos=CanalFactory.getListadoCanales('adultos').sortBy('titulo');
 
 		//Añadimos los objetos al menu Adultos
 		for (var i=0; i< menu_adultos.length;i++) 
@@ -7416,7 +7939,7 @@ function utf8_encode(argString) {
 	plugin.addURI(PREFIX + ":alfabeto:(.*):(.*)", function(page,servidor,caracter_numerico) {
 		page.metadata.background = plugin.path + "views/img/background.png";
 
-		var item=objCanal.getitem_alfabeto();
+		var item=objCanal.getitem_alfabeto(page);
 
 		var array_alfabeto=['0-9',"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
 
@@ -7448,7 +7971,7 @@ function utf8_encode(argString) {
 
 		objCanal=CanalFactory.createCanal(canal); 
 
-		array_menu= objCanal.getmenu();
+		array_menu= objCanal.getmenu(page);
 
 		for (var i=0;i<array_menu.length;i++)
 			{
@@ -7484,6 +8007,7 @@ function utf8_encode(argString) {
 		for (var i=0;i<array_playlist.length;i++)
 			{
 			item = page.appendItem(array_playlist[i].page_uri + escape(array_playlist[i].url), "directory", {
+				titlecover : new showtime.RichText(array_playlist[i].titulo),
 				title: new showtime.RichText(array_playlist[i].titulo),
 				icon: array_playlist[i].imagen});
 
@@ -7527,7 +8051,7 @@ function utf8_encode(argString) {
 			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
 
 
-		array_servidores=objCanal.getservidores(url);
+		array_servidores=objCanal.getservidores(url,page);
 
 		//pintar el playlist se recorre el array y se pinta
 		if (array_servidores.length == 0)
@@ -7586,7 +8110,7 @@ function utf8_encode(argString) {
 		if (objCanal == undefined) {objCanal=CanalFactory.createCanal(canal);}
 			else {if (objCanal.name != canal) objCanal=CanalFactory.createCanal(canal);}
 
-		var url_servidor=objCanal.geturl_host(url_video);
+		var url_servidor=objCanal.geturl_host(url_video, page);
 
 		var objHost=HostFactory.createHost(host,{"servidor":host});	
 		var url_video2= objHost.geturl_video(url_servidor);
@@ -7641,12 +8165,15 @@ function utf8_encode(argString) {
 		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		//metodos publicos
 		
-		/************************************************************************
-		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal. *
-		/*	Parametros: ninguno													*
-		/*	Retorna: Array de objetos Item_menu									*
-		/************************************************************************/
-		this.getmenu= function(){
+		/*************************************************************************************
+		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
+
+		/*	Parametros:                                                                      *
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*	Retorna: Array de objetos Item_menu									             *
+
+		/************************************************************************************/
+		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Test Videoservers','views/img/folder.png',':vercontenido:ztestchannel:urlvideo:null'),
@@ -7675,29 +8202,40 @@ function utf8_encode(argString) {
 					page.metadata.title = 'Busqueda Youtube';			
 					array_playlist=buscaryoutube();
 					break;					
+				case "tvdb":
+					var texto_busqueda=that.cuadroBuscar();
+					page.metadata.title = 'Busqueda Tvdb: ' + texto_busqueda;
+					var serie= get_SerieTvdb (escape(texto_busqueda));
+					showtime.print (showtime.JSONEncode(serie));		
+					break;
 			}	
 		return array_playlist;
 		}
 		
-		/****************************************************************************************
-		/*	funcion getservidores: Devuelve un listado de enlaces a la pelicula en los 			*
-		/*							servidores soportados. Sustituye a parseXXXXXpelicula (url)	*
-		/*	Parametros: 																    	*
-		/*		url: direccion de la que se debe extraer la lista.								*
-		/*	Retorna: Array de servidores												    	*
-		/****************************************************************************************/
-		this.getservidores= function (url)	{
+		/************************************************************************************
+		/*	funcion getservidores: Devuelve un listado de enlaces al contenido en los 		*
+
+		/*							servidores soportados. 								    *
+		/*	Parametros: 																    *
+		/*		url: direccion de la que se debe extraer la lista.							*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: Array de servidores												    *
+
+		/************************************************************************************/
+		this.getservidores= function (url,page)	{
 			return false;
 		}
 		
-		/************************************************************************
-		/*	funcion gethost: Devuelve la url del host donde se aloja el video	*
-		/*					 Sustituye a resolveXXXXXXpelicula(url)				*
-		/*	Parametros:															*
-		/*		url: direccion de la que se debe extraer la lista.				*
-		/*	Retorna: String que representa la url								*
-		/************************************************************************/
-		this.geturl_host= function (url){
+		/***********************************************************************************
+		/*	funcion geturl_host: Devuelve la url del host donde se aloja el video.	       *
+
+		/*	Parametros:																       *
+		/*		url: direccion de la que se debe extraer la lista.					       *
+		/*      page: referencia a la pagina de showtime desde donde se llama a la funcion.*	
+		/*	Retorna: String que representa la url									       *
+
+		/**********************************************************************************/
+		this.geturl_host= function (url,page){
 			return url;			
 		}
 		
