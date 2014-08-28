@@ -389,7 +389,7 @@
 		}
 
 	}
-	HostFactory.registrarHost("filenuke",Filenuke); //Registrar la clase Filenuke
+	//HostFactory.registrarHost("filenuke",Filenuke); //Registrar la clase Filenuke
 
 	/********************************************************************************	
 	/* var Magnovideo: Objeto que representa el servidor Magnovideo					*
@@ -5569,8 +5569,17 @@
 
 						if (typeof file_contents.headers['Location'] == 'undefined')
 							{
-							reason = "Usuario/Contraseña Incorrecta.";
-							continue;
+							if(file_contents.indexOf('Quota exceeded')>0)
+								{
+								showtime.notify('Quota Exceded Api.series.ly', 3);
+								error = 1;
+								break;									
+								}
+							else
+								{
+								reason = "Usuario/Contraseña Incorrecta.";
+								continue;
+								}
 							}
 						else
 							{

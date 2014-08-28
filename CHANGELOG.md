@@ -18,6 +18,7 @@
 - Añadida funcion 'pass_control_parental (titulo)' a las listas LiveStream, M3U y PLX. Si las opciones de Adultos no estan activadas filtra enlaces en cuyo nombre aparezca XX, porno o +18. ESTO NO GARANTIZA NADA!!!
 - Añadida notificacion cuando objCanal.getplaylist no devuelve resultados
 - Arreglado Movshare.net
+- Deteccion quota exceeded en series.ly
 
 ### 0.9.9
 
