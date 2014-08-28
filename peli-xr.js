@@ -1226,6 +1226,45 @@
 		
 	}
 	HostFactory.registrarHost("youtube",Youtube); //Registrar la clase Youtube
+
+	/********************************************************************************	
+	/* var Videomega: Objeto que representa el servidor Movshare						*
+	/*		Hereda de Host															*
+	/********************************************************************************/
+	var Videomega= function() {
+
+		//metodos publicos
+
+		/************************************************************************
+		/*	funcion esservidoradulto: Indica si es un servidor de adultos o no. *
+		/*	Parametros: ninguno													*
+		/*	Retorna: true si es un servidor de adultos, false si no lo es.		*
+		/***********************************************************************/
+		this.esservidoradulto= function ()	{
+			return false;
+		}
+
+		/****************************************************************************
+		/*	funcion geturl_video: Devuelve la url del video.						*
+		/*	Parametros:																*
+		/*		url_servidor: direccion de la que se debe extraer la url del video.	*	
+		/*	Retorna: String que representa la url del video o 'error'				*									*
+		/***************************************************************************/
+		this.geturl_video= function (url_servidor)	{
+			var file_contents = get_urlsource(url_servidor);
+			file_contents = extraer_texto(file_contents,'<div>&lt;iframe ','</div>');
+			url_servidor = extraer_texto(file_contents,'src="','"');
+			file_contents = get_urlsource(url_servidor);
+			var aux_string = unescape(extraer_texto(file_contents,'document.write(unescape("','"'));
+			file_contents = "";
+			var url_video = extraer_texto(aux_string,'file: "','"')
+				
+		return url_video;
+		}
+
+	}
+	HostFactory.registrarHost("videomega",Videomega); //Registrar la clase Videomega
+
 	
 //servidores de video
 //
@@ -7554,13 +7593,17 @@ function utf8_encode(argString) {
 			url_video = 'http://played.to/0vpqv384hysv';
 			page_uri = ':vervideo:ztestchannel:played:test:views/img/folder.png:';
 			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+
+			titulo = 'Test Played.To';
+			url_video = 'http://played.to/0vpqv384hysv';
+			page_uri = ':vervideo:ztestchannel:played:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 			
-			titulo = 'Test Streamcloud';
-			url_video = 'http://streamcloud.eu/azv2nq7q0xpv';
-			page_uri = ':vervideo:ztestchannel:streamcloud:test:views/img/folder.png:';
+			titulo = 'Test Videomega';
+			url_video = 'http://videomega.tv/?ref=NKUVcRHTLf';
+			page_uri = ':vervideo:ztestchannel:videomega:test:views/img/folder.png:';
 			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
-			
-			
+	
 			
 			titulo = 'Test Youtube No Cypher';
 			url_video = 'https://www.youtube.com/watch?v=mzhM6xNB8sQ';

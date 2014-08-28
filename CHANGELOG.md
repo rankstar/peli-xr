@@ -19,6 +19,7 @@
 - Añadida notificacion cuando objCanal.getplaylist no devuelve resultados
 - Arreglado Movshare.net
 - Deteccion quota exceeded en series.ly
+- Añadido soporte para videomega
 
 ### 0.9.9
 
