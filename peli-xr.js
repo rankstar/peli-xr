@@ -395,7 +395,7 @@
 	/* var Magnovideo: Objeto que representa el servidor Magnovideo					*
 	/*		Hereda de Host															*
 	/********************************************************************************/
-	var Magnovideo= function() {
+	var Magnovideo= function() { //SERVER CERRADo
 
 		//metodos publicos
 
@@ -536,30 +536,34 @@
 			//detectar el tipo hay .me y .net
 			var dominio= url_servidor.split('/')[2].match(/\.\w{2,3}$/i);
 			if(dominio=='.me')
-			{
-				url_video='error';				
-			}else{			
+				{
+				url_video='error';
+				}
+			else
+				{			
 				var file_contents = get_urlsource(url_servidor);
 				var error = file_contents.indexOf('This file no longer exists')
 				if(error==-1)
 				{
-					var videoplay = extraer_texto(file_contents,'<input type="hidden" name="videoplay" value="','"');
-					file_contents = ""
-					showtime.sleep(1000);
-
-					var datos_post = {'videoplay':videoplay};
-					file_contents = post_urlsource(url_servidor,datos_post);
-					var url_video = extraer_texto(file_contents,'file: "','"');
+					var fcid1 = extraer_texto(file_contents,'flashvars.cid="','"');
+					var ffile = extraer_texto(file_contents,'flashvars.file="','"');
+					var fkey = extraer_texto(file_contents,'flashvars.filekey="','"');
+					var url_api_video = "http://www.movshare.net/api/player.api.php?cid=" + fcid1 + "&user=undefined&file=" + ffile + "&key=" + fkey + "&cid2=undefined&cid3=undefined&pass=undefined&numOfErrors=0";
+					file_contents = get_urlsource(url_api_video);
+					var url_video = extraer_texto(file_contents,'url=','&');
 					file_contents = "";
-				}else{
+					}
+				else
+					{
 					url_video='error';
+					}
 				}
-			}
+				
 		return url_video;
 		}
 
 	}
-	//HostFactory.registrarHost("movshare",Movshare); //Registrar la clase Movshare
+	HostFactory.registrarHost("movshare",Movshare); //Registrar la clase Movshare
 
 	/********************************************************************************	
 	/* var Novamov: Objeto que representa el servidor Novamov						*
@@ -744,8 +748,8 @@
 		/****************************************************************************
 		/*	funcion geturl_video: Devuelve la url del video.						*
 		/*	Parametros:																*
-		/*		url_servidor: direccion de la que se debe extraer la url del video.	*	
-		/*	Retorna: String que representa la url del video o 'error'				*									*
+		/*		url_servidor: direccion de la que se debe extraer la url del video.	*
+		/*	Retorna: String que representa la url del video o 'error'				*
 		/***************************************************************************/
 		this.geturl_video= function (url_servidor)
 		{
@@ -782,7 +786,7 @@
 		}
 
 	}
-	//HostFactory.registrarHost("streamcloud",Streamcloud); //Registrar la clase Streamcloud
+	HostFactory.registrarHost("streamcloud",Streamcloud); //Registrar la clase Streamcloud
 
 	/********************************************************************************	
 	/* var Videobam: Objeto que representa el servidor Videobam						*
@@ -5217,7 +5221,7 @@
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
-		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
 		/*		url: direccion de la que se debe extraer la lista.							*
 		/*	Retorna: Array de objetos Item_menu											    *
@@ -5657,7 +5661,7 @@
 		/*************************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
 		/*	Parametros:                                                                      *
-		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*	Retorna: Array de objetos Item_menu									             *
 		/************************************************************************************/
 		this.getmenu= function(page){
@@ -5956,7 +5960,7 @@
 		/*************************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
 		/*	Parametros:                                                                      *
-		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*	Retorna: Array de objetos Item_menu									             *
 		/************************************************************************************/
 		this.getmenu= function(page){
@@ -6828,7 +6832,7 @@ function utf8_encode(argString) {
 	var licencia = '';
 	var licencia_md5 = '1e7c1eac9e131fe3a01d7594c071bf8c'; //not4kids
 
-	var canal_test=false; //for testing only
+	var canal_test=true; //for testing only
 
 	var objCanal;
 	var objHistorial=new StoreHistorial();
@@ -7446,17 +7450,15 @@ function utf8_encode(argString) {
 		
 		/*************************************************************************************
 		/*	funcion getmenu: Devuelve un listado de las subsecciones del canal.              *
-
 		/*	Parametros:                                                                      *
-		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *													*
+		/*       page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*	Retorna: Array de objetos Item_menu									             *
-
 		/************************************************************************************/
 		this.getmenu= function(page){
 		//retorna el Menu
 			var array_menu=[
 				new Item_menu('Test Videoservers','views/img/folder.png',':vercontenido:ztestchannel:urlvideo:null'),
-				new Item_menu('Busqueda youtube','views/img/folder.png',':vercontenido:ztestchannel:buscaryoutube:null')
+				new Item_menu('Busqueda youtube','views/img/folder.png',':vercontenido:ztestchannel:buscaryoutube:null'),
 				new Item_menu('Busqueda Tvdb','views/img/folder.png',':vercontenido:ztestchannel:tvdb:null')
 				];
 		return array_menu;
@@ -7465,7 +7467,7 @@ function utf8_encode(argString) {
 		/************************************************************************************
 		/*	funcion getplaylist: Devuelve un listado del contenido de las subsecciones.     *
 		/*	Parametros: 																    *
-		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. * 																*
+		/*		page: referencia a la pagina de showtime desde donde se llama a la funcion. *
 		/*		tipo: especifica los diferentes tipos de listas soportados por el canal.    *
 		/*		url: direccion de la que se debe extraer la lista.							*
 		/*	Retorna: Array de objetos Item_menu											    *
@@ -7529,15 +7531,27 @@ function utf8_encode(argString) {
 			var url_video;
 			var page_uri;
 			
+			titulo = 'Test Allmmyvideos';
+			url_video = 'http://allmyvideos.net/u1z2tdsv9rrw';
+			page_uri = ':vervideo:ztestchannel:allmyvideos:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+
+			titulo = 'Test MovShare';
+			url_video = 'http://www.movshare.net/video/ac5287a58e716';
+			page_uri = ':vervideo:ztestchannel:movshare:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
+
 			titulo = 'Test Played.To';
 			url_video = 'http://played.to/0vpqv384hysv';
 			page_uri = ':vervideo:ztestchannel:played:test:views/img/folder.png:';
 			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));
 			
-			titulo = 'Test Allmmyvideos';
-			url_video = 'http://allmyvideos.net/u1z2tdsv9rrw';
-			page_uri = ':vervideo:ztestchannel:allmyvideos:test:views/img/folder.png:';
-			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));			
+			titulo = 'Test Streamcloud';
+			url_video = 'http://streamcloud.eu/azv2nq7q0xpv';
+			page_uri = ':vervideo:ztestchannel:streamcloud:test:views/img/folder.png:';
+			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));	
+			
+			
 			
 			titulo = 'Test Youtube No Cypher';
 			url_video = 'https://www.youtube.com/watch?v=mzhM6xNB8sQ';
@@ -7575,11 +7589,6 @@ function utf8_encode(argString) {
 			var imagen = 'views/img/folder.png';
 			var url_video;
 			var page_uri;
-			
-			/*titulo = 'Test Played.To';
-			url_video = 'http://played.to/0vpqv384hysv';
-			page_uri = ':vervideo:ztestchannel:played:test:views/img/folder.png:';
-			array_playlist.push(new Item_menu(titulo,imagen,page_uri,url_video));*/			
 			
 			var texto_busqueda=that.cuadroBuscar();
 			
