@@ -1,5 +1,14 @@
 ###### Changelog
 
+### 0.10.1b:
+- Limpieza de codigo
+- Servidores: Arreglado Movshare.net; Eliminados Magnovideo y Mightyupload; Añadido VideoMega
+- Deteccion quota exceeded en series.ly
+- NewPCT: Corregido 
+- NewPctSeries: no funciona la paginacion en la pagina de los capitulos de una serie. El resto todo OK
+
+
+
 ### 0.10.0b:
 - Añadido String.prototype.format:  Formatea el String sustituyendo {0}, {1},...{n} por los argumentos (0..n) pasados a la funcion.
 - Añadida funcion generica get_SerieTvdb: Obtiene los datos de una serie de thetvdb.com
@@ -17,9 +26,7 @@
 - SeriesDanko añadida la descripcion en la pagina 'verenlaces'
 - Añadida funcion 'pass_control_parental (titulo)' a las listas LiveStream, M3U y PLX. Si las opciones de Adultos no estan activadas filtra enlaces en cuyo nombre aparezca XX, porno o +18. ESTO NO GARANTIZA NADA!!!
 - Añadida notificacion cuando objCanal.getplaylist no devuelve resultados
-- Arreglado Movshare.net
-- Deteccion quota exceeded en series.ly
-- Añadido soporte para videomega
+
 
 ### 0.9.9
 
