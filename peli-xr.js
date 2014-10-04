@@ -898,7 +898,8 @@
 			if(error == -1)
 			{
 				//var url_video = "http://videos.mp4.redtubefiles.com/" + unescape(extraer_texto(file_contents, 'http://videos.mp4.redtubefiles.com/','"'));
-				var url_video = extraer_texto(file_contents,"<source src='","'");
+				var url_video = extraer_texto(file_contents,"so.addParam('flashvars','video_url=","'");
+				url_video = unescape(url_video.substr(0,(url_video.indexOf('embedCode')-1)));
 			}else{
 				url_video = 'error';
 			}
@@ -3451,8 +3452,9 @@
 		{
 			url=unescape(url);
 			var file_contents = get_urlsource(url);
+			file_contents = extraer_texto(file_contents,'class="video-listing','<div class="pages">');
 
-			var array_aux = extraer_html_array(file_contents,'<div class="video">','</div>');
+			var array_aux = extraer_html_array(file_contents,'<li','</li>');
 
 			file_contents = "";
 			//array_aux = limpiar_array(array_aux);
