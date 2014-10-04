@@ -4174,7 +4174,7 @@
 	/* var Seriesflv: Objeto que representa el canal Seriesflv en Series				*
 	/************************************************************************************/
 	var Seriesflv= function() {	
-		//var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
+		var that=this; //Permite el acceso a metodos publicos desde metodos privados (closures): that.metodo_publico()
 		var descripcion="";
 		
 		
@@ -4193,7 +4193,8 @@
 				new Item_menu('Ultimos Cap. Latino','views/img/folder.png',':vercontenido:seriesflv:tipocapituloLA:'+ escape('http://www.seriesflv.net/')),
 				new Item_menu('Ultimos Cap. VOSE','views/img/folder.png',':vercontenido:seriesflv:tipocapituloVOSE:'+ escape('http://www.seriesflv.net/')),
 				new Item_menu('Ultimos Cap. V.O.','views/img/folder.png',':vercontenido:seriesflv:tipocapituloVO:'+ escape('http://www.seriesflv.net/')),
-				new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:seriesflv:0-9') 
+				new Item_menu('Orden Alfabetico','views/img/folder.png',':alfabeto:seriesflv:0-9'),
+				new Item_menu('Buscar','views/img/search.png',':vercontenido:seriesflv:tipòbusqueda:' + escape('http://www.seriesflv.net/api/search/?q='))
 				];
 		return array_menu;
 		}
@@ -4245,6 +4246,16 @@
 			case "tiposerie":
 				array_playlist=parseseriesflvserie(params,page);
 				break;
+			case "tipòbusqueda":
+				var texto_busqueda=that.cuadroBuscar();
+				if(texto_busqueda!= undefined)
+					{
+					page.metadata.title = "SeriesFlv - Buscar - " + texto_busqueda;
+					params.url_servidor=escape(unescape(params.url_servidor) + texto_busqueda); 
+					params.page_uri=':vercontenido:seriesflv:tiposerie:';
+					array_playlist= parseseriesflvbusqueda (params);
+					}
+				break;				
 			}
 			
 		return array_playlist;
@@ -4502,6 +4513,25 @@
 				}		
 		return array_playlist;
 		}
+		
+		function parseseriesflvbusqueda (params) 
+		{	
+			//www.seriesflv.net/api/search/?q=
+			var array_playlist=[];
+			var file_contents = get_urlsource(unescape(params.url_servidor));
+	
+			var array_aux = extraer_html_array(file_contents,"<li>","</li>");
+			file_contents = "";
+			
+			for (var i=0; i<array_aux.length ;i++)
+				{
+					var url_serie= extraer_texto(array_aux[i],'href="','"');
+					var titulo= extraer_texto(array_aux[i],'<span class="color1 bold tit">','</span>');
+					var imagen= extraer_texto(array_aux[i],'src="','"');
+					array_playlist.push(new Item_menu(titulo,imagen,params.page_uri,url_serie));			
+				}
+		return array_playlist;
+		}		
 		
 		
 	}	

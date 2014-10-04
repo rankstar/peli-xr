@@ -1,5 +1,9 @@
 ###### Changelog
 
+### 0.10.2b:
+- Corregido el problema de redtube
+- Añadida la funcion de busqueda en seriesflv
+
 ### 0.10.1b:
 - Limpieza de codigo
 - Servidores: Arreglado Movshare.net; Eliminados Magnovideo y Mightyupload; Añadido VideoMega
