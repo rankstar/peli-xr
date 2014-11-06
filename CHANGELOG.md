@@ -1,8 +1,22 @@
 ###### Changelog
+### 0.10.4b:
+- Arreglado NewPctSeries
+- Arreglado Almyvideos (nuevo bug)
+- Sustituir Oraline.net por Oraline.com
+- Añadido Host vaughnlive (regex)
+- Actualizado canal 'Peliculas De Sebas'
+
+### 0.10.3b:
+- Arreglado Almyvideos
+- El canal TVonline ha sido completamente remodelado. Ahora tenemos soportes para listas XML, JSON, PLX y M3U.
+- La opcion de las listas personales ha sido desactivada.
+- Añadido Canal 'Peliculas De Sebas' en el apartado de Peliculas
+
 
 ### 0.10.2b:
-- Corregido el problema de redtube
+- Redtube reparado
 - Añadida la funcion de busqueda en seriesflv
+
 
 ### 0.10.1b:
 - Limpieza de codigo
@@ -12,25 +26,14 @@
 - NewPctSeries: no funciona la paginacion en la pagina de los capitulos de una serie. El resto todo OK
 
 
-
 ### 0.10.0b:
+- Añadida funcion post_urlheaders (me hacia falta para series.ly)
+- Canal de series.ly activo - Api de Series.ly activa (gracias a los admins de series.ly)
 - Añadido String.prototype.format:  Formatea el String sustituyendo {0}, {1},...{n} por los argumentos (0..n) pasados a la funcion.
 - Añadida funcion generica get_SerieTvdb: Obtiene los datos de una serie de thetvdb.com
 - LiveStream: Eliminar getDate (tardaba mucho) y añadir recursividad para leer listas multiples.
-- Añadido canal Lista M3U con listas autoactualizables y una personal configurable en ajustes.	
-- Añadido canal Lista PLX con listas autoactualizables y una personal configurable en ajustes.					
-- Añadida funcion post_urlheaders (me hacia falta para series.ly)
-- Canal de series.ly activo - Api de Series.ly activa (gracias a los admins de series.ly)		
-- Cambiado el metodo para seriesflv, vuelve a funcionar (han hechos cambios en su pagina)
-- Arreglado Allmyvideos, vuelve a funcionar
-- Arreglado seriesdanko, vuelve a funcionar
-- Añadir el parametro 'page' en las funciones .getmenu, .getservidores y .getitem_alfabeto. Esto permite personalizar las paginas.
-- Reparado bug en NewPctSeries.getservidores (no extraia bien el titulo)
-- Reparado bug en Pordedeseries.getservidores (no extraia bien el titulo, la imagen ni la descripcion)
-- SeriesDanko añadida la descripcion en la pagina 'verenlaces'
-- Añadida funcion 'pass_control_parental (titulo)' a las listas LiveStream, M3U y PLX. Si las opciones de Adultos no estan activadas filtra enlaces en cuyo nombre aparezca XX, porno o +18. ESTO NO GARANTIZA NADA!!!
-- Añadida notificacion cuando objCanal.getplaylist no devuelve resultados
-
+- Añadido canal Lista M3U con tres listas autoactualizables y una personal configurable en ajustes.	
+- Añadido canal Lista PLX con listas autoactualizables y una personal configurable en ajustes.	
 
 ### 0.9.9
 
