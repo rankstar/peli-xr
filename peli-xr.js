@@ -19,7 +19,7 @@
  
 (function(plugin) {
 
-// var version = '0.10.5b';
+// var version = '0.10.6b';
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -1492,18 +1492,18 @@ showtime.print (url_video)
 		/*		jsonRegexs: String JSON	que representa las REGEXs necesarias para obtener la url del video en este host *
 		/*	Retorna: String que representa la url del video o 'error'													*
 		/***************************************************************************************************************/
-		this.geturl_video= function (jsonRegexs)
-		{
+		this.geturl_video= function (jsonRegexs) {
+			
 			var url_video ='error';
 			var file_contents;
 			var objRegexs;
 			var name;
 			var array_objRegex=[];
 			var expres;
-//showtime.print(jsonRegexs)
+			//showtime.print(jsonRegexs)
 			if (true) 	
-			{ //Se incluyen Regex
-//$doregex[get-proper-rtmp] app=direct2watch/_definst_/?xs=$doregex[get-app] playpath=$doregex[get-path] token=$doregex[get-token] swfUrl=http://www.direct2watch.com/player/player_embed_iguide.swf pageUrl=http://www.direct2watch.com/embedplayer.php?width=653&amp;height=400&amp;channel=10&amp;autoplay=true live=1 swfVfy=true timeout=10
+				{ 	//Se incluyen Regex
+					//$doregex[get-proper-rtmp] app=direct2watch/_definst_/?xs=$doregex[get-app] playpath=$doregex[get-path] token=$doregex[get-token] swfUrl=http://www.direct2watch.com/player/player_embed_iguide.swf pageUrl=http://www.direct2watch.com/embedplayer.php?width=653&amp;height=400&amp;channel=10&amp;autoplay=true live=1 swfVfy=true timeout=10
 				objRegexs=showtime.JSONDecode(jsonRegexs)
 				for (var i=0;i<objRegexs.array_regex.length;i++)
 					{
@@ -1541,14 +1541,14 @@ showtime.print (url_video)
 			}
 			
 			//get-rtmp
-			file_contents = get_urlsourcereferer(array_objRegex['get-rtmp'].page, array_objRegex['get-rtmp'].referer);	
-	showtime.print(file_contents)		
+			file_contents = get_urlsourcereferer(array_objRegex['get-rtmp'].page, array_objRegex['get-rtmp'].referer);
+			showtime.print(file_contents);
 			expres= new RegExp(array_objRegex['get-rtmp'].strExpres);
 			var get_rtmp= expres.exec(file_contents)[0].substr(13);
 		
 			//get-proper-rtmp
-			var get_proper_rtmp= get_rtmp.replace(/\\\//g,'/');
-			objRegexs.link= objRegexs.link.replace('$doregex[get-proper-rtmp]', get_proper_rtmp);
+			var get_proper_rtmp = get_rtmp.replace(/(\\\/)/g,'/');
+			objRegexs.link = objRegexs.link.replace('$doregex[get-proper-rtmp]', get_proper_rtmp);
 		
 			//get-app
 			if ((array_objRegex['get-app'].page != array_objRegex['get-rtmp'].page) || (array_objRegex['get-app'].referer != array_objRegex['get-rtmp'].referer))
@@ -5727,12 +5727,35 @@ showtime.print (url_video)
 					try
 						{
 						//file_contents = get_urlsource(url_api_user + '?auth_token=' + auth_token.auth_token + '&username=' + credentials.username + '&password=' + credentials.password + '&remember=1');
-												
-						var datos_post = {'auth_token': auth_token.auth_token , 'redirect_url': 'http://rantanplan.net46.net/takata/' ,'username': credentials.username ,'password': credentials.password,'remember': '1'};
+						
+						var datos_post = {'auth_token': auth_token.auth_token , 'redirect_url': 'https://showtimemediacenter.com/' ,'username': credentials.username ,'password': credentials.password,'remember': '1'};
 						file_contents = post_urlheaders(url_api_user,datos_post);
-
 						if (typeof file_contents.headers['Location'] == 'undefined')
 							{
+							//Si no hay header location
+							file_contents = file_contents.toString();
+							if(file_contents.indexOf('Si aceptas esta aplicac')>0)
+								{
+								//Aceptar q peli-xr tenga acceso a seriesly
+								//esto solo deberia saltar la primera vez
+								var respuesta= showtime.message("Aceptas q peli-xr reciba de series.ly\n\nTu email\nTu información básica (nombre, fecha de nacimiento, identificador de usuario...)\nToda tu información creada en series.ly incluídos tus amigos",true,true);
+								if(respuesta==true)
+									{
+									//Envia la aceptacion
+									var op_key = extraer_texto(file_contents,'name="op_key" value="','"/>');
+									var datos_post = {'auth_token': auth_token.auth_token , 'op_key' : op_key, 'redirect_url': 'https://showtimemediacenter.com/' ,'accept': 'Aceptar aplicación'};
+									file_contents = post_urlheaders(url_api_user,datos_post);
+									//accept" value="Aceptar aplicación"
+									//name="op_key" value="f0e2a0b1ccc5a807b36f"/>
+									}
+								else
+									{
+									//Si cancelas no hago nada
+									}
+								break;
+								}
+							
+							//Si aceptas esta aplicac
 							if(file_contents.indexOf('Quota exceeded')>0)
 								{
 								showtime.notify('Quota Exceded Api.series.ly', 3);
@@ -5773,25 +5796,41 @@ showtime.print (url_video)
 			var resultado_json = showtime.JSONDecode(file_contents);
 			file_contents = "";
 
+			
 			if(resultado_json.error==0)
 				{
 				var titulo;
 				var imagen;
 				var url_video;	 
 				var page_uri;
+				
 				if(mediatype==2)
 					{
-					resultado_json=resultado_json.movies;
+					if(typeof resultado_json.movies == "undefined")
+						{
+						resultado_json.length=0;
+						}
+					else
+						{
+						resultado_json=resultado_json.movies;
+						}
 					page_uri = ':verenlaces:seriesly:';
 					url_api = 'http://api.series.ly/v2/media/episode/links?idm=';
 					}
 				else
 					{
-					resultado_json=resultado_json.series;
+					if(typeof resultado_json.series == "undefined")
+						{
+						resultado_json.length=0;
+						}
+					else
+						{
+						resultado_json=resultado_json.series;
+						}
 					page_uri = ':vercontenido:serieslyseries:tiposerie:';
 					url_api = 'http://api.series.ly/v2/media/full_info?idm=';
 					}
-
+				
 				for (var i=0;i<resultado_json.length;i++)
 					{
 					titulo=resultado_json[i].name;
@@ -7119,7 +7158,7 @@ showtime.print (url_video)
 
 		var codigo_html = showtime.httpReq(url_servidor, 
 			{
-			debug: false,
+			debug: true,
 			compression: true,
 			noFollow: true,
 			method: 'POST',

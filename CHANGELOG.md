@@ -1,4 +1,15 @@
 ###### Changelog
+
+### 0.10.6b:
+- Corregido el problema de login con seriesly (creo q ya esta todo)
+
+### 0.10.5b:
+- Añadido Canal Pornhub (+18)
+- TV Online:
+- Descartados Host con Regex
+- Añadido identificacion del servidor en listas
+- Añadida gestion de sublistas m3u
+ master
 ### 0.10.4b:
 - Arreglado NewPctSeries
 - Arreglado Almyvideos (nuevo bug)
