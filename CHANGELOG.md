@@ -1,5 +1,8 @@
 ###### Changelog
 
+### 0.10.7b:
+- Cambios en api de series.ly para corregir el problema con la opcion mas vistas
+
 ### 0.10.6b:
 - Corregido el problema de login con seriesly (creo q ya esta todo)
 

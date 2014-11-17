@@ -19,7 +19,7 @@
  
 (function(plugin) {
 
-// var version = '0.10.6b';
+// var version = '0.10.7b';
 
 
 //////////////////////////////////////////////////////////////////////////
@@ -5374,7 +5374,7 @@ showtime.print (url_video)
 				new Item_menu('Vistas','views/img/folder.png',':vercontenido:seriesly:vistas:' + escape('http://api.series.ly/v2/user/media/movies/')),
 				new Item_menu('Favoritas','views/img/folder.png',':vercontenido:seriesly:favoritas:' + escape('http://api.series.ly/v2/user/media/movies/')),
 				new Item_menu('Pendientes','views/img/folder.png',':vercontenido:seriesly:pendientes:' + escape('http://api.series.ly/v2/user/media/movies/')),
-				new Item_menu('Mas Vistas','views/img/folder.png',':vercontenido:seriesly:masvistas:' + escape('http://api.series.ly/v2/media/most_seen/movies/?limit=50')),
+				new Item_menu('Mas Vistas','views/img/folder.png',':vercontenido:seriesly:masvistas:' + escape('http://api.series.ly/v2/media/browse?order=most_viewed')),
 				//new Item_menu('Categorias','views/img/folder.png',':vercontenido:seriesly:vistas:' + escape('http://api.series.ly/v2/media/browse')),
 				new Item_menu('Buscar','views/img/search.png',':vercontenido:seriesly:buscar:' + escape('http://api.series.ly/v2/search/'))
 				];
@@ -5539,12 +5539,13 @@ showtime.print (url_video)
 						break;						
 					case "pmasvistas":
 						//url_api = 'http://api.series.ly/v2/media/most_seen/movies/?auth_token=' + auth_token.auth_token + '&limit=50';
-						url_api = unescape(url_servidor) + '&auth_token=' + auth_token.auth_token + '&user_token=' + user_token.user_token + '&limit=50';
-						status = -1;						
+						//http://api.series.ly/docs/media/browse order=most_viewed
+						url_api = unescape(url_servidor) + '&auth_token=' + auth_token.auth_token + '&mediaType=2'  + '&limit=48';
+						status = -1;
 						break;
 					case "smasvistas":
 						//url_api = 'http://api.series.ly/v2/media/most_seen/series/?auth_token=' + auth_token.auth_token + '&limit=50';
-						url_api = unescape(url_servidor) + '&auth_token=' + auth_token.auth_token + '&user_token=' + user_token.user_token + '&limit=50';
+						url_api = unescape(url_servidor) + '&auth_token=' + auth_token.auth_token + '&mediaType=1'  + '&limit=48';
 						status = -1;						
 						mediatype = 1;
 						break;							
@@ -5790,12 +5791,11 @@ showtime.print (url_video)
 
 		function parseserieslytipo1(url_api, status, mediatype)	{
 			//http://api.series.ly/v2/user/media/movies/????
-			//http://api.series.ly/v2/media/most_seen/movies/???
+			//http://api.series.ly/v2/media/most_seen/movies/??? http://api.series.ly/v2/media/browse?auth_token={auth_token}&mediaType=1&limit=10
 			var array_playlist=[];
 			var file_contents = get_urlsource(url_api);
 			var resultado_json = showtime.JSONDecode(file_contents);
 			file_contents = "";
-
 			
 			if(resultado_json.error==0)
 				{
@@ -5804,33 +5804,49 @@ showtime.print (url_video)
 				var url_video;	 
 				var page_uri;
 				
-				if(mediatype==2)
+				if(url_api.indexOf('http://api.series.ly/v2/media/browse')==0)
 					{
-					if(typeof resultado_json.movies == "undefined")
+					resultado_json=resultado_json.results.medias;						
+					if(mediatype==2)
 						{
-						resultado_json.length=0;
+						page_uri = ':verenlaces:seriesly:';
+						url_api = 'http://api.series.ly/v2/media/episode/links?idm=';
 						}
 					else
 						{
-						resultado_json=resultado_json.movies;
+						page_uri = ':vercontenido:serieslyseries:tiposerie:';
+						url_api = 'http://api.series.ly/v2/media/full_info?idm=';
 						}
-					page_uri = ':verenlaces:seriesly:';
-					url_api = 'http://api.series.ly/v2/media/episode/links?idm=';
 					}
 				else
 					{
-					if(typeof resultado_json.series == "undefined")
+					if(mediatype==2)
 						{
-						resultado_json.length=0;
+							if(typeof resultado_json.movies == "undefined")
+							{
+							resultado_json.length=0;
+							}
+						else
+							{
+							resultado_json=resultado_json.movies;
+							}
+						page_uri = ':verenlaces:seriesly:';
+						url_api = 'http://api.series.ly/v2/media/episode/links?idm=';
 						}
 					else
 						{
-						resultado_json=resultado_json.series;
+						if(typeof resultado_json.series == "undefined")
+							{
+							resultado_json.length=0;
+							}
+						else
+							{
+							resultado_json=resultado_json.series;
+							}
+						page_uri = ':vercontenido:serieslyseries:tiposerie:';
+						url_api = 'http://api.series.ly/v2/media/full_info?idm=';
 						}
-					page_uri = ':vercontenido:serieslyseries:tiposerie:';
-					url_api = 'http://api.series.ly/v2/media/full_info?idm=';
 					}
-				
 				for (var i=0;i<resultado_json.length;i++)
 					{
 					titulo=resultado_json[i].name;
@@ -5881,7 +5897,7 @@ showtime.print (url_video)
 				new Item_menu('Siguiendo','views/img/folder.png',':vercontenido:serieslyseries:siguiendo:' + escape('http://api.series.ly/v2/user/media/series/')),
 				new Item_menu('Pendientes','views/img/folder.png',':vercontenido:serieslyseries:pendientes:' + escape('http://api.series.ly/v2/user/media/series/')),
 				new Item_menu('Vistas','views/img/folder.png',':vercontenido:serieslyseries:vistas:' + escape('http://api.series.ly/v2/user/media/series/')),
-				new Item_menu('Mas Vistas','views/img/folder.png',':vercontenido:serieslyseries:masvistas:' + escape('http://api.series.ly/v2/media/most_seen/series/?limit=50')),
+				new Item_menu('Mas Vistas','views/img/folder.png',':vercontenido:serieslyseries:masvistas:' + escape('http://api.series.ly/v2/media/browse?order=most_viewed')),
 				//new Item_menu('Categorias','views/img/folder.png',':vercontenido:seriesly:vistas:' + escape('http://api.series.ly/v2/media/browse')),
 				new Item_menu('Buscar','views/img/search.png',':vercontenido:serieslyseries:buscar:' + escape('http://api.series.ly/v2/search/'))
 				];
@@ -7158,7 +7174,7 @@ showtime.print (url_video)
 
 		var codigo_html = showtime.httpReq(url_servidor, 
 			{
-			debug: true,
+			debug: false,
 			compression: true,
 			noFollow: true,
 			method: 'POST',
